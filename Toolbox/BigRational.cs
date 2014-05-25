@@ -413,19 +413,7 @@ namespace ProjectEuler.Toolbox
 
         public int CompareTo(BigRational other)
         {
-            var n = (this - other).Numerator;
-
-            if (n < 0)
-            {
-                return -1;
-            }
-
-            if (n > 0)
-            {
-                return 1;
-            }
-
-            return 0;
+            return (this - other).Numerator.Sign;
         }
 
         public override bool Equals(object obj)
