@@ -61,13 +61,13 @@ namespace ProjectEuler.Toolbox
                         for (var x1 = 0; x1 < 9; x1++)
                         {
                             var cell = Tuple.Create(x1, y);
-                            RemoveCellValue(possibleCellValues, cell, p[x, y]);
+                            RemovePossibleCellValue(possibleCellValues, cell, p[x, y]);
                         }
 
                         for (var y1 = 0; y1 < 9; y1++)
                         {
                             var cell = Tuple.Create(x, y1);
-                            RemoveCellValue(possibleCellValues, cell, p[x, y]);
+                            RemovePossibleCellValue(possibleCellValues, cell, p[x, y]);
                         }
                     }
                 }
@@ -91,7 +91,7 @@ namespace ProjectEuler.Toolbox
                                     for (var y1 = 0; y1 < 3; y1++)
                                     {
                                         var cell = Tuple.Create(x + x1, y + y1);
-                                        RemoveCellValue(possibleCellValues, cell, p[x + dx, y + dy]);
+                                        RemovePossibleCellValue(possibleCellValues, cell, p[x + dx, y + dy]);
                                     }
                                 }
                             }
@@ -101,7 +101,7 @@ namespace ProjectEuler.Toolbox
             }
         }
 
-        private static void RemoveCellValue(Dictionary<Tuple<int, int>, IList<int>> possibleCellValues, Tuple<int, int> cell, int value)
+        private static void RemovePossibleCellValue(Dictionary<Tuple<int, int>, IList<int>> possibleCellValues, Tuple<int, int> cell, int value)
         {
             var valueList = default(IList<int>);
 
