@@ -9,40 +9,41 @@ namespace ProjectEuler.Toolbox
         /// <summary>
         /// Recursively solve Sudoku puzzles via trial and error
         /// </summary>
-        /// <param name="p">Puzzle state</param>
+        /// <param name="grid">Puzzle grid</param>
         /// <returns>Completed puzzle or null if no solution</returns>
-        public static int[,] Solve(int[,] p)
+        public static int[,] Solve(int[,] grid)
         {
-            var possibleCellValues = InitializePossibleEmptyCellValues(p);
+            var possibleCellValues = InitializePossibleEmptyCellValues(grid);
 
             while (true)
             {
-                RemoveUsedRowColValuesFromPossibleCellValues(p, possibleCellValues);
-                RemoveUsedBoxValuesFromPossibleCellValues(p, possibleCellValues);
+                RemoveUsedRowColValuesFromPossibleCellValues(grid, possibleCellValues);
+                RemoveUsedBoxValuesFromPossibleCellValues(grid, possibleCellValues);
 
                 if (!possibleCellValues.Any())
                 {
-                    return CheckAllSums(p) ? p : null;
+                    return CheckAllSums(grid) ? grid : null;
                 }
 
-                if (!AssignCellsWithOnlyOnePossibleValue(p, possibleCellValues))
+                if (!AssignCellsWithOnlyOnePossibleValue(grid, possibleCellValues))
                 {
-                    return RecursivelyGuess(p, possibleCellValues);
+                    return RecursivelyGuess(grid, possibleCellValues);
                 }
             }
         }
 
-        private static Dictionary<Tuple<int, int>, IList<int>> InitializePossibleEmptyCellValues(int[,] p)
+        private static Dictionary<dynamic, IList<int>> InitializePossibleEmptyCellValues(int[,] grid)
         {
-            var possibleCellValues = new Dictionary<Tuple<int, int>, IList<int>>();
+            var possibleCellValues = new Dictionary<dynamic, IList<int>>();
 
             for (var x = 0; x < 9; x++)
             {
                 for (var y = 0; y < 9; y++)
                 {
-                    if (p[x, y] == 0)
+                    if (grid[x, y] == 0)
                     {
-                        possibleCellValues[Tuple.Create(x, y)] = Enumerable.Range(1, 9).ToList();
+                        var cell = new { x = x, y = y };
+                        possibleCellValues[cell] = Enumerable.Range(1, 9).ToList();
                     }
                 }
             }
@@ -50,31 +51,31 @@ namespace ProjectEuler.Toolbox
             return possibleCellValues;
         }
 
-        private static void RemoveUsedRowColValuesFromPossibleCellValues(int[,] p, Dictionary<Tuple<int, int>, IList<int>> possibleCellValues)
+        private static void RemoveUsedRowColValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
         {
             for (var x = 0; x < 9; x++)
             {
                 for (var y = 0; y < 9; y++)
                 {
-                    if (p[x, y] != 0)
+                    if (grid[x, y] != 0)
                     {
                         for (var x1 = 0; x1 < 9; x1++)
                         {
-                            var cell = Tuple.Create(x1, y);
-                            RemovePossibleCellValue(possibleCellValues, cell, p[x, y]);
+                            var cell = new { x = x1, y = y };
+                            RemovePossibleCellValue(possibleCellValues, cell, grid[x, y]);
                         }
 
                         for (var y1 = 0; y1 < 9; y1++)
                         {
-                            var cell = Tuple.Create(x, y1);
-                            RemovePossibleCellValue(possibleCellValues, cell, p[x, y]);
+                            var cell = new { x = x, y = y1 };
+                            RemovePossibleCellValue(possibleCellValues, cell, grid[x, y]);
                         }
                     }
                 }
             }
         }
 
-        private static void RemoveUsedBoxValuesFromPossibleCellValues(int[,] p, Dictionary<Tuple<int, int>, IList<int>> possibleCellValues)
+        private static void RemoveUsedBoxValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
         {
             for (var x = 0; x < 9; x += 3)
             {
@@ -84,14 +85,14 @@ namespace ProjectEuler.Toolbox
                     {
                         for (var dy = 0; dy < 3; dy++)
                         {
-                            if (p[x + dx, y + dy] != 0)
+                            if (grid[x + dx, y + dy] != 0)
                             {
                                 for (var x1 = 0; x1 < 3; x1++)
                                 {
                                     for (var y1 = 0; y1 < 3; y1++)
                                     {
-                                        var cell = Tuple.Create(x + x1, y + y1);
-                                        RemovePossibleCellValue(possibleCellValues, cell, p[x + dx, y + dy]);
+                                        var cell = new { x = x + x1, y = y + y1 };
+                                        RemovePossibleCellValue(possibleCellValues, cell, grid[x + dx, y + dy]);
                                     }
                                 }
                             }
@@ -101,7 +102,7 @@ namespace ProjectEuler.Toolbox
             }
         }
 
-        private static void RemovePossibleCellValue(Dictionary<Tuple<int, int>, IList<int>> possibleCellValues, Tuple<int, int> cell, int value)
+        private static void RemovePossibleCellValue(Dictionary<dynamic, IList<int>> possibleCellValues, dynamic cell, int value)
         {
             var valueList = default(IList<int>);
 
@@ -118,12 +119,12 @@ namespace ProjectEuler.Toolbox
 
         private static readonly int ExpectedSum = 45;
 
-        private static bool CheckAllSums(int[,] p)
+        private static bool CheckAllSums(int[,] grid)
         {
-            return CheckColSums(p) && CheckRowSums(p) && CheckBoxSums(p);
+            return CheckColSums(grid) && CheckRowSums(grid) && CheckBoxSums(grid);
         }
 
-        private static bool CheckColSums(int[,] p)
+        private static bool CheckColSums(int[,] grid)
         {
             for (var x = 0; x < 9; x++)
             {
@@ -131,7 +132,7 @@ namespace ProjectEuler.Toolbox
 
                 for (var y = 0; y < 9; y++)
                 {
-                    sum += p[x, y];
+                    sum += grid[x, y];
                 }
 
                 if (sum != ExpectedSum)
@@ -143,7 +144,7 @@ namespace ProjectEuler.Toolbox
             return true;
         }
 
-        private static bool CheckRowSums(int[,] p)
+        private static bool CheckRowSums(int[,] grid)
         {
             for (var y = 0; y < 9; y++)
             {
@@ -151,7 +152,7 @@ namespace ProjectEuler.Toolbox
 
                 for (var x = 0; x < 9; x++)
                 {
-                    sum += p[x, y];
+                    sum += grid[x, y];
                 }
 
                 if (sum != ExpectedSum)
@@ -163,7 +164,7 @@ namespace ProjectEuler.Toolbox
             return true;
         }
 
-        private static bool CheckBoxSums(int[,] p)
+        private static bool CheckBoxSums(int[,] grid)
         {
             for (var x = 0; x < 9; x += 3)
             {
@@ -175,7 +176,7 @@ namespace ProjectEuler.Toolbox
                     {
                         for (var dy = 0; dy < 3; dy++)
                         {
-                            sum += p[x + dx, y + dy];
+                            sum += grid[x + dx, y + dy];
                         }
                     }
 
@@ -189,7 +190,7 @@ namespace ProjectEuler.Toolbox
             return true;
         }
 
-        private static bool AssignCellsWithOnlyOnePossibleValue(int[,] p, Dictionary<Tuple<int, int>, IList<int>> possibleCellValues)
+        private static bool AssignCellsWithOnlyOnePossibleValue(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
         {
             var cellsWithOnePossibleValue = possibleCellValues
                 .Where(kvp => kvp.Value.Count == 1)
@@ -197,27 +198,29 @@ namespace ProjectEuler.Toolbox
 
             foreach (var cell in cellsWithOnePossibleValue)
             {
-                p[cell.Key.Item1, cell.Key.Item2] = cell.Value.Single();
+                grid[cell.Key.x, cell.Key.y] = cell.Value.Single();
                 possibleCellValues.Remove(cell.Key);
             }
 
             return cellsWithOnePossibleValue.Any();
         }
 
-        private static int[,] RecursivelyGuess(int[,] p, Dictionary<Tuple<int, int>, IList<int>> possibleCellValues)
+        private static int[,] RecursivelyGuess(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
         {
-            var emptyCellWithFewestPossibleValues = possibleCellValues.OrderBy(kvp => kvp.Value.Count).First();
+            var emptyCellWithFewestPossibleValues = possibleCellValues
+                .OrderBy(kvp => kvp.Value.Count)
+                .First();
 
             foreach (var value in emptyCellWithFewestPossibleValues.Value)
             {
-                var temp = (int[,])p.Clone();
-                temp[emptyCellWithFewestPossibleValues.Key.Item1, emptyCellWithFewestPossibleValues.Key.Item2] = value;
+                var tempGrid = (int[,])grid.Clone();
+                tempGrid[emptyCellWithFewestPossibleValues.Key.x, emptyCellWithFewestPossibleValues.Key.y] = value;
 
-                temp = Solve(temp);
+                var tempSolution = Solve(tempGrid);
 
-                if (temp != null)
+                if (tempSolution != null)
                 {
-                    return temp;
+                    return tempSolution;
                 }
             }
 
