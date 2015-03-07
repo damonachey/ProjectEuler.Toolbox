@@ -8,13 +8,25 @@ namespace ProjectEuler.Toolbox
     public static class MathLibrary
     {
         /// <summary>
-        /// TODO: Find a good description of what a Binomial is
+        /// Binomial coefficients are a family of positive integers that occur as 
+        /// coefficients in the binomial theorem. They are indexed by two nonnegative 
+        /// integers; the binomial coefficient indexed by n and k is usually written 
+        /// nCk. It is the coefficient of the x^k term in the polynomial expansion of 
+        /// the binomial power (1 + x)^n. Under suitable circumstances the value of 
+        /// the coefficient is given by the expression n! / k!(n-k)!. Arranging 
+        /// binomial coefficients into rows for successive values of n, and in which 
+        /// k ranges from 0 to n, gives a triangular array called Pascal's triangle.
         /// </summary>
         /// <param name="n"></param>
         /// <param name="k"></param>
         /// <returns></returns>
         public static BigInteger Binomial(int n, int k)
         {
+            if (n < 1 || k < 0 || k > n)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             return Factorial(n) / (Factorial(k) * Factorial(n - k));
         }
 
@@ -26,7 +38,7 @@ namespace ProjectEuler.Toolbox
         public static BigInteger Factorial(long n)
         {
             var factorial = BigInteger.One;
-            
+
             while (n > 1)
             {
                 factorial *= n--;
@@ -280,6 +292,22 @@ namespace ProjectEuler.Toolbox
             i = i - ((i >> 1) & 0x5555555555555555);
             i = (i & 0x3333333333333333) + ((i >> 2) & 0x3333333333333333);
             return (int)((((i + (i >> 4)) & 0xF0F0F0F0F0F0F0F) * 0x101010101010101) >> 56);
+        }
+
+        public static double NewtonsMethod(Func<double, double> f, Func<double, double> fprime, double guess, double epsilon)
+        {
+            var x = guess;
+            var xlast = x;
+
+            while (true)
+            {
+                x = x - f(x) / fprime(x);
+
+                if (Math.Abs(x - xlast) < epsilon)
+                    return x;
+
+                xlast = x;
+            }
         }
     }
 }

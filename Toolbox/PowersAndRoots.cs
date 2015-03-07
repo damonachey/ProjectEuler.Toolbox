@@ -52,36 +52,34 @@ namespace ProjectEuler.Toolbox
             return false;
         }
 
-        /// <summary>
-        /// Gets the integer value equal to Floor(Sqrt(n))
-        /// http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method
-        /// </summary>
-        /// <param name="n"></param>
-        /// <returns></returns>
-        public static BigInteger SqrtFloor(BigInteger n)
+        public static BigInteger SqrtFloor(this BigInteger n)
         {
-            if (n < 0)
+            if (n == 0) return 0;
+            if (n > 0)
             {
-                throw new ArgumentOutOfRangeException("Cannot calculate square root from a negative number");
-            }
+                int bitLength = Convert.ToInt32(Math.Ceiling(BigInteger.Log(n, 2)));
+                BigInteger root = BigInteger.One << (bitLength / 2);
 
-            var current = new BigInteger(Math.Sqrt((double)n) * 1.1);
-            var previous = default(BigInteger);
-
-            do
-            {
-                previous = current;
-
-                if (previous == 0)
+                while (!isSqrt(n, root))
                 {
-                    return 0;
+                    root += n / root;
+                    root /= 2;
                 }
 
-                current = (current + n / current) / 2;
+                return root;
             }
-            while (previous > current);
 
-            return previous;
+            throw new ArithmeticException("NaN");
+        }
+
+        private static Boolean isSqrt(BigInteger n, BigInteger root)
+        {
+            BigInteger lowerBound = root * root;
+            
+            BigInteger root1 = root + 1;
+            BigInteger upperBound = root1 * root1;
+
+            return n >= lowerBound && n < upperBound;
         }
 
         /// <summary>

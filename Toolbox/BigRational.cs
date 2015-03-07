@@ -246,6 +246,16 @@ namespace ProjectEuler.Toolbox
             return new BigRational(BigInteger.Pow(value.Numerator, exponent), BigInteger.Pow(value.Denominator, exponent));
         }
 
+        public static double Log(BigRational value)
+        {
+            return BigInteger.Log(value.Numerator) - BigInteger.Log(value.Denominator);
+        }
+
+        public static double Log10(BigRational value)
+        {
+            return BigInteger.Log10(value.Numerator) - BigInteger.Log10(value.Denominator);
+        }
+
         public static BigRational Abs(BigRational value)
         {
             return new BigRational(BigInteger.Abs(value.Numerator), value.Denominator);

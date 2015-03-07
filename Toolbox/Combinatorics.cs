@@ -7,6 +7,16 @@ namespace ProjectEuler.Toolbox
 {
     public static class Combinatorics
     {
+        public static BigInteger AnagramCount(IEnumerable<int> m)
+        {
+            return MathLibrary.Factorial(m.Aggregate((a, v) => a + v)) / m.Aggregate(BigInteger.One, (a, v) => a * MathLibrary.Factorial(v));
+        }
+
+        public static BigInteger CircularPermutationCount(long n)
+        {
+            return MathLibrary.Factorial(n - 1);
+        }
+
         /// <summary>
         /// Compute the number of combinations nCk.
         /// </summary>

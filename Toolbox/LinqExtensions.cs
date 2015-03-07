@@ -351,7 +351,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="action">The action.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             if (action == null)
             {
@@ -361,6 +361,7 @@ namespace ProjectEuler.Toolbox
             foreach (var item in source)
             {
                 action(item);
+                yield return item;
             }
         }
     }

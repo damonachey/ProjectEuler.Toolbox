@@ -8,7 +8,7 @@ namespace ProjectEuler.Toolbox
 {
     public static class PrimeHelper
     {
-        private const string PrimeFile = @"N:\Computer\Development\Primes32bit.bin";
+        private const string PrimeFile = @"C:\Users\Damon\OneDrive\Development\Primes32bit.bin";
         private static readonly Func<long, bool> isPrimeMemoized = n => IsPrime(n);
 
         static PrimeHelper()
