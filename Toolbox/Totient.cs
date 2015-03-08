@@ -1,4 +1,8 @@
-﻿namespace ProjectEuler.Toolbox
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ProjectEuler.Toolbox
 {
     public class Totient
     {
@@ -67,14 +71,14 @@
 
             if (n >= _lastSmallestFactor)
             {
-                InitializeSmallestFactors(n);
+                //InitializeSmallestFactors(n);
 
-                //throw new ArgumentOutOfRangeException("Please InitializeSmallestFactors to a larger value or use PhiSlow(n)");
+                throw new ArgumentOutOfRangeException("Please InitializeSmallestFactors to a larger value or use PhiSlow(n)");
             }
 
-            var f = 
-                n == 2 ? 1 : 
-                n % 2 == 0 ? 2 : 
+            var f =
+                n == 2 ? 1 :
+                n % 2 == 0 ? 2 :
                 _smallestFactors[n / 2];
 
             if (f == 1)
@@ -90,6 +94,81 @@
             }
 
             return Phi(n) * (f - 1) * fp;
+        }
+
+        static long isqrt(long a)
+        {
+            var y = 0L;
+            var x = a;
+
+            while (x > 1)
+            {
+                if ((y = ((x + (a / x)) >> 1)) >= x)
+                    return x;
+
+                x = y;
+            }
+
+            return x;
+        }
+
+        public static long Phi2(long n)
+        {
+            var p = 0;
+
+            while(n % 2 == 0)
+            {
+                n >>= 1;
+                p++;
+            }
+
+            var r = (p == 0) ? 1L : (1 << (p - 1));
+            var m = isqrt(n) + 1;
+
+            for (var d = 3; d <= m; d += 2)
+            {
+                if ((n % d) == 0)
+                {
+                    for (n /= d, p = 1; n % d == 0; n /= d, p++)
+                        r *= d;
+                    r *= d - 1;
+                    m = isqrt(n) + 1;
+                }
+            }
+
+            if (n > 1)
+                r *= (n - 1);
+
+            return r;
+        }
+
+        public static int MaxnOverPhin(int n)
+        {
+            var product = 1;
+
+            foreach (var prime in PrimeHelper.Primes())
+            {
+                if (product * prime > n)
+                    return product;
+
+                product *= prime;
+            }
+
+            throw new Exception("Need more primes");
+        }
+
+        public static int MinnOverphin(int n)
+        {
+            var best = 0;
+
+            var primes = PrimeHelper.Primes().TakeWhile(p => p < Math.Sqrt(n)).ToList();
+
+            for (var i = 0; i < primes.Count; i++)
+                for (var j = i; j < primes.Count; j++)
+                    if (primes[i] * primes[j] < n && n - primes[i] * primes[j] < n - best)
+                        best = primes[i] * primes[j];
+
+            return best;
         }
     }
 }
