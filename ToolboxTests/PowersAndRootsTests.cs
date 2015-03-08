@@ -125,7 +125,7 @@ namespace ProjectEuler.ToolboxTests
         [Test]
         public void SqrtFloorNegative()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => PowersAndRoots.SqrtFloor(BigInteger.MinusOne));
+            Assert.Throws<ArithmeticException>(() => PowersAndRoots.SqrtFloor(BigInteger.MinusOne));
         }
 
         [Test]
