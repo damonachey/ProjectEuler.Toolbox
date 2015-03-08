@@ -23,27 +23,27 @@
         /// <param name="max"></param>
         public void InitializeSmallestFactors(int max)
         {
-            max += 1; // to account for zero base
+            max += 2; // to account for zero base
 
             if (max > _lastSmallestFactor)
             {
                 lock (_smallestFactorsLock)
                 {
-                    _smallestFactors = new int[max];
+                    _smallestFactors = new int[max / 2];
 
-                    for (int i = 0; i < max; i++)
+                    for (int i = 0; i < max / 2; i++)
                     {
                         _smallestFactors[i] = 1;
                     }
 
-                    for (int i = 2; i < max; i++)
+                    for (int i = 3; i < max; i += 2)
                     {
-                        if (_smallestFactors[i] == 1)
+                        if (_smallestFactors[i / 2] == 1)
                         {
                             for (int k = i + i; k < max; k += i)
-                                if (_smallestFactors[k] == 1)
+                                if (k % 2 == 1 && _smallestFactors[k / 2] == 1)
                                 {
-                                    _smallestFactors[k] = i;
+                                    _smallestFactors[k / 2] = i;
                                 }
                         }
                     }
@@ -72,7 +72,10 @@
                 //throw new ArgumentOutOfRangeException("Please InitializeSmallestFactors to a larger value or use PhiSlow(n)");
             }
 
-            var f = _smallestFactors[n];
+            var f = 
+                n == 2 ? 1 : 
+                n % 2 == 0 ? 2 : 
+                _smallestFactors[n / 2];
 
             if (f == 1)
             {
