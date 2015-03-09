@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ProjectEuler.Toolbox</id>
+    <version>$version$</version>
+    <authors>Damon Achey</authors>
+    <owners>Damon Achey</owners>
+    <projectUrl>https://github.com/damonachey/ProjectEuler.Toolbox</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Library of tools I use to solve ProjectEuler.Net problems (Sorry, no solutions here :)</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>euler math</tags>
+  </metadata>
+</package>
