@@ -33,12 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IronPython">
-      <HintPath>..\packages\IronPython.2.6.1\lib\Net40\IronPython.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.Modules">
-      <HintPath>..\packages\IronPython.2.6.1\lib\Net40\IronPython.Modules.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Dynamic">
       <HintPath>..\packages\IronPython.2.6.1\lib\Net40\Microsoft.Dynamic.dll</HintPath>
     </Reference>

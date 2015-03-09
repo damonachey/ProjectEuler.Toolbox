@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using IronPython.Hosting;
 
 namespace ProjectEuler.Toolbox
 {
@@ -57,37 +56,6 @@ namespace ProjectEuler.Toolbox
             }
 
             return stack.Pop();
-        }
-
-        /// <summary>
-        /// TODO: Complete native Simplify implementation
-        /// TODO: Test Simplify
-        /// </summary>
-        /// <param name="expr"></param>
-        /// <returns></returns>
-        public static string Simplify(string expr)
-        {
-            var engine = Python.CreateEngine();
-            var paths = engine.GetSearchPaths();
-            paths.Add(@"c:\program files (x86)\ironpython 2.7\lib");
-            paths.Add(@"N:\Computer\Development\3rd Party\sympy");
-            engine.SetSearchPaths(paths);
-
-            var scope = engine.CreateScope();
-            var script = engine.CreateScriptSourceFromString(string.Format(@"
-from sympy import *
-expr = simplify('{0}')
-
-import clr
-from System import String
-result = clr.Convert(expr, String)",
-                expr.Replace("^", "**")));
-
-            script.Execute(scope);
-
-            return scope
-                .GetVariable("result")
-                .Replace("**", "^");
         }
     }
 }
