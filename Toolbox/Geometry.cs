@@ -181,7 +181,7 @@ namespace ProjectEuler.Toolbox
             X = x;
             Y = y;
         }
-         
+
         public override string ToString()
         {
             return string.Format("({0}, {1})", X, Y);
@@ -201,10 +201,48 @@ namespace ProjectEuler.Toolbox
             Y = y;
             Z = z;
         }
-        
+
         public override string ToString()
         {
             return string.Format("({0}, {1}, {2})", X, Y, Z);
+        }
+    }
+
+
+    public struct Segment
+    {
+        public Point2<BigRational> P0;
+        public Point2<BigRational> P1;
+
+        public Segment(Point2<BigRational> p0, Point2<BigRational> p1)
+        {
+            P0 = p0;
+            P1 = p1;
+        }
+
+        public bool Intersects(Segment s, out Point2<BigRational> p)
+        {
+            p = default(Point2<BigRational>);
+
+            var d = (P0.X - P1.X) * (s.P0.Y - s.P1.Y) - (P0.Y - P1.Y) * (s.P0.X - s.P1.X);
+
+            if (d != 0)
+            {
+                var x = ((P0.X * P1.Y - P0.Y * P1.X) * (s.P0.X - s.P1.X) - (P0.X - P1.X) * (s.P0.X * s.P1.Y - s.P0.Y * s.P1.X)) / d;
+                var y = ((P0.X * P1.Y - P0.Y * P1.X) * (s.P0.Y - s.P1.Y) - (P0.Y - P1.Y) * (s.P0.X * s.P1.Y - s.P0.Y * s.P1.X)) / d;
+
+                var t = new Point2<BigRational>(x, y);
+
+                if (((P0.X < t.X && t.X < P1.X) || (P1.X < t.X && t.X < P0.X)) && ((s.P0.X < t.X && t.X < s.P1.X) || (s.P1.X < t.X && t.X < s.P0.X)) &&
+                    ((P0.Y < t.Y && t.Y < P1.Y) || (P1.Y < t.Y && t.Y < P0.Y)) && ((s.P0.Y < t.Y && t.Y < s.P1.Y) || (s.P1.Y < t.Y && t.Y < s.P0.Y)))
+                {
+                    p = t;
+
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
