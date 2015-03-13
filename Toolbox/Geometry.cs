@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using System.Windows;
 using Microsoft.Xna.Framework;
 
@@ -135,7 +136,7 @@ namespace ProjectEuler.Toolbox
             return Vector3.Dot(cp1, cp2) >= 0;
         }
 
-        public static BigRational Distance(Point2DBigRational p1, Point2DBigRational p2)
+        public static BigRational Distance(Point2<BigRational> p1, Point2<BigRational> p2)
         {
             var dx = p2.X - p1.X;
             var dy = p2.Y - p1.Y;
@@ -147,27 +148,21 @@ namespace ProjectEuler.Toolbox
         }
     }
 
-    public struct Point3DLong
+    public struct Polygon2<T>
     {
-        public long X { get; private set; }
-        public long Y { get; private set; }
-        public long Z { get; private set; }
+        public Point2<T> P1 { get; private set; }
+        public Point2<T> P2 { get; private set; }
+        public Point2<T> P3 { get; private set; }
+        public Point2<T> P4 { get; private set; }
 
-        public Point3DLong(long x, long y, long z)
+        public Polygon2(Point2<T> p1, Point2<T> p2, Point2<T> p3, Point2<T> p4)
             : this()
         {
-            X = x;
-            Y = y;
-            Z = z;
+            P1 = p1;
+            P2 = p2;
+            P3 = p3;
+            P4 = p4;
         }
-    }
-
-    public struct Polygon2DBigRational
-    {
-        public Point2DBigRational P1;
-        public Point2DBigRational P2;
-        public Point2DBigRational P3;
-        public Point2DBigRational P4;
 
         public override string ToString()
         {
@@ -175,28 +170,41 @@ namespace ProjectEuler.Toolbox
         }
     }
 
-    public struct Point2DBigRational
+    public struct Point2<T>
     {
-        public BigRational X;
-        public BigRational Y;
+        public T X { get; private set; }
+        public T Y { get; private set; }
 
-        public Point2DBigRational(BigRational x, BigRational y)
+        public Point2(T x, T y)
             : this()
         {
             X = x;
             Y = y;
         }
-
-        public Point2DBigRational(Vector v)
-            : this()
-        {
-            X = v.X;
-            Y = v.Y;
-        }
-
+         
         public override string ToString()
         {
             return string.Format("({0}, {1})", X, Y);
+        }
+    }
+
+    public struct Point3<T>
+    {
+        public T X { get; private set; }
+        public T Y { get; private set; }
+        public T Z { get; private set; }
+
+        public Point3(T x, T y, T z)
+            : this()
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+        
+        public override string ToString()
+        {
+            return string.Format("({0}, {1}, {2})", X, Y, Z);
         }
     }
 }

@@ -63,8 +63,8 @@ namespace ProjectEuler.ToolboxTests
         public void Distance()
         {
             var expected = new BigRational(5);
-            var p1 = new Point2DBigRational(1, 2);
-            var p2 = new Point2DBigRational(4, 6);
+            var p1 = new Point2<BigRational>(1, 2);
+            var p2 = new Point2<BigRational>(4, 6);
             var actual = Geometry.Distance(p1, p2);
 
             Assert.AreEqual(expected, actual);
@@ -82,23 +82,15 @@ namespace ProjectEuler.ToolboxTests
         [Test]
         public void BigRationalPointConstructor()
         {
-            var p = new Point2DBigRational(1, 2);
+            var p = new Point2<BigRational>(1, 2);
 
             Assert.IsNotNull(p);
         }
 
         [Test]
-        public void BigRationalPointConstructorFromVector()
+        public void Point3()
         {
-            var p = new Point2DBigRational(new Vector(1, 2));
-
-            Assert.IsNotNull(p);
-        }
-
-        [Test]
-        public void Point3D()
-        {
-            var actual = new Point3DLong(1, 2, 3);
+            var actual = new Point3<long>(1, 2, 3);
 
             Assert.AreEqual(1, actual.X);
             Assert.AreEqual(2, actual.Y);
@@ -106,19 +98,19 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
-        public void BigRationalSquare2D()
+        public void BigRationalSquare2()
         {
             var expected = "((INF, INF), (INF, INF), (INF, INF), (INF, INF))";
-            var actual = new Polygon2DBigRational().ToString();
+            var actual = new Polygon2<BigRational>(default(Point2<BigRational>), default(Point2<BigRational>), default(Point2<BigRational>), default(Point2<BigRational>)).ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void BigRationalPoint2D()
+        public void BigRationalPoint2()
         {
             var expected = "(INF, INF)";
-            var actual = new Point2DBigRational().ToString();
+            var actual = new Point2<BigRational>().ToString();
 
             Assert.AreEqual(expected, actual);
         }
