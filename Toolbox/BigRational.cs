@@ -26,7 +26,7 @@ namespace ProjectEuler.Toolbox
 
         public bool IsOne { get { return Numerator == Denominator; } }
         public bool IsZero { get { return Numerator == 0; } }
-        public int Sign { get { return Numerator.Sign * Denominator.Sign; } }
+        public int Sign { get { return Numerator.Sign; } }
 
         public BigRational(BigInteger i)
             : this()
@@ -44,6 +44,11 @@ namespace ProjectEuler.Toolbox
             }
 
             var gcd = BigInteger.GreatestCommonDivisor(numerator, denominator);
+            
+            if (denominator.Sign < 0)
+            {
+                gcd = BigInteger.Negate(gcd);
+            }
 
             Numerator = numerator / gcd;
             Denominator = denominator / gcd;
