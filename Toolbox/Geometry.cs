@@ -170,7 +170,7 @@ namespace ProjectEuler.Toolbox
         }
     }
 
-    public struct Point2<T>
+    public struct Point2<T> : IEquatable<Point2<T>>
     {
         public T X { get; private set; }
         public T Y { get; private set; }
@@ -186,9 +186,34 @@ namespace ProjectEuler.Toolbox
         {
             return string.Format("({0}, {1})", X, Y);
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Point2<T> && Equals((Point2<T>)obj);
+        }
+
+        public bool Equals(Point2<T> p)
+        {
+            return X.Equals(p.X) && Y.Equals(p.Y);
+        }
+
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() ^ Y.GetHashCode();
+        }
+
+        public static bool operator ==(Point2<T> left, Point2<T> right)
+        {
+            return left.X.Equals(right.X) && left.Y.Equals(right.Y);
+        }
+
+        public static bool operator !=(Point2<T> left, Point2<T> right)
+        {
+            return !left.X.Equals(right.X) || !left.Y.Equals(right.Y);
+        }
     }
 
-    public struct Point3<T>
+    public struct Point3<T> : IEquatable<Point3<T>>
     {
         public T X { get; private set; }
         public T Y { get; private set; }
@@ -206,35 +231,60 @@ namespace ProjectEuler.Toolbox
         {
             return string.Format("({0}, {1}, {2})", X, Y, Z);
         }
-    }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Point3<T> && Equals((Point3<T>)obj);
+        }
+
+        public bool Equals(Point3<T> p)
+        {
+            return X.Equals(p.X) && Y.Equals(p.Y) && Z.Equals(p.Z);
+        }
+
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+        }
+
+        public static bool operator ==(Point3<T> left, Point3<T> right)
+        {
+            return left.X.Equals(right.X) && left.Y.Equals(right.Y) && left.Z.Equals(right.Z);
+        }
+
+        public static bool operator !=(Point3<T> left, Point3<T> right)
+        {
+            return !left.X.Equals(right.X) || !left.Y.Equals(right.Y) || !left.Z.Equals(right.Z);
+        }
+    }
 
     public struct Segment
     {
-        public Point2<BigRational> P0;
         public Point2<BigRational> P1;
+        public Point2<BigRational> P2;
 
-        public Segment(Point2<BigRational> p0, Point2<BigRational> p1)
+        public Segment(Point2<BigRational> p1, Point2<BigRational> p2)
         {
-            P0 = p0;
             P1 = p1;
+            P2 = p2;
         }
 
         public bool Intersects(Segment s, out Point2<BigRational> p)
         {
             p = default(Point2<BigRational>);
 
-            var d = (P0.X - P1.X) * (s.P0.Y - s.P1.Y) - (P0.Y - P1.Y) * (s.P0.X - s.P1.X);
+            var d = (P1.X - P2.X) * (s.P1.Y - s.P2.Y) - (P1.Y - P2.Y) * (s.P1.X - s.P2.X);
 
             if (d != 0)
             {
-                var x = ((P0.X * P1.Y - P0.Y * P1.X) * (s.P0.X - s.P1.X) - (P0.X - P1.X) * (s.P0.X * s.P1.Y - s.P0.Y * s.P1.X)) / d;
-                var y = ((P0.X * P1.Y - P0.Y * P1.X) * (s.P0.Y - s.P1.Y) - (P0.Y - P1.Y) * (s.P0.X * s.P1.Y - s.P0.Y * s.P1.X)) / d;
+                var x = ((P1.X * P2.Y - P1.Y * P2.X) * (s.P1.X - s.P2.X) - (P1.X - P2.X) * (s.P1.X * s.P2.Y - s.P1.Y * s.P2.X)) / d;
+                var y = ((P1.X * P2.Y - P1.Y * P2.X) * (s.P1.Y - s.P2.Y) - (P1.Y - P2.Y) * (s.P1.X * s.P2.Y - s.P1.Y * s.P2.X)) / d;
 
                 var t = new Point2<BigRational>(x, y);
 
-                if (((P0.X < t.X && t.X < P1.X) || (P1.X < t.X && t.X < P0.X)) && ((s.P0.X < t.X && t.X < s.P1.X) || (s.P1.X < t.X && t.X < s.P0.X)) &&
-                    ((P0.Y < t.Y && t.Y < P1.Y) || (P1.Y < t.Y && t.Y < P0.Y)) && ((s.P0.Y < t.Y && t.Y < s.P1.Y) || (s.P1.Y < t.Y && t.Y < s.P0.Y)))
+                if (((P1.X <= t.X && t.X <= P2.X) || (P2.X <= t.X && t.X <= P1.X)) && ((s.P1.X <= t.X && t.X <= s.P2.X) || (s.P2.X <= t.X && t.X <= s.P1.X)) &&
+                    ((P1.Y <= t.Y && t.Y <= P2.Y) || (P2.Y <= t.Y && t.Y <= P1.Y)) && ((s.P1.Y <= t.Y && t.Y <= s.P2.Y) || (s.P2.Y <= t.Y && t.Y <= s.P1.Y)) &&
+                    P1 != t && P2 != t && s.P1 != t && s.P2 != t)
                 {
                     p = t;
 
