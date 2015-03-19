@@ -148,28 +148,6 @@ namespace ProjectEuler.Toolbox
         }
     }
 
-    public struct Polygon2<T>
-    {
-        public Point2<T> P1 { get; private set; }
-        public Point2<T> P2 { get; private set; }
-        public Point2<T> P3 { get; private set; }
-        public Point2<T> P4 { get; private set; }
-
-        public Polygon2(Point2<T> p1, Point2<T> p2, Point2<T> p3, Point2<T> p4)
-            : this()
-        {
-            P1 = p1;
-            P2 = p2;
-            P3 = p3;
-            P4 = p4;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("({0}, {1}, {2}, {3})", P1, P2, P3, P4);
-        }
-    }
-
     public struct Point2<T> : IEquatable<Point2<T>>
     {
         public T X { get; private set; }
@@ -258,20 +236,45 @@ namespace ProjectEuler.Toolbox
         }
     }
 
-    public struct Segment
+    public struct Line2
     {
-        public Point2<BigRational> P1;
-        public Point2<BigRational> P2;
+        public Point2<double> P1 { get; private set; }
+        public Point2<double> P2 { get; private set; }
 
-        public Segment(Point2<BigRational> p1, Point2<BigRational> p2)
+        public Line2(Point2<double> p1, Point2<double> p2)
+            : this()
         {
             P1 = p1;
             P2 = p2;
         }
 
-        public bool Intersects(Segment s, out Point2<BigRational> p)
+        public Line2(Point2<double> p1, double m)
+            : this()
         {
-            p = default(Point2<BigRational>);
+            P1 = p1;
+            P2 = new Point2<double>(0, Intercept(p1, m));
+
+            if (P1 == P2) throw new ArgumentOutOfRangeException("Point is Y intercept");
+        }
+
+        public double Slope()
+        {
+            return (P2.Y - P1.Y) / (P2.X - P1.X);
+        }
+
+        public double Intercept()
+        {
+            return P1.Y - Slope() * P1.X;
+        }
+
+        private double Intercept(Point2<double> p, double m)
+        {
+            return p.Y - m * p.X;
+        }
+        
+        public bool Intersects(Line2 s, out Point2<double> p)
+        {
+            p = default(Point2<double>);
 
             var d = (P1.X - P2.X) * (s.P1.Y - s.P2.Y) - (P1.Y - P2.Y) * (s.P1.X - s.P2.X);
 
@@ -280,7 +283,7 @@ namespace ProjectEuler.Toolbox
                 var x = ((P1.X * P2.Y - P1.Y * P2.X) * (s.P1.X - s.P2.X) - (P1.X - P2.X) * (s.P1.X * s.P2.Y - s.P1.Y * s.P2.X)) / d;
                 var y = ((P1.X * P2.Y - P1.Y * P2.X) * (s.P1.Y - s.P2.Y) - (P1.Y - P2.Y) * (s.P1.X * s.P2.Y - s.P1.Y * s.P2.X)) / d;
 
-                var t = new Point2<BigRational>(x, y);
+                var t = new Point2<double>(x, y);
 
                 if (((P1.X <= t.X && t.X <= P2.X) || (P2.X <= t.X && t.X <= P1.X)) && ((s.P1.X <= t.X && t.X <= s.P2.X) || (s.P2.X <= t.X && t.X <= s.P1.X)) &&
                     ((P1.Y <= t.Y && t.Y <= P2.Y) || (P2.Y <= t.Y && t.Y <= P1.Y)) && ((s.P1.Y <= t.Y && t.Y <= s.P2.Y) || (s.P2.Y <= t.Y && t.Y <= s.P1.Y)) &&
@@ -293,6 +296,62 @@ namespace ProjectEuler.Toolbox
             }
 
             return false;
+        }
+
+        public Point2<double> ReflectPoint(Point2<double> p)
+        {
+            var m = Slope();
+            var c = Intercept();
+            var d = (p.X + (p.Y - c) * m) / (1 + m * m);
+
+            return new Point2<double>(2 * d - p.X, 2 * d * m - p.Y + 2 * c);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("({0}, {1})", P1, P2);
+        }
+    }
+
+    public struct Triangle2<T>
+    {
+        public Point2<T> P1 { get; private set; }
+        public Point2<T> P2 { get; private set; }
+        public Point2<T> P3 { get; private set; }
+
+        public Triangle2(Point2<T> p1, Point2<T> p2, Point2<T> p3)
+            : this()
+        {
+            P1 = p1;
+            P2 = p2;
+            P3 = p3;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("({0}, {1}, {2})", P1, P2, P3);
+        }
+    }
+
+    public struct Polygon2<T>
+    {
+        public Point2<T> P1 { get; private set; }
+        public Point2<T> P2 { get; private set; }
+        public Point2<T> P3 { get; private set; }
+        public Point2<T> P4 { get; private set; }
+
+        public Polygon2(Point2<T> p1, Point2<T> p2, Point2<T> p3, Point2<T> p4)
+            : this()
+        {
+            P1 = p1;
+            P2 = p2;
+            P3 = p3;
+            P4 = p4;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("({0}, {1}, {2}, {3})", P1, P2, P3, P4);
         }
     }
 }

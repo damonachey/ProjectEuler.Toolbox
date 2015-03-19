@@ -78,6 +78,7 @@
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Sudoku.cs" />
     <Compile Include="Totient.cs" />
+    <Compile Include="TupleExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
