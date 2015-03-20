@@ -344,7 +344,7 @@ namespace ProjectEuler.Toolbox
         }
 
         /// <summary>
-        /// Enumerable ForEach because I'm that lazy
+        /// Enumerable ForAll
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source">The source.</param>
