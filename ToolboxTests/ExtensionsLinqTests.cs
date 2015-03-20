@@ -137,20 +137,20 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
-        public void ForEach()
+        public void ForAll()
         {
             var expected = Enumerable.Range(1, 10).ToList();
             var actual = new List<int>();
 
-            Enumerable.Range(0, 10).ForEach(i => actual.Add(i + 1)).ToList();
+            Enumerable.Range(0, 10).ForAll(i => actual.Add(i + 1));
 
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
         [Test]
-        public void ForEachArgumentNull()
+        public void ForAllArgumentNull()
         {
-            Assert.Throws<ArgumentNullException>(() => Enumerable.Range(1, 2).ForEach(null).ToList());
+            Assert.Throws<ArgumentNullException>(() => Enumerable.Range(1, 2).ForAll(null));
         }
 
         [Test]
