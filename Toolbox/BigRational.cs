@@ -179,8 +179,7 @@ namespace ProjectEuler.Toolbox
                 negativeNumber = true;
             }
 
-            var sep = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-            var decSeparator = sep.ToCharArray()[0];
+            var decSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
 
             var exponentParts = str.Split('E');
             var decimalParts = exponentParts[0].Split(decSeparator);
@@ -208,7 +207,7 @@ namespace ProjectEuler.Toolbox
                 result =
                     "0" +
                     decSeparator +
-                    new string('0', Math.Abs(exponentValue - decimalParts[0].Length)) +
+                    new string('0', Math.Abs(exponentValue + decimalParts[0].Length)) +
                     newNumber;
 
                 result = result.TrimEnd('0');

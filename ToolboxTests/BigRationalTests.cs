@@ -76,6 +76,17 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
+        public void ConstructorFromDoubleENotation()
+        {
+            var expectedNumerator = new BigInteger(621);
+            var expectedDenominator = new BigInteger(10000000000000);
+            var actual = new BigRational(6.21e-11);
+
+            Assert.AreEqual(expectedNumerator, actual.Numerator);
+            Assert.AreEqual(expectedDenominator, actual.Denominator);
+        }
+
+        [Test]
         public void ConstructorFromDecimal()
         {
             var expectedNumerator = new BigInteger(1);
@@ -564,6 +575,15 @@ namespace ProjectEuler.ToolboxTests
         {
             var expected = 0.5;
             var actual = (double)new BigRational(1, 2);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void op_ExplicitDoubleENotation()
+        {
+            var expected = 6.21e-11;
+            var actual = (double)new BigRational(621, 10000000000000);
 
             Assert.AreEqual(expected, actual);
         }
