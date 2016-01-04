@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ProjectEuler.Toolbox
@@ -117,12 +116,9 @@ namespace ProjectEuler.Toolbox
             }
         }
 
-        private static readonly int ExpectedSum = 45;
+        private static int ExpectedSum { get; } = 45;
 
-        private static bool CheckAllSums(int[,] grid)
-        {
-            return CheckColSums(grid) && CheckRowSums(grid) && CheckBoxSums(grid);
-        }
+        private static bool CheckAllSums(int[,] grid) => CheckColSums(grid) && CheckRowSums(grid) && CheckBoxSums(grid);
 
         private static bool CheckColSums(int[,] grid)
         {

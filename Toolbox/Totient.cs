@@ -8,11 +8,10 @@ namespace ProjectEuler.Toolbox
     {
         private int[] _smallestFactors;
         private int _lastSmallestFactor;
-        private readonly object _smallestFactorsLock;
+        private object _smallestFactorsLock { get; } = new object();
 
         public Totient()
         {
-            _smallestFactorsLock = new object();
         }
 
         public Totient(int max)

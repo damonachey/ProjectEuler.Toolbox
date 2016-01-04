@@ -7,15 +7,9 @@ namespace ProjectEuler.Toolbox
 {
     public static class Combinatorics
     {
-        public static BigInteger AnagramCount(IEnumerable<int> m)
-        {
-            return MathLibrary.Factorial(m.Aggregate((a, v) => a + v)) / m.Aggregate(BigInteger.One, (a, v) => a * MathLibrary.Factorial(v));
-        }
+        public static BigInteger AnagramCount(IEnumerable<int> m) => MathLibrary.Factorial(m.Aggregate((a, v) => a + v)) / m.Aggregate(BigInteger.One, (a, v) => a * MathLibrary.Factorial(v));
 
-        public static BigInteger CircularPermutationCount(long n)
-        {
-            return MathLibrary.Factorial(n - 1);
-        }
+        public static BigInteger CircularPermutationCount(long n) => MathLibrary.Factorial(n - 1);
 
         /// <summary>
         /// Compute the number of combinations nCk.
@@ -39,11 +33,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="s"></param>
         /// <param name="k"></param>
         /// <returns></returns>
-        public static IEnumerable<string> Combinations(this string s, int k)
-        {
-            return Combinations(s.ToCharArray(), k)
-                .Select(c => String.Join("", c));
-        }
+        public static IEnumerable<string> Combinations(this string s, int k) => Combinations(s.ToCharArray(), k).Select(c => string.Join("", c));
 
         /// <summary>
         /// Generate all combinations of s of k size
@@ -250,12 +240,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="s1"></param>
         /// <param name="s2"></param>
         /// <returns></returns>
-        public static bool IsPermutation(this string s1, string s2)
-        {
-            return
-                s1.Length == s2.Length &&
-                s1.OrderBy(c => c).SequenceEqual(s2.OrderBy(c2 => c2));
-        }
+        public static bool IsPermutation(this string s1, string s2) => s1.Length == s2.Length && s1.OrderBy(c => c).SequenceEqual(s2.OrderBy(c2 => c2));
 
         /// <summary>
         /// Compute the number of permutations nPk.

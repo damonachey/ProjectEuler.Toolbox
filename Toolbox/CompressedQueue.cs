@@ -11,10 +11,10 @@ namespace ProjectEuler.Toolbox
     [DebuggerDisplay("Count = {Count}")]
     public class CompressedQueue
     {
-        public static int CompressThreshold { get { return 1000000; } }
-        private readonly Queue<long> readQueue = new Queue<long>();
-        private readonly Queue<long> writeQueue = new Queue<long>();
-        private readonly Queue<byte[]> bufferQueue = new Queue<byte[]>();
+        public static int CompressThreshold { get; } = 1000000; 
+        private Queue<long> readQueue { get; } = new Queue<long>();
+        private Queue<long> writeQueue { get; } = new Queue<long>();
+        private Queue<byte[]> bufferQueue { get; } = new Queue<byte[]>();
 
         public int Count { get; private set; }
 

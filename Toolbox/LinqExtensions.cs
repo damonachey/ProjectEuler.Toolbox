@@ -144,20 +144,14 @@ namespace ProjectEuler.Toolbox
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static BigInteger Sum(this IEnumerable<BigInteger> list)
-        {
-            return list.Aggregate(BigInteger.Zero, (current, i) => current + i);
-        }
-        
+        public static BigInteger Sum(this IEnumerable<BigInteger> list) => list.Aggregate(BigInteger.Zero, (current, i) => current + i);
+
         /// <summary>
         /// Computes the sum of a sequence of BigRational value.
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static BigRational Sum(this IEnumerable<BigRational> list)
-        {
-            return list.Aggregate(BigRational.Zero, (current, i) => current + i);
-        }
+        public static BigRational Sum(this IEnumerable<BigRational> list) => list.Aggregate(BigRational.Zero, (current, i) => current + i);
 
         /// <summary>
         /// Enumerates over all items in the input, skipping over the item with the specified offset.

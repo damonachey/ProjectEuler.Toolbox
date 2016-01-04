@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Numerics;
-using System.Windows;
 using Microsoft.Xna.Framework;
 
 namespace ProjectEuler.Toolbox
@@ -68,10 +65,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="b"></param>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static bool IsPointInTriangle(Vector3 p, Vector3 a, Vector3 b, Vector3 c)
-        {
-            return SameSide(p, a, b, c) && SameSide(p, b, a, c) && SameSide(p, c, a, b);
-        }
+        public static bool IsPointInTriangle(Vector3 p, Vector3 a, Vector3 b, Vector3 c) => SameSide(p, a, b, c) && SameSide(p, b, a, c) && SameSide(p, c, a, b);
 
         /// <summary>
         /// Generate Pythagorean triples with a sum no greater than maxPerimeter, answers are NOT unique but a &lt; b &lt; c.
@@ -150,8 +144,8 @@ namespace ProjectEuler.Toolbox
 
     public struct Point2<T> : IEquatable<Point2<T>>
     {
-        public T X { get; private set; }
-        public T Y { get; private set; }
+        public T X { get; }
+        public T Y { get; }
 
         public Point2(T x, T y)
             : this()
@@ -160,42 +154,24 @@ namespace ProjectEuler.Toolbox
             Y = y;
         }
 
-        public override string ToString()
-        {
-            return string.Format("({0}, {1})", X, Y);
-        }
+        public override string ToString() => $"({X}, {Y})";
 
-        public override bool Equals(object obj)
-        {
-            return obj is Point2<T> && Equals((Point2<T>)obj);
-        }
+        public override bool Equals(object obj) => obj is Point2<T> && Equals((Point2<T>)obj);
 
-        public bool Equals(Point2<T> p)
-        {
-            return X.Equals(p.X) && Y.Equals(p.Y);
-        }
+        public bool Equals(Point2<T> p) => X.Equals(p.X) && Y.Equals(p.Y);
 
-        public override int GetHashCode()
-        {
-            return X.GetHashCode() ^ Y.GetHashCode();
-        }
+        public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode();
 
-        public static bool operator ==(Point2<T> left, Point2<T> right)
-        {
-            return left.X.Equals(right.X) && left.Y.Equals(right.Y);
-        }
+        public static bool operator ==(Point2<T> left, Point2<T> right) => left.X.Equals(right.X) && left.Y.Equals(right.Y);
 
-        public static bool operator !=(Point2<T> left, Point2<T> right)
-        {
-            return !left.X.Equals(right.X) || !left.Y.Equals(right.Y);
-        }
+        public static bool operator !=(Point2<T> left, Point2<T> right) => !left.X.Equals(right.X) || !left.Y.Equals(right.Y);
     }
 
     public struct Point3<T> : IEquatable<Point3<T>>
     {
-        public T X { get; private set; }
-        public T Y { get; private set; }
-        public T Z { get; private set; }
+        public T X { get; }
+        public T Y { get; }
+        public T Z { get; }
 
         public Point3(T x, T y, T z)
             : this()
@@ -205,41 +181,23 @@ namespace ProjectEuler.Toolbox
             Z = z;
         }
 
-        public override string ToString()
-        {
-            return string.Format("({0}, {1}, {2})", X, Y, Z);
-        }
+        public override string ToString() => $"({X}, {Y}, {Z})";
 
-        public override bool Equals(object obj)
-        {
-            return obj is Point3<T> && Equals((Point3<T>)obj);
-        }
+        public override bool Equals(object obj) => obj is Point3<T> && Equals((Point3<T>)obj);
 
-        public bool Equals(Point3<T> p)
-        {
-            return X.Equals(p.X) && Y.Equals(p.Y) && Z.Equals(p.Z);
-        }
+        public bool Equals(Point3<T> p) => X.Equals(p.X) && Y.Equals(p.Y) && Z.Equals(p.Z);
 
-        public override int GetHashCode()
-        {
-            return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
-        }
+        public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
 
-        public static bool operator ==(Point3<T> left, Point3<T> right)
-        {
-            return left.X.Equals(right.X) && left.Y.Equals(right.Y) && left.Z.Equals(right.Z);
-        }
+        public static bool operator ==(Point3<T> left, Point3<T> right) => left.X.Equals(right.X) && left.Y.Equals(right.Y) && left.Z.Equals(right.Z);
 
-        public static bool operator !=(Point3<T> left, Point3<T> right)
-        {
-            return !left.X.Equals(right.X) || !left.Y.Equals(right.Y) || !left.Z.Equals(right.Z);
-        }
+        public static bool operator !=(Point3<T> left, Point3<T> right) => !left.X.Equals(right.X) || !left.Y.Equals(right.Y) || !left.Z.Equals(right.Z);
     }
 
     public struct Line2
     {
-        public Point2<double> P1 { get; private set; }
-        public Point2<double> P2 { get; private set; }
+        public Point2<double> P1 { get; }
+        public Point2<double> P2 { get; }
 
         public Line2(Point2<double> p1, Point2<double> p2)
             : this()
@@ -257,21 +215,12 @@ namespace ProjectEuler.Toolbox
             if (P1 == P2) throw new ArgumentOutOfRangeException("Point is Y intercept");
         }
 
-        public double Slope()
-        {
-            return (P2.Y - P1.Y) / (P2.X - P1.X);
-        }
+        public double Slope() => (P2.Y - P1.Y) / (P2.X - P1.X);
 
-        public double Intercept()
-        {
-            return P1.Y - Slope() * P1.X;
-        }
+        public double Intercept() => P1.Y - Slope() * P1.X;
 
-        private double Intercept(Point2<double> p, double m)
-        {
-            return p.Y - m * p.X;
-        }
-        
+        private double Intercept(Point2<double> p, double m) => p.Y - m * p.X;
+
         public bool Intersects(Line2 s, out Point2<double> p)
         {
             p = default(Point2<double>);
@@ -307,17 +256,14 @@ namespace ProjectEuler.Toolbox
             return new Point2<double>(2 * d - p.X, 2 * d * m - p.Y + 2 * c);
         }
 
-        public override string ToString()
-        {
-            return string.Format("({0}, {1})", P1, P2);
-        }
+        public override string ToString() => $"({P1}, {P2})";
     }
 
     public struct Triangle2<T>
     {
-        public Point2<T> P1 { get; private set; }
-        public Point2<T> P2 { get; private set; }
-        public Point2<T> P3 { get; private set; }
+        public Point2<T> P1 { get; }
+        public Point2<T> P2 { get; }
+        public Point2<T> P3 { get; }
 
         public Triangle2(Point2<T> p1, Point2<T> p2, Point2<T> p3)
             : this()
@@ -327,18 +273,15 @@ namespace ProjectEuler.Toolbox
             P3 = p3;
         }
 
-        public override string ToString()
-        {
-            return string.Format("({0}, {1}, {2})", P1, P2, P3);
-        }
+        public override string ToString() => $"({P1}, {P2}, {P3})";
     }
 
     public struct Polygon2<T>
     {
-        public Point2<T> P1 { get; private set; }
-        public Point2<T> P2 { get; private set; }
-        public Point2<T> P3 { get; private set; }
-        public Point2<T> P4 { get; private set; }
+        public Point2<T> P1 { get; }
+        public Point2<T> P2 { get; }
+        public Point2<T> P3 { get; }
+        public Point2<T> P4 { get; }
 
         public Polygon2(Point2<T> p1, Point2<T> p2, Point2<T> p3, Point2<T> p4)
             : this()
@@ -349,9 +292,6 @@ namespace ProjectEuler.Toolbox
             P4 = p4;
         }
 
-        public override string ToString()
-        {
-            return string.Format("({0}, {1}, {2}, {3})", P1, P2, P3, P4);
-        }
+        public override string ToString() => $"({P1}, {P2}, {P3}, {P4})";
     }
 }

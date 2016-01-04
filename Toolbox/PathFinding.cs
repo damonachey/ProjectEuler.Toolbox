@@ -14,10 +14,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="start"></param>
         /// <param name="goal"></param>
         /// <returns></returns>
-        public static long DijkstraMinPathWeight(this long[,] grid, Coordinate start, Coordinate goal)
-        {
-            return grid.DijkstraMinPathWeights(start, goal, Neighbors8)[goal.Row, goal.Col];
-        }
+        public static long DijkstraMinPathWeight(this long[,] grid, Coordinate start, Coordinate goal) => grid.DijkstraMinPathWeights(start, goal, Neighbors8)[goal.Row, goal.Col];
 
         // Dijkstra
         // http://en.wikipedia.org/wiki/Dijkstra's_algorithm
@@ -29,10 +26,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="goal"></param>
         /// <param name="neighbors"> </param>
         /// <returns></returns>
-        public static long DijkstraMinPathWeight(this long[,] grid, Coordinate start, Coordinate goal, Func<long[,], Coordinate, IEnumerable<Coordinate>> neighbors)
-        {
-            return grid.DijkstraMinPathWeights(start, goal, neighbors)[goal.Row, goal.Col];
-        }
+        public static long DijkstraMinPathWeight(this long[,] grid, Coordinate start, Coordinate goal, Func<long[,], Coordinate, IEnumerable<Coordinate>> neighbors) => grid.DijkstraMinPathWeights(start, goal, neighbors)[goal.Row, goal.Col];
 
         /// <summary>
         /// Solves the single-source shortest path problem for a graph with nonnegative edge path costs and returns the min-weight sum to each point in the grid.
@@ -40,10 +34,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="grid"></param>
         /// <param name="start"></param>
         /// <returns></returns>
-        public static long[,] DijkstraMinPathWeights(this long[,] grid, Coordinate start)
-        {
-            return grid.DijkstraMinPathWeights(start, null, Neighbors8);
-        }
+        public static long[,] DijkstraMinPathWeights(this long[,] grid, Coordinate start) => grid.DijkstraMinPathWeights(start, null, Neighbors8);
 
         /// <summary>
         /// Solves the single-source shortest path problem for a graph with nonnegative edge path costs and returns the min-weight sum to each point in the grid using a custom neighbor function.
@@ -52,10 +43,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="start"></param>
         /// <param name="neighbors"></param>
         /// <returns></returns>
-        public static long[,] DijkstraMinPathWeights(this long[,] grid, Coordinate start, Func<long[,], Coordinate, IEnumerable<Coordinate>> neighbors)
-        {
-            return grid.DijkstraMinPathWeights(start, null, neighbors);
-        }
+        public static long[,] DijkstraMinPathWeights(this long[,] grid, Coordinate start, Func<long[,], Coordinate, IEnumerable<Coordinate>> neighbors) => grid.DijkstraMinPathWeights(start, null, neighbors);
 
         /// <summary>
         /// Solves the single-source shortest path problem for a graph with nonnegative edge path costs and returns the min-weight sum to the goal
@@ -128,10 +116,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="start"></param>
         /// <param name="goal"></param>
         /// <returns></returns>
-        public static IEnumerable<Coordinate> Astar(this long[,] grid, Coordinate start, Coordinate goal)
-        {
-            return grid.Astar(start, goal, (g, x) => g.Neighbors8(x));
-        }
+        public static IEnumerable<Coordinate> Astar(this long[,] grid, Coordinate start, Coordinate goal) => grid.Astar(start, goal, (g, x) => g.Neighbors8(x));
 
         // A*
         // http://en.wikipedia.org/wiki/A*_search_algorithm
@@ -319,25 +304,16 @@ namespace ProjectEuler.Toolbox
         /// </summary>
         /// <param name="grid"></param>
         /// <returns></returns>
-        public static Coordinate UpperLeft<T>(this T[,] grid)
-        {
-            return new Coordinate(0, 0);
-        }
+        public static Coordinate UpperLeft<T>(this T[,] grid) => new Coordinate(0, 0);
 
         /// <summary>
         /// Get the lower right coordinate of a grid.
         /// </summary>
         /// <param name="grid"></param>
         /// <returns></returns>
-        public static Coordinate LowerRight<T>(this T[,] grid)
-        {
-            return new Coordinate(grid.GetLength(0) - 1, grid.GetLength(1) - 1);
-        }
+        public static Coordinate LowerRight<T>(this T[,] grid) => new Coordinate(grid.GetLength(0) - 1, grid.GetLength(1) - 1);
 
-        private static long DistanceBetween(this long[,] grid, Coordinate square1, Coordinate square2)
-        {
-            return grid[square2.Row, square2.Col];
-        }
+        private static long DistanceBetween(this long[,] grid, Coordinate square1, Coordinate square2) => grid[square2.Row, square2.Col];
 
         private static long DistanceEstimate(this long[,] grid, Coordinate current, Coordinate goal)
         {
@@ -364,8 +340,8 @@ namespace ProjectEuler.Toolbox
 
         public class Coordinate : IEquatable<Coordinate>
         {
-            public int Row { get; private set; }
-            public int Col { get; private set; }
+            public int Row { get; }
+            public int Col { get; }
 
             public Coordinate(int row, int col)
             {
@@ -399,15 +375,9 @@ namespace ProjectEuler.Toolbox
                 return Row == c.Row && Col == c.Col;
             }
 
-            public override int GetHashCode()
-            {
-                return Row ^ Col;
-            }
+            public override int GetHashCode() => Row ^ Col;
 
-            public override string ToString()
-            {
-                return string.Format("({0}, {1})", Row, Col);
-            }
+            public override string ToString() => $"({Row}, {Col})";
         }
     }
 }

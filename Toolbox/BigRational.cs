@@ -9,24 +9,18 @@ namespace ProjectEuler.Toolbox
 {
     public struct BigRational : IFormattable, IComparable, IComparable<BigRational>, IEquatable<BigRational>
     {
-        public BigInteger Numerator { get; private set; }
-        public BigInteger Denominator { get; private set; }
+        public BigInteger Numerator { get; }
+        public BigInteger Denominator { get; }
 
-        private static readonly BigRational zero = new BigRational(0);
-        private static readonly BigRational one = new BigRational(1);
-        private static readonly BigRational minusOne = new BigRational(-1);
-        private static readonly BigRational pi = new BigRational(BigInteger.Parse("31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"), BigInteger.Pow(10, 100));
-        private static readonly BigRational e = new BigRational(BigInteger.Parse("27182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274"), BigInteger.Pow(10, 100));
-        
-        public static BigRational Zero { get { return zero; } }
-        public static BigRational One { get { return one; } }
-        public static BigRational MinusOne { get { return minusOne; } }
-        public static BigRational PI { get { return pi; } }
-        public static BigRational E { get { return e; } }
+        public static BigRational Zero { get; } = new BigRational(0);
+        public static BigRational One { get; } = new BigRational(1);
+        public static BigRational MinusOne { get; } = new BigRational(-1);
+        public static BigRational PI { get; } = new BigRational(BigInteger.Parse("31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"), BigInteger.Pow(10, 100));
+        public static BigRational E { get; } = new BigRational(BigInteger.Parse("27182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274"), BigInteger.Pow(10, 100));
 
-        public bool IsOne { get { return Numerator == Denominator; } }
-        public bool IsZero { get { return Numerator == 0; } }
-        public int Sign { get { return Numerator.Sign; } }
+        public bool IsOne => Numerator == Denominator;
+        public bool IsZero => Numerator == 0;
+        public int Sign => Numerator.Sign;
 
         public BigRational(BigInteger i)
             : this()
@@ -44,7 +38,7 @@ namespace ProjectEuler.Toolbox
             }
 
             var gcd = BigInteger.GreatestCommonDivisor(numerator, denominator);
-            
+
             if (denominator.Sign < 0)
             {
                 gcd = BigInteger.Negate(gcd);
@@ -61,90 +55,39 @@ namespace ProjectEuler.Toolbox
             Denominator = value.Denominator;
         }
 
-        public static BigRational operator -(BigRational value)
-        {
-            return new BigRational(-value.Numerator, value.Denominator);
-        }
+        public static BigRational operator -(BigRational value) => new BigRational(-value.Numerator, value.Denominator);
 
-        public static BigRational operator -(BigRational left, BigRational right)
-        {
-            return new BigRational(left.Numerator * right.Denominator - right.Numerator * left.Denominator, left.Denominator * right.Denominator);
-        }
+        public static BigRational operator -(BigRational left, BigRational right) => new BigRational(left.Numerator * right.Denominator - right.Numerator * left.Denominator, left.Denominator * right.Denominator);
 
-        public static BigRational operator --(BigRational value)
-        {
-            return new BigRational(value.Numerator - 1, value.Denominator);
-        }
+        public static BigRational operator --(BigRational value) => new BigRational(value.Numerator - 1, value.Denominator);
 
-        public static bool operator !=(BigRational left, BigRational right)
-        {
-            return left.Numerator * right.Denominator != right.Numerator * left.Denominator;
-        }
+        public static bool operator !=(BigRational left, BigRational right) => left.Numerator * right.Denominator != right.Numerator * left.Denominator;
 
-        public static BigRational operator %(BigRational dividend, BigRational divisor)
-        {
-            return new BigRational((dividend.Numerator * divisor.Denominator) % (dividend.Denominator * divisor.Numerator), dividend.Denominator * divisor.Denominator);
-        }
+        public static BigRational operator %(BigRational dividend, BigRational divisor) => new BigRational((dividend.Numerator * divisor.Denominator) % (dividend.Denominator * divisor.Numerator), dividend.Denominator * divisor.Denominator);
 
-        public static BigRational operator *(BigRational left, BigRational right)
-        {
-            return new BigRational(left.Numerator * right.Numerator, left.Denominator * right.Denominator);
-        }
+        public static BigRational operator *(BigRational left, BigRational right) => new BigRational(left.Numerator * right.Numerator, left.Denominator * right.Denominator);
 
-        public static BigRational operator /(BigRational dividend, BigRational divisor)
-        {
-            return new BigRational(dividend.Numerator * divisor.Denominator, dividend.Denominator * divisor.Numerator);
-        }
+        public static BigRational operator /(BigRational dividend, BigRational divisor) => new BigRational(dividend.Numerator * divisor.Denominator, dividend.Denominator * divisor.Numerator);
 
-        public static BigRational operator +(BigRational left, BigRational right)
-        {
-            return new BigRational(left.Numerator * right.Denominator + right.Numerator * left.Denominator, left.Denominator * right.Denominator);
-        }
+        public static BigRational operator +(BigRational left, BigRational right) => new BigRational(left.Numerator * right.Denominator + right.Numerator * left.Denominator, left.Denominator * right.Denominator);
 
-        public static BigRational operator ++(BigRational value)
-        {
-            return new BigRational(value.Numerator + 1, value.Denominator);
-        }
+        public static BigRational operator ++(BigRational value) => new BigRational(value.Numerator + 1, value.Denominator);
 
-        public static bool operator <(BigRational left, BigRational right)
-        {
-            return left.Numerator * right.Denominator < right.Numerator * left.Denominator;
-        }
+        public static bool operator <(BigRational left, BigRational right) => left.Numerator * right.Denominator < right.Numerator * left.Denominator;
 
-        public static bool operator <=(BigRational left, BigRational right)
-        {
-            return left.Numerator * right.Denominator <= right.Numerator * left.Denominator;
-        }
+        public static bool operator <=(BigRational left, BigRational right) => left.Numerator * right.Denominator <= right.Numerator * left.Denominator;
 
-        public static bool operator ==(BigRational left, BigRational right)
-        {
-            return left.Numerator * right.Denominator == right.Numerator * left.Denominator;
-        }
+        public static bool operator ==(BigRational left, BigRational right) => left.Numerator * right.Denominator == right.Numerator * left.Denominator;
 
-        public static bool operator >(BigRational left, BigRational right)
-        {
-            return left.Numerator * right.Denominator > right.Numerator * left.Denominator;
-        }
+        public static bool operator >(BigRational left, BigRational right) => left.Numerator * right.Denominator > right.Numerator * left.Denominator;
 
-        public static bool operator >=(BigRational left, BigRational right)
-        {
-            return left.Numerator * right.Denominator >= right.Numerator * left.Denominator;
-        }
+        public static bool operator >=(BigRational left, BigRational right) => left.Numerator * right.Denominator >= right.Numerator * left.Denominator;
 
-        public static explicit operator double(BigRational value)
-        {
-            return (double)value.Numerator / (double)value.Denominator;
-        }
+        public static explicit operator double (BigRational value) => (double)value.Numerator / (double)value.Denominator;
 
-        public static explicit operator decimal(BigRational value)
-        {
-            return (decimal)value.Numerator / (decimal)value.Denominator;
-        }
+        public static explicit operator decimal (BigRational value) => (decimal)value.Numerator / (decimal)value.Denominator;
 
-        public static explicit operator BigInteger(BigRational value)
-        {
-            return value.Numerator / value.Denominator;
-        }
+        public static explicit operator BigInteger(BigRational value) => value.Numerator / value.Denominator;
 
         public static implicit operator BigRational(double value)
         {
@@ -198,19 +141,12 @@ namespace ProjectEuler.Toolbox
 
             if (exponentValue > 0)
             {
-                result =
-                    newNumber +
-                    new string('0', Math.Abs(exponentValue - decimalParts[1].Length));
+                result = newNumber + new string('0', Math.Abs(exponentValue - decimalParts[1].Length));
             }
             else // negative exponent
             {
-                result =
-                    "0" +
-                    decSeparator +
-                    new string('0', Math.Abs(exponentValue + decimalParts[0].Length)) +
-                    newNumber;
-
-                result = result.TrimEnd('0');
+                result = ("0" + decSeparator + new string('0', Math.Abs(exponentValue + decimalParts[0].Length)) + newNumber)
+                   .TrimEnd('0');
             }
 
             if (negativeNumber)
@@ -235,50 +171,23 @@ namespace ProjectEuler.Toolbox
             return new BigRational(numerator, denominator);
         }
 
-        public static implicit operator BigRational(long value)
-        {
-            return new BigRational(value);
-        }
+        public static implicit operator BigRational(long value) => new BigRational(value);
 
-        public static implicit operator BigRational(BigInteger value)
-        {
-            return new BigRational(value);
-        }
+        public static implicit operator BigRational(BigInteger value) => new BigRational(value);
 
-        public static BigRational Pow(BigRational value, int exponent)
-        {
-            return new BigRational(BigInteger.Pow(value.Numerator, exponent), BigInteger.Pow(value.Denominator, exponent));
-        }
+        public static BigRational Pow(BigRational value, int exponent) => new BigRational(BigInteger.Pow(value.Numerator, exponent), BigInteger.Pow(value.Denominator, exponent));
 
-        public static double Log(BigRational value)
-        {
-            return BigInteger.Log(value.Numerator) - BigInteger.Log(value.Denominator);
-        }
+        public static double Log(BigRational value) => BigInteger.Log(value.Numerator) - BigInteger.Log(value.Denominator);
 
-        public static double Log10(BigRational value)
-        {
-            return BigInteger.Log10(value.Numerator) - BigInteger.Log10(value.Denominator);
-        }
+        public static double Log10(BigRational value) => BigInteger.Log10(value.Numerator) - BigInteger.Log10(value.Denominator);
 
-        public static BigRational Abs(BigRational value)
-        {
-            return new BigRational(BigInteger.Abs(value.Numerator), value.Denominator);
-        }
+        public static BigRational Abs(BigRational value) => new BigRational(BigInteger.Abs(value.Numerator), value.Denominator);
 
-        public static BigRational Inverse(BigRational value)
-        {
-            return new BigRational(value.Denominator, value.Numerator);
-        }
+        public static BigRational Inverse(BigRational value) => new BigRational(value.Denominator, value.Numerator);
 
-        public static BigRational Max(BigRational left, BigRational right)
-        {
-            return left > right ? left : right;
-        }
+        public static BigRational Max(BigRational left, BigRational right) => left > right ? left : right;
 
-        public static BigRational Min(BigRational left, BigRational right)
-        {
-            return left < right ? left : right;
-        }
+        public static BigRational Min(BigRational left, BigRational right) => left < right ? left : right;
 
         /// <summary>
         /// Square root of the value to the specified precision.
@@ -386,34 +295,26 @@ namespace ProjectEuler.Toolbox
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
-        public static IEnumerable<BigRational> SqrtAsRationals(int n)
-        {
-            return SqrtAsContinuedFraction(n)
-                .ToBigRationals();
-        }
+        public static IEnumerable<BigRational> SqrtAsRationals(int n) => SqrtAsContinuedFraction(n).ToBigRationals();
 
         /// <summary>
         /// Returns the square root of n as a list of continued rationals.
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
-        public static IEnumerable<BigRational> SqrtAsRationals(BigInteger n)
-        {
-            return SqrtAsContinuedFraction(n)
-                .ToBigRationals();
-        }
+        public static IEnumerable<BigRational> SqrtAsRationals(BigInteger n) => SqrtAsContinuedFraction(n).ToBigRationals();
 
         /// <summary>
         /// Gets the whole part of the ratio
         /// </summary>
         /// <returns></returns>
-        public BigInteger GetWholePart() { return BigInteger.Divide(Numerator, Denominator); }
+        public BigInteger GetWholePart() => BigInteger.Divide(Numerator, Denominator);
 
         /// <summary>
         /// Gets the fractional part of the ratio
         /// </summary>
         /// <returns></returns>
-        public BigRational GetFractionPart() { return new BigRational(BigInteger.Remainder(Numerator, Denominator), Denominator); }
+        public BigRational GetFractionPart() => new BigRational(BigInteger.Remainder(Numerator, Denominator), Denominator);
 
         public int CompareTo(object obj)
         {
@@ -425,15 +326,9 @@ namespace ProjectEuler.Toolbox
             throw new ArgumentException("object is not a BigRational");
         }
 
-        public int CompareTo(BigRational other)
-        {
-            return (this - other).Numerator.Sign;
-        }
+        public int CompareTo(BigRational other) => (this - other).Numerator.Sign;
 
-        public override bool Equals(object obj)
-        {
-            return obj is BigRational && Equals((BigRational)obj);
-        }
+        public override bool Equals(object obj) => obj is BigRational && Equals((BigRational)obj);
 
         public bool Equals(BigRational f)
         {
@@ -445,10 +340,7 @@ namespace ProjectEuler.Toolbox
             return Numerator * f.Denominator == f.Numerator * Denominator;
         }
 
-        public override int GetHashCode()
-        {
-            return Numerator.GetHashCode() ^ Denominator.GetHashCode();
-        }
+        public override int GetHashCode() => Numerator.GetHashCode() ^ Denominator.GetHashCode();
 
         public override string ToString()
         {
@@ -462,11 +354,6 @@ namespace ProjectEuler.Toolbox
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            if (formatProvider == null)
-            {
-                formatProvider = CultureInfo.CurrentCulture;
-            }
-
             if (string.IsNullOrEmpty(format))
             {
                 return ToString();
@@ -477,7 +364,7 @@ namespace ProjectEuler.Toolbox
                 return "INF";
             }
 
-            return string.Format(formatProvider, format, Numerator, Denominator);
+            return string.Format(formatProvider ?? CultureInfo.CurrentCulture, format, Numerator, Denominator);
         }
 
         public string ToDecimalString(int precision)

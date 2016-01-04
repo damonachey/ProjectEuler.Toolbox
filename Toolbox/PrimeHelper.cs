@@ -8,8 +8,8 @@ namespace ProjectEuler.Toolbox
 {
     public static class PrimeHelper
     {
-        private const string PrimeFile = @"C:\Users\Damon\OneDrive\Development\Primes32bit.bin";
-        private static readonly Func<long, bool> isPrimeMemoized = n => IsPrime(n);
+        private static string PrimeFile { get; } = @"C:\Users\Damon\OneDrive\Development\Primes32bit.bin";
+        private static Func<long, bool> isPrimeMemoized { get; } = n => IsPrime(n);
 
         static PrimeHelper()
         {
@@ -80,10 +80,7 @@ namespace ProjectEuler.Toolbox
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
-        public static bool IsPrimeMemoized(long n)
-        {
-            return isPrimeMemoized(n);
-        }
+        public static bool IsPrimeMemoized(long n) => isPrimeMemoized(n);
 
         /// <summary>
         /// Enumerates all prime values previously computed

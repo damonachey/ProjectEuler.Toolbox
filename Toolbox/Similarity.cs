@@ -13,8 +13,8 @@ namespace ProjectEuler.Toolbox
         public static int EditDistance<T>(IEnumerable<T> x, IEnumerable<T> y) where T : IEquatable<T>
         {
             // Validate parameters
-            if (x == null) throw new ArgumentNullException("x");
-            if (y == null) throw new ArgumentNullException("y");
+            if (x == null) throw new ArgumentNullException(nameof(x));
+            if (y == null) throw new ArgumentNullException(nameof(y));
 
             // Convert the parameters into IList instances
             // in order to obtain indexing capabilities
@@ -79,8 +79,8 @@ namespace ProjectEuler.Toolbox
         public static int EditDistance(string s, string t)
         {
             // Validate parameters
-            if (s == null) throw new ArgumentNullException("s");
-            if (t == null) throw new ArgumentNullException("t");
+            if (s == null) throw new ArgumentNullException(nameof(s));
+            if (t == null) throw new ArgumentNullException(nameof(t));
 
             var n = s.Length;
             var m = t.Length;
