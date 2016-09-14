@@ -140,6 +140,8 @@ namespace ProjectEuler.Toolbox
 
             return BigRational.Sqrt(dx2 + dy2, 10);
         }
+
+        public static long Side(Point2<long> p1, Point2<long> p2, Point2<long> p3) => (p2.X - p1.X) * (p3.Y - p1.Y) - (p2.Y - p1.Y) * (p3.X - p1.X);
     }
 
     public struct Point2<T> : IEquatable<Point2<T>>
