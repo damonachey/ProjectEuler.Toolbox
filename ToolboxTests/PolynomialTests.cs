@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Windows;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using ProjectEuler.Toolbox;
+using System.Linq;
+using System.Windows;
 
 namespace ProjectEuler.ToolboxTests
 {

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using NUnit.Framework;
+using ProjectEuler.Toolbox;
+using System;
 using System.Linq;
 using System.Numerics;
-using NUnit.Framework;
-using ProjectEuler.Toolbox;
 
 namespace ProjectEuler.ToolboxTests
 {
@@ -271,16 +271,6 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
-        public void op_Decrement()
-        {
-            var expected = new BigRational(1, 3);
-            var actual = new BigRational(2, 3);
-            actual--;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
         public void op_InequalityBigRationalNotEqualRationalTrue()
         {
             var actual = new BigRational(1, 3) != new BigRational(1, 2);
@@ -382,16 +372,6 @@ namespace ProjectEuler.ToolboxTests
             var actual = new BigRational(1, 3) + new BigRational(2, 5);
 
             Assert.AreNotEqual(expected, actual);
-        }
-
-        [Test]
-        public void op_Increment()
-        {
-            var expected = new BigRational(2, 3);
-            var actual = new BigRational(1, 3);
-            actual++;
-
-            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -652,6 +632,42 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
+        public void op_ImplicitDoubleNegativeENotation1()
+        {
+            var expected = new BigRational(-100, 1);
+            var actual = (BigRational)(-1e2);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void op_ImplicitDoubleNegativeENotation2()
+        {
+            var expected = new BigRational(-120, 1);
+            var actual = (BigRational)(-1.2e2);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void op_ImplicitDoubleNegativeENotation3()
+        {
+            var expected = -1.2 * new BigRational(BigInteger.Pow(10, 20), 1);
+            var actual = (BigRational)(-1.2e20);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void op_ImplicitDoubleNegativeENotation4()
+        {
+            var expected = new BigRational(BigInteger.Pow(10, 20), 1);
+            var actual = (BigRational)(1e20);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void op_ImplicitDecimal()
         {
             var expected = new BigRational(1, 2);
@@ -683,6 +699,24 @@ namespace ProjectEuler.ToolboxTests
         {
             var expected = new BigRational(27, 1);
             var actual = BigRational.Pow(new BigRational(3, 1), 3);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Log()
+        {
+            var expected = BigInteger.Log(1) - BigInteger.Log(3);
+            var actual = BigRational.Log(new BigRational(1, 3));
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Log10()
+        {
+            var expected = BigInteger.Log10(1) - BigInteger.Log10(3);
+            var actual = BigRational.Log10(new BigRational(1, 3));
 
             Assert.AreEqual(expected, actual);
         }
@@ -974,7 +1008,7 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
-        public void ToString()
+        public new void ToString()
         {
             var expected = "2/3";
             var actual = new BigRational(2, 3).ToString();

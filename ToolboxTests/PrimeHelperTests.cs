@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Numerics;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using ProjectEuler.Toolbox;
+using System.Linq;
 
 namespace ProjectEuler.ToolboxTests
 {

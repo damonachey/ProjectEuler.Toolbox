@@ -59,8 +59,6 @@ namespace ProjectEuler.Toolbox
 
         public static BigRational operator -(BigRational left, BigRational right) => new BigRational(left.Numerator * right.Denominator - right.Numerator * left.Denominator, left.Denominator * right.Denominator);
 
-        public static BigRational operator --(BigRational value) => new BigRational(value.Numerator - 1, value.Denominator);
-
         public static bool operator !=(BigRational left, BigRational right) => left.Numerator * right.Denominator != right.Numerator * left.Denominator;
 
         public static BigRational operator %(BigRational dividend, BigRational divisor) => new BigRational((dividend.Numerator * divisor.Denominator) % (dividend.Denominator * divisor.Numerator), dividend.Denominator * divisor.Denominator);
@@ -70,8 +68,6 @@ namespace ProjectEuler.Toolbox
         public static BigRational operator /(BigRational dividend, BigRational divisor) => new BigRational(dividend.Numerator * divisor.Denominator, dividend.Denominator * divisor.Numerator);
 
         public static BigRational operator +(BigRational left, BigRational right) => new BigRational(left.Numerator * right.Denominator + right.Numerator * left.Denominator, left.Denominator * right.Denominator);
-
-        public static BigRational operator ++(BigRational value) => new BigRational(value.Numerator + 1, value.Denominator);
 
         public static bool operator <(BigRational left, BigRational right) => left.Numerator * right.Denominator < right.Numerator * left.Denominator;
 
@@ -98,7 +94,7 @@ namespace ProjectEuler.Toolbox
 
             dstr = dstr.Replace(".", "");
 
-            var denominator = BigInteger.Pow(10, dlen - dot);
+            var denominator = BigInteger.Pow(10, dot == -1 ? 1 : dlen - dot);
             var numerator = 10 * BigInteger.Parse(dstr);
 
             return new BigRational(numerator, denominator);

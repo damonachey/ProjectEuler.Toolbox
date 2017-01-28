@@ -45,6 +45,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
+        [Ignore("Runs too long")]
         [Test]
         public void PhiPhi2()
         {

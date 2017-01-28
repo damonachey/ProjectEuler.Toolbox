@@ -1,13 +1,21 @@
-﻿using System.Linq;
-using System.Numerics;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using ProjectEuler.Toolbox;
+using System;
+using System.Linq;
+using System.Numerics;
 
 namespace ProjectEuler.ToolboxTests
 {
     [TestFixture]
     public class MathLibraryTests
     {
+        [Test]
+        public void BinomialBadParameter()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => MathLibrary.Binomial(0, 5));
+        }
+
+        [Test]
         public void Binomial()
         {
             var expected = new BigInteger(792);
@@ -134,6 +142,42 @@ namespace ProjectEuler.ToolboxTests
             var actual = MathLibrary.Rad(50);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void CountInBase()
+        {
+            var expected = new[] { 0L, 1, 2, 10, 11 };
+            var actual = MathLibrary.CountInBase(3).Take(5);
+
+            Assert.IsTrue(expected.SequenceEqual(actual));
+        }
+
+        [Test]
+        public void NumberOfSetBits()
+        {
+            var expected = 5;
+            var actual = MathLibrary.NumberOfSetBits(361);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void NewtonsMethod()
+        {
+            var epsilon = 0.0005;
+            var expected = 1.732;
+            var actual = MathLibrary.NewtonsMethod(x => x * x - 3, x => 2 * x, 2, epsilon);
+
+            Assert.AreEqual(expected, actual, epsilon);
+        }
+
+        [Test]
+        public void NewtonsMethodOutOfRange()
+        {
+            var epsilon = 0.0005;
+
+            Assert.Throws<OverflowException>(() => MathLibrary.NewtonsMethod(x => 3- x * x, x => 2 * x, 2, epsilon));
         }
     }
 }

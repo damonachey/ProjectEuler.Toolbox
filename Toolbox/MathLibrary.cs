@@ -307,6 +307,11 @@ namespace ProjectEuler.Toolbox
                     return x;
 
                 xlast = x;
+
+                if (double.IsNaN(x))
+                {
+                    throw new OverflowException();
+                }
             }
         }
     }
