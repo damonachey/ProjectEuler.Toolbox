@@ -45,8 +45,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Ignore("Runs too long")]
-        [Test]
+        [Test, Timeout(2000)]
         public void PhiPhi2()
         {
             var totient = new Totient(100830877);

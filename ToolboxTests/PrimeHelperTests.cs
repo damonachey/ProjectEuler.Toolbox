@@ -86,8 +86,7 @@ namespace ProjectEuler.ToolboxTests
             var p2 = PrimeHelper.Primes().Take(20).ToList();
 
             for (var i = 0; i < p2.Count(); i++)
-                if (primes[i] != p2[i])
-                    Assert.Fail("Oops");
+                Assert.AreEqual(primes[i], p2[i]);
         }
 
         [Test]

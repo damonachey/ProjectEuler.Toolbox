@@ -355,11 +355,6 @@ namespace ProjectEuler.Toolbox
                 return ToString();
             }
 
-            if (Denominator == 0)
-            {
-                return "INF";
-            }
-
             return string.Format(formatProvider ?? CultureInfo.CurrentCulture, format, Numerator, Denominator);
         }
 
