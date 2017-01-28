@@ -8,7 +8,7 @@ using System.Numerics;
 namespace ProjectEuler.ToolboxTests
 {
     [TestFixture]
-    public class ExtensionsLinqTests
+    public class LinqExtensionsTests
     {
         [Test]
         public void BinarySearchForMatchFound()

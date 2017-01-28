@@ -70,46 +70,22 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
+        public void Side()
+        {
+            var expected = -5;
+            var p1 = new Point2<long>(1, 2);
+            var p2 = new Point2<long>(4, 6);
+            var p3 = new Point2<long>(3, 3);
+            var actual = Geometry.Side(p1, p2, p3);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void Rectangles()
         {
             var expected = 1999998;
             var actual = Geometry.Rectangles(77, 36);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void BigRationalPointConstructor()
-        {
-            var p = new Point2<BigRational>(1, 2);
-
-            Assert.IsNotNull(p);
-        }
-
-        [Test]
-        public void Point3()
-        {
-            var actual = new Point3<long>(1, 2, 3);
-
-            Assert.AreEqual(1, actual.X);
-            Assert.AreEqual(2, actual.Y);
-            Assert.AreEqual(3, actual.Z);
-        }
-
-        [Test]
-        public void BigRationalSquare2()
-        {
-            var expected = "((INF, INF), (INF, INF), (INF, INF), (INF, INF))";
-            var actual = new Polygon2<BigRational>(default(Point2<BigRational>), default(Point2<BigRational>), default(Point2<BigRational>), default(Point2<BigRational>)).ToString();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void BigRationalPoint2()
-        {
-            var expected = "(INF, INF)";
-            var actual = new Point2<BigRational>().ToString();
 
             Assert.AreEqual(expected, actual);
         }

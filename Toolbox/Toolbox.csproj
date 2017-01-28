@@ -60,11 +60,14 @@
     <Compile Include="Combinatorics.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Expression.cs" />
+    <Compile Include="Geometry\Line2.cs" />
+    <Compile Include="Geometry\Polygon2.cs" />
+    <Compile Include="Geometry\Triangle2.cs" />
     <Compile Include="LinqExtensions.cs" />
     <Compile Include="NumericExtensions.cs" />
     <Compile Include="Factorization.cs" />
     <Compile Include="CompressedQueue.cs" />
-    <Compile Include="Geometry.cs" />
+    <Compile Include="Geometry\Geometry.cs" />
     <Compile Include="Hashing.cs" />
     <Compile Include="LinearAssignmentProblem.cs" />
     <Compile Include="Memoization.cs" />
@@ -72,6 +75,8 @@
     <Compile Include="Packing.cs" />
     <Compile Include="Parsers.cs" />
     <Compile Include="PathFinding.cs" />
+    <Compile Include="Geometry\Point3.cs" />
+    <Compile Include="Geometry\Point2.cs" />
     <Compile Include="Polynomial.cs" />
     <Compile Include="PowersAndRoots.cs" />
     <Compile Include="PrimeHelper.cs" />

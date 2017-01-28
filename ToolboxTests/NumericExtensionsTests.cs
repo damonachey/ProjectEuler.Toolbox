@@ -7,7 +7,7 @@ using System.Numerics;
 namespace ProjectEuler.ToolboxTests
 {
     [TestFixture]
-    public class ExtensionsNumericTests
+    public class NumericExtensionsTests
     {
         [Test]
         public void ReduceRomanNumeral()

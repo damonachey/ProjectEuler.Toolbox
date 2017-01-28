@@ -4,7 +4,7 @@ using ProjectEuler.Toolbox;
 namespace ProjectEuler.ToolboxTests
 {
     [TestFixture]
-    public class ExtensionsStringTests
+    public class StringExtensionsTests
     {
         [Test]
         public void Replace()
