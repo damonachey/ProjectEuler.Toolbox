@@ -17,8 +17,13 @@ namespace ProjectEuler.Toolbox
             R = r;
         }
 
-        public double Area() => Math.PI * R * R;
+        public double Area() => 
+            Math.PI * R * R;
 
-        public double Circumfrence() => 2 * Math.PI * R;
+        public double Circumfrence() => 
+            2 * Math.PI * R;
+
+        public static double ChordAngle(double length, double radius) =>
+            2 * Math.Asin((length / 2) / radius);
     }
 }

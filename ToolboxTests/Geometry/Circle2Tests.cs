@@ -9,7 +9,7 @@ namespace ProjectEuler.ToolboxTests
     public class Circle2Tests
     {
         [Test]
-        public void Circle2()
+        public void Circle2Constructor()
         {
             var c = new Point2<double>(1, 1);
             var r = 1;
@@ -39,6 +39,15 @@ namespace ProjectEuler.ToolboxTests
             var actual = new Circle2(c, r).Circumfrence();
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ChordAngle()
+        {
+            var expected = 1.047;
+            var actual = Circle2.ChordAngle(2, 2);
+
+            Assert.AreEqual(expected, actual, 0.001);
         }
     }
 }
