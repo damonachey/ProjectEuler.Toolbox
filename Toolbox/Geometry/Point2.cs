@@ -20,7 +20,7 @@ namespace ProjectEuler.Toolbox
 
         public bool Equals(Point2<T> p)
         {
-            if (p is Point2<double>)
+            if (typeof(T) == typeof(double))
             {
                 return
                     Math.Abs(Convert.ToDouble(p.X) - Convert.ToDouble(X)) < 0.000001 &&
