@@ -60,6 +60,7 @@
     <Compile Include="Combinatorics.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Expression.cs" />
+    <Compile Include="Geometry\Circle2.cs" />
     <Compile Include="Geometry\Line2.cs" />
     <Compile Include="Geometry\Polygon2.cs" />
     <Compile Include="Geometry\Triangle2.cs" />

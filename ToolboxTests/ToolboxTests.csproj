@@ -65,6 +65,7 @@
     <Compile Include="CombinatoricsTests.cs" />
     <Compile Include="BackingStoreQueueTests.cs" />
     <Compile Include="ExpressionTests.cs" />
+    <Compile Include="Geometry\Circle2Tests.cs" />
     <Compile Include="Geometry\Line2Tests.cs" />
     <Compile Include="Geometry\Triangle2Tests.cs" />
     <Compile Include="Geometry\Polygon2Tests.cs" />
