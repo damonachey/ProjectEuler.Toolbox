@@ -49,5 +49,14 @@ namespace ProjectEuler.ToolboxTests
 
             Assert.AreEqual(expected, actual, 0.001);
         }
+
+        [Test]
+        public void SegmentArea()
+        {
+            var expected = 1.141;
+            var actual = Circle2.SegmentArea(Math.PI / 2, 2);
+
+            Assert.AreEqual(expected, actual, 0.001);
+        }
     }
 }
