@@ -54,6 +54,17 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
+        public void Length()
+        {
+            var expected = 3.60555;
+            var p1 = new Point2<double>(1, 2);
+            var p2 = new Point2<double>(3, 5);
+            var actual = new Line2(p1, p2).Length();
+
+            Assert.AreEqual(expected, actual, 0.0001);
+        }
+
+        [Test]
         public void IntersectsTrue()
         {
             var expected = new Point2<double>(1, 3);

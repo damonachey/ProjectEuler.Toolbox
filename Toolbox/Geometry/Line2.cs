@@ -29,6 +29,17 @@ namespace ProjectEuler.Toolbox
 
         private double Intercept(Point2<double> p, double m) => p.Y - m * p.X;
 
+        public double Length()
+        {
+            var dx = P2.X - P1.X;
+            var dy = P2.Y - P1.Y;
+
+            var dx2 = dx * dx;
+            var dy2 = dy * dy;
+
+            return Math.Sqrt(dx2 + dy2);
+        }
+
         public bool Intersects(Line2 s, out Point2<double> p)
         {
             p = default(Point2<double>);
