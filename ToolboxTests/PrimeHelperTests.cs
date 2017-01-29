@@ -97,5 +97,25 @@ namespace ProjectEuler.ToolboxTests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void PrimesMax()
+        {
+            var last = 0L;
+            var count = 0L;
+
+            try
+            {
+                foreach (var prime in PrimeHelper.Primes())
+                {
+                    last = prime;
+                    count++;
+                }
+            }
+            catch { };
+
+            Assert.AreEqual(2147483647, last);
+            Assert.AreEqual(105097565, count);
+        }
     }
 }
