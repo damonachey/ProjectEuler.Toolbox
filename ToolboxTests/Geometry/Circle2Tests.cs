@@ -58,5 +58,16 @@ namespace ProjectEuler.ToolboxTests
 
             Assert.AreEqual(expected, actual, 0.001);
         }
+
+        [Test]
+        public new void ToString()
+        {
+            var expected = "(1, 1) R = 1";
+            var c = new Point2<double>(1, 1);
+            var r = 1;
+            var actual = new Circle2(c, r).ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

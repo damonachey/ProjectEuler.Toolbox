@@ -28,5 +28,8 @@ namespace ProjectEuler.Toolbox
 
         public static double SegmentArea(double angle, double r) =>
             (r * r) / 2 * (angle - Math.Sin(angle));
+
+        public override string ToString() => 
+            $"{C} R = {R}";
     }
 }
