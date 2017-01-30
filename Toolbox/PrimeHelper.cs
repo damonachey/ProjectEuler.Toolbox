@@ -48,11 +48,6 @@ namespace ProjectEuler.Toolbox
                 return false;
             }
 
-            //if (primes.Any() && n <= primes.Last())
-            //{
-            //    return primes.BinarySearch((int)n) >= 0;
-            //}
-
             var r = (long)Math.Sqrt(n);
             var incr = Environment.ProcessorCount * 6;
 

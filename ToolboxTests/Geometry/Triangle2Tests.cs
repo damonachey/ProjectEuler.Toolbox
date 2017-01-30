@@ -56,6 +56,38 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
+        public void EqualsFalse()
+        {
+            var p1 = new Point2<long>(1, 2);
+            var p2 = new Point2<long>(3, 4);
+            var p3 = new Point2<long>(5, 6);
+            var t1 = new Triangle2<long>(p1, p2, p3);
+
+            var p4 = new Point2<long>(2, 2);
+            var p5 = new Point2<long>(3, 4);
+            var p6 = new Point2<long>(5, 6);
+            var t2= new Triangle2<long>(p4, p5, p6);
+
+            Assert.AreNotEqual(t1, t2);
+        }
+
+        [Test]
+        public void EqualsTrue()
+        {
+            var p1 = new Point2<double>(1.000001, 2);
+            var p2 = new Point2<double>(3, 4);
+            var p3 = new Point2<double>(5, 6);
+            var t1 = new Triangle2<double>(p1, p2, p3);
+
+            var p4 = new Point2<double>(1, 2);
+            var p5 = new Point2<double>(3, 4);
+            var p6 = new Point2<double>(5, 6);
+            var t2 = new Triangle2<double>(p4, p5, p6);
+
+            Assert.AreEqual(t1, t2);
+        }
+
+        [Test]
         public new void ToString()
         {
             var expected = "((1, 2), (3, 4), (5, 6))";

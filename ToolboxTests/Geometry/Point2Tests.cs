@@ -28,7 +28,7 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
-        public void Equals()
+        public void EqualsFalse()
         {
             var p = new Point2<long>(1, 2);
 
@@ -36,7 +36,16 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
-        public void Equals2()
+        public void EqualsFalse2()
+        {
+            var p1 = new Point2<long>(2, 2);
+            var p2 = new Point2<long>(1, 2);
+
+            Assert.AreNotEqual(p1, p2);
+        }
+
+        [Test]
+        public void EqualsTrue()
         {
             var p1 = new Point2<long>(1, 2);
             var p2 = new Point2<long>(1, 2);
