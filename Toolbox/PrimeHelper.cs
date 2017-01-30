@@ -86,11 +86,13 @@ namespace ProjectEuler.Toolbox
         /// Enumerates all prime values previously computed
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<int> Primes()
+        public static IEnumerable<int> Primes(long index = 0)
         {
             using (var stream = File.Open(PrimeFile, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (var reader = new BinaryReader(stream))
             {
+                reader.BaseStream.Seek(index * 4, SeekOrigin.Begin);
+
                 while (true)
                 {
                     yield return reader.ReadInt32();

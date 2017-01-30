@@ -102,11 +102,11 @@ namespace ProjectEuler.ToolboxTests
         public void PrimesMax()
         {
             var last = 0L;
-            var count = 0L;
+            var count = 100000000L;
 
             try
             {
-                foreach (var prime in PrimeHelper.Primes())
+                foreach (var prime in PrimeHelper.Primes(count))
                 {
                     last = prime;
                     count++;
