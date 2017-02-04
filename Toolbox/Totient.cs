@@ -10,12 +10,7 @@ namespace ProjectEuler.Toolbox
         private int _lastSmallestFactor;
         private object _smallestFactorsLock { get; } = new object();
 
-        public Totient()
-        {
-        }
-
         public Totient(int max)
-            : this()
         {
             InitializeSmallestFactors(max);
         }
@@ -156,7 +151,7 @@ namespace ProjectEuler.Toolbox
             throw new Exception("Need more primes");
         }
 
-        public static int MinnOverphin(int n)
+        public static int MinnOverPhin(int n)
         {
             var best = 0;
 

@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using ProjectEuler.Toolbox;
+using System;
 
 namespace ProjectEuler.ToolboxTests
 {
@@ -37,6 +38,13 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [Test]
+        public void PhiGreaterThanN()
+        {
+            var totient = new Totient(10);
+            Assert.Throws<ArgumentOutOfRangeException>(() => totient.Phi(20));
+        }
+
+        [Test]
         public void Phi2()
         {
             var expected = 10083087720778;
@@ -45,12 +53,30 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test, Timeout(2000)]
+        [Test]
         public void PhiPhi2()
         {
-            var totient = new Totient(100830877);
-            var expected = totient.Phi(100830877);
-            var actual = Totient.Phi2(100830877);
+            var totient = new Totient(100);
+            var expected = totient.Phi(20);
+            var actual = Totient.Phi2(20);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void MaxnOverPhin()
+        {
+            var expected = 30;
+            var actual = Totient.MaxnOverPhin(100);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void MinnOverPhin()
+        {
+            var expected = 49;
+            var actual = Totient.MinnOverPhin(100);
 
             Assert.AreEqual(expected, actual);
         }
