@@ -72,6 +72,7 @@
     <Compile Include="Geometry\Polygon2Tests.cs" />
     <Compile Include="Geometry\Point3Tests.cs" />
     <Compile Include="Geometry\Point2Tests.cs" />
+    <Compile Include="LinearAssignmentProblemTests.cs" />
     <Compile Include="StringExtensionTests.cs" />
     <Compile Include="MathLibraryTests.cs" />
     <Compile Include="DiceTests.cs" />
