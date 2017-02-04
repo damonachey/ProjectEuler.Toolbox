@@ -347,18 +347,12 @@ namespace ProjectEuler.Toolbox
 
             public override bool Equals(object obj)
             {
-                if (obj == null)
+                if (obj is Coordinate c)
                 {
-                    return false;
+                    return Row == c.Row && Col == c.Col;
                 }
 
-                var c = obj as Coordinate;
-                if (c == null)
-                {
-                    return false;
-                }
-
-                return Row == c.Row && Col == c.Col;
+                return false;
             }
 
             public bool Equals(Coordinate c)

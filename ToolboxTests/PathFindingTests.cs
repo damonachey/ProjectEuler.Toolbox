@@ -98,5 +98,41 @@ namespace ProjectEuler.ToolboxTests
 
             Assert.IsTrue(expected.Equals(actual));
         }
+
+        [Test]
+        public void CoordinateEqualsCoordinateNull()
+        {
+            var expected = new PathFinding.Coordinate(1, 2);
+            var actual = default(PathFinding.Coordinate);
+
+            Assert.IsFalse(expected.Equals(actual));
+        }
+
+        [Test]
+        public void CoordinateEqualsNotCoordinateNull()
+        {
+            var expected = new PathFinding.Coordinate(1, 2);
+            var actual = (object)null;
+
+            Assert.IsFalse(expected.Equals(actual));
+        }
+
+        [Test]
+        public void CoordinateEqualsNotCoordinateOther()
+        {
+            var expected = new PathFinding.Coordinate(1, 2);
+            var actual = 1;
+
+            Assert.IsFalse(expected.Equals(actual));
+        }
+
+        [Test]
+        public void CoordinateToString()
+        {
+            var expected = "(1, 2)";
+            var actual = new PathFinding.Coordinate(1, 2).ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
