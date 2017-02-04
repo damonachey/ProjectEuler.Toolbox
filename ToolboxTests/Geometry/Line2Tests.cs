@@ -76,9 +76,7 @@ namespace ProjectEuler.ToolboxTests
             var p4 = new Point2<double>(2, 3);
             var line2 = new Line2(p3, p4);
 
-            var p = default(Point2<double>);
-
-            var actual = line1.Intersects(line2, out p);
+            var actual = line1.Intersects(line2, out Point2<double> p);
 
             Assert.IsTrue(actual);
             Assert.AreEqual(expected, p);
