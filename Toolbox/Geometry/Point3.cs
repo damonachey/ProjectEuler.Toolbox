@@ -18,7 +18,7 @@ namespace ProjectEuler.Toolbox
 
         public override string ToString() => $"({X}, {Y}, {Z})";
 
-        public override bool Equals(object obj) => obj is Point3<T> && Equals((Point3<T>)obj);
+        public override bool Equals(object obj) => obj is Point3<T> other && Equals(other);
 
         public bool Equals(Point3<T> p) => X.Equals(p.X) && Y.Equals(p.Y) && Z.Equals(p.Z);
 

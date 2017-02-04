@@ -314,9 +314,9 @@ namespace ProjectEuler.Toolbox
 
         public int CompareTo(object obj)
         {
-            if (obj is BigRational)
+            if (obj is BigRational other)
             {
-                return CompareTo((BigRational)obj);
+                return CompareTo(other);
             }
 
             throw new ArgumentException("object is not a BigRational");
@@ -324,7 +324,7 @@ namespace ProjectEuler.Toolbox
 
         public int CompareTo(BigRational other) => (this - other).Numerator.Sign;
 
-        public override bool Equals(object obj) => obj is BigRational && Equals((BigRational)obj);
+        public override bool Equals(object obj) => obj is BigRational other && Equals(other);
 
         public bool Equals(BigRational f)
         {
