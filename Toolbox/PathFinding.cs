@@ -183,9 +183,7 @@ namespace ProjectEuler.Toolbox
 
                     if (tentativeIsBetter)
                     {
-                        var value = default(Coordinate);
-
-                        if (cameFrom.TryGetValue(neighbor, out value))
+                        if (cameFrom.TryGetValue(neighbor, out Coordinate value))
                         {
                             value = u;
                         }
@@ -325,9 +323,7 @@ namespace ProjectEuler.Toolbox
 
         private static IEnumerable<Coordinate> ReconstitutePath(IDictionary<Coordinate, Coordinate> cameFrom, Coordinate current)
         {
-            Coordinate value;
-
-            if (cameFrom.TryGetValue(current, out value))
+            if (cameFrom.TryGetValue(current, out Coordinate value))
             {
                 foreach (var p in ReconstitutePath(cameFrom, value))
                 {

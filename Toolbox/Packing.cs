@@ -54,9 +54,7 @@ namespace ProjectEuler.Toolbox
 
             // without the first item
             var remainItems = items.GetRange(1, items.Count - 1).ToList();
-            List<BigInteger> chosenItemsInRemainItems;
-
-            var withoutFirstItemResult = Knapsack01(goal, remainItems, out chosenItemsInRemainItems);
+            var withoutFirstItemResult = Knapsack01(goal, remainItems, out List<BigInteger> chosenItemsInRemainItems);
 
             // with all the items
             var withFirstItemResult = BigInteger.Zero;

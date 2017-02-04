@@ -25,10 +25,8 @@ namespace ProjectEuler.ToolboxTests
                 .Select(i => new BigInteger(i))
                 .ToList();
 
-            var bag = new List<BigInteger> { };
-
             var expected = new BigInteger(15);
-            var actual = Packing.Knapsack01(15, items, out bag);
+            var actual = Packing.Knapsack01(15, items, out List<BigInteger> bag);
 
             Assert.AreEqual(expected, actual);
         }
@@ -36,14 +34,10 @@ namespace ProjectEuler.ToolboxTests
         [Test]
         public void Knapsack01ZeroItems()
         {
-            var items = Enumerable.Range(1, 0)
-                .Select(i => new BigInteger(i))
-                .ToList();
-
-            var bag = new List<BigInteger> { };
+            var items = new List<BigInteger>();
 
             var expected = new BigInteger(0);
-            var actual = Packing.Knapsack01(15, items, out bag);
+            var actual = Packing.Knapsack01(15, items, out List<BigInteger> bag);
 
             Assert.AreEqual(expected, actual);
         }
@@ -55,10 +49,8 @@ namespace ProjectEuler.ToolboxTests
                 .Select(i => new BigInteger(i))
                 .ToList();
 
-            var bag = new List<BigInteger> { };
-
             var expected = new BigInteger(1);
-            var actual = Packing.Knapsack01(15, items, out bag);
+            var actual = Packing.Knapsack01(15, items, out List<BigInteger> bag);
 
             Assert.AreEqual(expected, actual);
         }

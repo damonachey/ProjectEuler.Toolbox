@@ -103,9 +103,7 @@ namespace ProjectEuler.Toolbox
 
         private static void RemovePossibleCellValue(Dictionary<dynamic, IList<int>> possibleCellValues, dynamic cell, int value)
         {
-            var valueList = default(IList<int>);
-
-            if (possibleCellValues.TryGetValue(cell, out valueList))
+            if (possibleCellValues.TryGetValue(cell, out IList<int> valueList))
             {
                 valueList.Remove(value);
 

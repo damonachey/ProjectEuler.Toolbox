@@ -12,9 +12,7 @@ namespace ProjectEuler.Toolbox
 
             return a =>
             {
-                R value;
-
-                if (!map.TryGetValue(a, out value))
+                if (!map.TryGetValue(a, out R value))
                 {
                     map.TryAdd(a, value = f(a));
                 }
