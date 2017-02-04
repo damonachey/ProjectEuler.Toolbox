@@ -9,3 +9,4 @@ nunit-result.xml
 __pycache__
 _Resharper*
 packages/
+*.cache
