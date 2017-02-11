@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System.Linq;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class BackingStoreQueueTests
     {
-        [Test]
+        [TestMethod]
         public void Constructor()
         {
             var bsq = new CompressedQueue();
@@ -15,7 +15,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsNotNull(bsq);
         }
 
-        [Test]
+        [TestMethod]
         public void Enqueue()
         {
             var expectedCount = 2 * CompressedQueue.CompressThreshold;
@@ -29,7 +29,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expectedCount, actual.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void Dequeue()
         {
             var expectedCount = 2 * CompressedQueue.CompressThreshold;

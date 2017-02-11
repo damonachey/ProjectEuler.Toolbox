@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class HashingTests
     {
-        [Test]
+        [TestMethod]
         public void ModifiedFnv32()
         {
             var expected = 2730030712;
@@ -17,10 +17,10 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void EvaluateRPN()
         {
-            var expected = 8270004038646870267;
+            var expected = 8270004038646870267ul;
             var actual = Hashing.ModifiedFnv64(new byte[] { 1, 2, 3 });
 
             Assert.AreEqual(expected, actual);

@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class DiceTests
     {
-        [Test]
+        [TestMethod]
         public void DiceRandomRollsSingleDie()
         {
             var actual = Dice.RandomRolls(1, 6).Take(100000).ToList();
@@ -22,7 +22,7 @@ namespace ProjectEuler.ToolboxTests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void DiceRandomRollsMultipleDice()
         {
             var actual = Dice.RandomRolls(2, 6).Take(100000).ToList();
@@ -36,7 +36,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(Math.Abs(0.50 - (double)counts.Single(g => g.Key == 6).Count() / counts.Where(g => g.Key == 6 || g.Key == 8).Sum(g => g.Count())) < 0.02);
         }
 
-        [Test]
+        [TestMethod]
         public void DicePossibleRolls()
         {
             var expected = 36;
@@ -46,7 +46,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual.Distinct().Count());
         }
 
-        [Test]
+        [TestMethod]
         public void MeteredRollsOneDie()
         {
             var actual = Dice.MeteredRolls(1, 6).Take(100000).ToList();
@@ -60,7 +60,7 @@ namespace ProjectEuler.ToolboxTests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void MeteredRollsMultipleDice()
         {
             var actual = Dice.MeteredRolls(2, 6).Take(100000).ToList();

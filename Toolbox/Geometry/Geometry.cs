@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 
 namespace ProjectEuler.Toolbox
 {
@@ -65,7 +64,8 @@ namespace ProjectEuler.Toolbox
         /// <param name="b"></param>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static bool IsPointInTriangle(Vector3 p, Vector3 a, Vector3 b, Vector3 c) => SameSide(p, a, b, c) && SameSide(p, b, a, c) && SameSide(p, c, a, b);
+        public static bool IsPointInTriangle(Point3 p, Point3 a, Point3 b, Point3 c) => 
+            SameSide(p, a, b, c) && SameSide(p, b, a, c) && SameSide(p, c, a, b);
 
         /// <summary>
         /// Generate Pythagorean triples with a sum no greater than maxPerimeter, answers are NOT unique but a &lt; b &lt; c.
@@ -122,15 +122,15 @@ namespace ProjectEuler.Toolbox
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        private static bool SameSide(Vector3 p1, Vector3 p2, Vector3 a, Vector3 b)
+        private static bool SameSide(Point3 p1, Point3 p2, Point3 a, Point3 b)
         {
-            var cp1 = Vector3.Cross(b - a, p1 - a);
-            var cp2 = Vector3.Cross(b - a, p2 - a);
+            var cp1 = Point3.Cross(b - a, p1 - a);
+            var cp2 = Point3.Cross(b - a, p2 - a);
 
-            return Vector3.Dot(cp1, cp2) >= 0;
+            return Point3.Dot(cp1, cp2) >= 0;
         }
 
-        public static BigRational Distance(Point2<BigRational> p1, Point2<BigRational> p2)
+        public static BigRational Distance(Point2 p1, Point2 p2)
         {
             var dx = p2.X - p1.X;
             var dy = p2.Y - p1.Y;
@@ -141,6 +141,7 @@ namespace ProjectEuler.Toolbox
             return BigRational.Sqrt(dx2 + dy2, 10);
         }
 
-        public static long Side(Point2<long> p1, Point2<long> p2, Point2<long> p3) => (p2.X - p1.X) * (p3.Y - p1.Y) - (p2.Y - p1.Y) * (p3.X - p1.X);
+        public static double Side(Point2 p1, Point2 p2, Point2 p3) => 
+            (p2.X - p1.X) * (p3.Y - p1.Y) - (p2.Y - p1.Y) * (p3.X - p1.X);
     }
 }

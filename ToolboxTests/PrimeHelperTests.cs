@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System.Linq;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class PrimeHelperTests
     {
-        [Test]
+        [TestMethod]
         public void IsPrimeLessThan2()
         {
             var actual = PrimeHelper.IsPrime(1);
@@ -15,7 +15,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPrime2To4()
         {
             var actual = PrimeHelper.IsPrime(3);
@@ -23,7 +23,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPrimeOdds4To9()
         {
             var actual = PrimeHelper.IsPrime(7);
@@ -31,7 +31,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPrimeEven()
         {
             var actual = PrimeHelper.IsPrime(10);
@@ -39,7 +39,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPrimeMultipleOfThree()
         {
             var actual = PrimeHelper.IsPrime(51);
@@ -47,7 +47,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPrimeSquare()
         {
             var actual = PrimeHelper.IsPrime(25);
@@ -55,7 +55,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPrimePrime()
         {
             var actual = PrimeHelper.IsPrime(8219);
@@ -63,7 +63,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPrimeNotPrime()
         {
             var actual = PrimeHelper.IsPrime(8227);
@@ -71,7 +71,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPrimeMemoized()
         {
             var actual = PrimeHelper.IsPrimeMemoized(8227);
@@ -79,7 +79,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PrimesRepeatability()
         {
             var primes = PrimeHelper.Primes().Take(20).ToList();
@@ -89,7 +89,7 @@ namespace ProjectEuler.ToolboxTests
                 Assert.AreEqual(primes[i], p2[i]);
         }
 
-        [Test]
+        [TestMethod]
         public void Primes()
         {
             var expected = 15485863;
@@ -98,7 +98,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PrimesMax()
         {
             var last = 0L;

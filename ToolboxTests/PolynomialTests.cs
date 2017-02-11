@@ -1,31 +1,31 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System.Linq;
 using System.Windows;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class PolynomialTests
     {
-        [Test]
+        [TestMethod]
         public void Lagrange()
         {
-            var input = new Vector[]
+            var input = new Point2[]
                 {
-                    new Vector(1, 1),
-                    new Vector(2, 8),
-                    new Vector(3, 27),
-                    new Vector(4, 64),
+                    new Point2(1, 1),
+                    new Point2(2, 8),
+                    new Point2(3, 27),
+                    new Point2(4, 64),
                 };
-            var expected = new Vector[]
+            var expected = new Point2[]
                 {
-                    new Vector(1, 1),
-                    new Vector(2, 8),
-                    new Vector(3, 27),
-                    new Vector(4, 64),
-                    new Vector(5, 125),
-                    new Vector(6, 216),
+                    new Point2(1, 1),
+                    new Point2(2, 8),
+                    new Point2(3, 27),
+                    new Point2(4, 64),
+                    new Point2(5, 125),
+                    new Point2(6, 216),
                 };
             var actual = Polynomial
                 .Lagrange(input, 1, 1)
@@ -35,22 +35,22 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void LagrangeDouble()
         {
-            var input = new Vector[]
+            var input = new Point2[]
                 {
-                    new Vector(1, 1),
-                    new Vector(2, 8),
-                    new Vector(3, 27),
+                    new Point2(1, 1),
+                    new Point2(2, 8),
+                    new Point2(3, 27),
                 };
-            var expected = new Vector[]
+            var expected = new Point2[]
                 {
-                    new Vector(1.0, 1),
-                    new Vector(1.5, 3),
-                    new Vector(2.0, 8),
-                    new Vector(2.5, 16),
-                    new Vector(3.0, 27),
+                    new Point2(1.0, 1),
+                    new Point2(1.5, 3),
+                    new Point2(2.0, 8),
+                    new Point2(2.5, 16),
+                    new Point2(3.0, 27),
                 };
             var actual = Polynomial
                 .Lagrange(input, 1, 0.5)

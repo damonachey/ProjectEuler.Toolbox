@@ -1,12 +1,12 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class StringExtensionsTests
     {
-        [Test]
+        [TestMethod]
         public void Replace()
         {
             var expected = "testing";

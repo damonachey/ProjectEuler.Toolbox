@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class MemoizationTests
     {
-        [Test]
+        [TestMethod]
         public void MemoizeOneParameter()
         {
             var count = 0;
@@ -25,7 +25,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected + 1, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void MemoizeTwoParameters()
         {
             var count = 0;
@@ -43,7 +43,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected + 1, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void MemoizeThreeParameters()
         {
             var count = 0;
@@ -61,7 +61,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected + 1, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void MemoizeFourParameters()
         {
             var count = 0;
@@ -79,7 +79,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected + 1, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void MemoizeFiveParameters()
         {
             var count = 0;

@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class StringExtensionTests
     {
-        [Test]
+        [TestMethod]
         public void SubstringFound()
         {
             var expected = " a midnight ";
@@ -16,19 +16,21 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void SubstringStartNotFound()
         {
-            Assert.Throws<ArgumentException>(() => "Once upon a midnight dreary".Substring("upn", "dreary"));
+            "Once upon a midnight dreary".Substring("upn", "dreary");
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void SubstringEndNotFound()
         {
-            Assert.Throws<ArgumentException>(() => "Once upon a midnight dreary".Substring("upon", "drery"));
+            "Once upon a midnight dreary".Substring("upon", "drery");
         }
 
-        [Test]
+        [TestMethod]
         public void TestRandomString()
         {
             var s1 = StringExtensions.RandomString();

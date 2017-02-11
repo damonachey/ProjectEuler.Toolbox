@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
@@ -6,16 +6,17 @@ using System.Numerics;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class MathLibraryTests
     {
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void BinomialBadParameter()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => MathLibrary.Binomial(0, 5));
+            MathLibrary.Binomial(0, 5);
         }
 
-        [Test]
+        [TestMethod]
         public void Binomial()
         {
             var expected = new BigInteger(792);
@@ -24,7 +25,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void Factorial()
         {
             var expected = BigInteger.Parse("1551118753287382280224243016469303211063259720016986112000000000000");
@@ -33,7 +34,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void FibonacciNumbers()
         {
             var expected = BigInteger.Parse("222232244629420445529739893461909967206666939096499764990979600");
@@ -42,7 +43,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsBouncyLongTrue()
         {
             var actual = MathLibrary.IsBouncy(123934);
@@ -50,7 +51,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsBouncyLongFalse()
         {
             var actual = MathLibrary.IsBouncy(12389);
@@ -58,7 +59,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void CycleLenthHasCycle()
         {
             var expected = 115;
@@ -67,7 +68,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void CycleLenthNoCycle()
         {
             var expected = 0;
@@ -76,7 +77,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void MaximumSubsetSum()
         {
             var expected = 9;
@@ -85,7 +86,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsCyclicTrue()
         {
             var actual = MathLibrary.IsCyclic("2034", "3498");
@@ -93,7 +94,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsCyclicFalse()
         {
             var actual = MathLibrary.IsCyclic("2034", "3598");
@@ -101,7 +102,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPalindromeTrue()
         {
             var actual = MathLibrary.IsPalindrome("amanaplanacanalpanama");
@@ -109,7 +110,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPalindromeFalse()
         {
             var actual = MathLibrary.IsPalindrome("fred");
@@ -117,7 +118,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PascalsTriangle()
         {
             var expected = new long[] { 1, 5, 10, 10, 5, 1 };
@@ -126,7 +127,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void RadOne()
         {
             var expected = 1;
@@ -135,7 +136,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void Rad()
         {
             var expected = 10;
@@ -144,7 +145,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void CountInBase()
         {
             var expected = new[] { 0L, 1, 2, 10, 11 };
@@ -153,7 +154,13 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
+        public void CountIncreasing()
+        {
+            MathLibrary.CountIncreasing();
+        }
+
+        [TestMethod]
         public void NumberOfSetBits()
         {
             var expected = 5;
@@ -162,7 +169,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void NewtonsMethod()
         {
             var epsilon = 0.0005;
@@ -172,12 +179,13 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual, epsilon);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(OverflowException))]
         public void NewtonsMethodOutOfRange()
         {
             var epsilon = 0.0005;
 
-            Assert.Throws<OverflowException>(() => MathLibrary.NewtonsMethod(x => 3- x * x, x => 2 * x, 2, epsilon));
+            MathLibrary.NewtonsMethod(x => 3 - x * x, x => 2 * x, 2, epsilon);
         }
     }
 }

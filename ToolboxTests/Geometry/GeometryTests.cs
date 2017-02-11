@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class GeometryTests
     {
-        [Test]
+        [TestMethod]
         public void Diamonds()
         {
             var expected = 3669546;
@@ -17,31 +17,31 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PointInTriangleTrue()
         {
             var actual = Geometry.IsPointInTriangle(
-                new Microsoft.Xna.Framework.Vector3(0),
-                new Microsoft.Xna.Framework.Vector3(0, 1, 0),
-                new Microsoft.Xna.Framework.Vector3(1, -1, 0),
-                new Microsoft.Xna.Framework.Vector3(-1, -1, 0));
+                new Point3(0, 0, 0),
+                new Point3(0, 1, 0),
+                new Point3(1, -1, 0),
+                new Point3(-1, -1, 0));
 
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PointInTriangleFalse()
         {
             var actual = Geometry.IsPointInTriangle(
-                new Microsoft.Xna.Framework.Vector3(2, 0, 0),
-                new Microsoft.Xna.Framework.Vector3(0, 1, 0),
-                new Microsoft.Xna.Framework.Vector3(1, -1, 0),
-                new Microsoft.Xna.Framework.Vector3(-1, -1, 0));
+                new Point3(2, 0, 0),
+                new Point3(0, 1, 0),
+                new Point3(1, -1, 0),
+                new Point3(-1, -1, 0));
 
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PythagoreanTriples()
         {
             var expected = new Tuple<int, int, int>[]
@@ -58,30 +58,30 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void Distance()
         {
             var expected = new BigRational(5);
-            var p1 = new Point2<BigRational>(1, 2);
-            var p2 = new Point2<BigRational>(4, 6);
+            var p1 = new Point2(1, 2);
+            var p2 = new Point2(4, 6);
             var actual = Geometry.Distance(p1, p2);
 
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void Side()
         {
             var expected = -5;
-            var p1 = new Point2<long>(1, 2);
-            var p2 = new Point2<long>(4, 6);
-            var p3 = new Point2<long>(3, 3);
+            var p1 = new Point2(1, 2);
+            var p2 = new Point2(4, 6);
+            var p3 = new Point2(3, 3);
             var actual = Geometry.Side(p1, p2, p3);
 
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void Rectangles()
         {
             var expected = 1999998;

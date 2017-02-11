@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Collections.Generic;
@@ -7,10 +7,10 @@ using System.Numerics;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class LinqExtensionsTests
     {
-        [Test]
+        [TestMethod]
         public void BinarySearchForMatchFound()
         {
             var expected = 5;
@@ -22,7 +22,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void BinarySearchForMatchNotFoundMiddle()
         {
             var expected = -4;
@@ -35,7 +35,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void BinarySearchForMatchNotFoundLess()
         {
             var expected = -11;
@@ -47,7 +47,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void BinarySearchForMatchNotFoundGreater()
         {
             var expected = -1;
@@ -59,7 +59,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ReverseRange()
         {
             var expected = new int[] { 0, 1, 2, 3, 4, 5, 9, 8, 7, 6 };
@@ -69,7 +69,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void Swap()
         {
             var expected = new int[] { 1, 3, 2, 4 };
@@ -79,7 +79,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void RandomSampleSubset()
         {
             var expected = Enumerable.Range(1, 5).ToList();
@@ -89,7 +89,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void RandomSampleWholeSet()
         {
             var expected = Enumerable.Range(1, 10).ToList();
@@ -99,7 +99,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void Shuffle()
         {
             var expected = Enumerable.Range(1, 10);
@@ -109,7 +109,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void SumBigInteger()
         {
             var expected = new BigInteger(6);
@@ -118,7 +118,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void SumBigRational()
         {
             var expected = new BigRational(6);
@@ -127,7 +127,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void AllExcept()
         {
             var expected = new int[] { 1, 2, 3, 5, 6, 7 };
@@ -136,7 +136,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void ForAll()
         {
             var expected = Enumerable.Range(1, 10).ToList();
@@ -147,25 +147,28 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void ForAllArgumentNull()
         {
-            Assert.Throws<ArgumentNullException>(() => Enumerable.Range(1, 2).ForAll(null));
+            Enumerable.Range(1, 2).ForAll(null);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void SkipLastArgumentNull()
         {
-            Assert.Throws<ArgumentNullException>(() => ((IEnumerable<int>)null).SkipLast(2));
+            ((IEnumerable<int>)null).SkipLast(2);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SkipLastArgumentOutOfRange()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Enumerable.Range(1, 10).SkipLast(-2));
+            Enumerable.Range(1, 10).SkipLast(-2);
         }
 
-        [Test]
+        [TestMethod]
         public void SkipLastSubset()
         {
             var expected = Enumerable.Range(1, 5).ToList();
@@ -174,7 +177,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void SkipLastWholeSet()
         {
             var expected = Enumerable.Range(1, 10).ToList();
@@ -183,19 +186,21 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void TakeLastArgumentNull()
         {
-            Assert.Throws<ArgumentNullException>(() => ((IEnumerable<int>)null).TakeLast(2));
+            ((IEnumerable<int>)null).TakeLast(2);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TakeLastArgumentOutOfRange()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Enumerable.Range(1, 10).TakeLast(-2));
+            Enumerable.Range(1, 10).TakeLast(-2);
         }
 
-        [Test]
+        [TestMethod]
         public void TakeLastSubset()
         {
             var expected = Enumerable.Range(6, 5).ToList();
@@ -204,7 +209,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void TakeLastEmptySet()
         {
             var actual = Enumerable.Range(1, 10).TakeLast(0).ToList();
@@ -212,7 +217,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual.TakeLast(0).Any());
         }
 
-        [Test]
+        [TestMethod]
         public void MergeFirstLonger()
         {
             var expected = new[] { 2, 4, 6, 4, 5 };
@@ -221,7 +226,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void MergeSecondLonger()
         {
             var expected = new[] { 2, 4, 6, 4, 5 };
@@ -230,7 +235,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void MergeRepeatLastFirstLonger()
         {
             var expected = new[] { 2, 4, 6, 7, 8 };
@@ -239,7 +244,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void MergeRepeatLastSecondLonger()
         {
             var expected = new[] { 2, 4, 6, 7, 8 };

@@ -282,6 +282,11 @@ namespace ProjectEuler.Toolbox
             }
         }
 
+        public static IEnumerable<long> CountIncreasing()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Numbers the of set bits.
         /// </summary>

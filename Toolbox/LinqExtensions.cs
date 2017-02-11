@@ -5,9 +5,6 @@ using System.Numerics;
 
 namespace ProjectEuler.Toolbox
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public static class LinqExtensions
     {
         /// <summary>
@@ -356,6 +353,11 @@ namespace ProjectEuler.Toolbox
             {
                 action(item);
             }
+        }
+
+        public static string EnumerableToString<T>(this IEnumerable<T> source)
+        {
+            return $"[{string.Join(", ", source.Select(item => item.ToString()))}]";
         }
     }
 }

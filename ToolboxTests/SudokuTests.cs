@@ -1,12 +1,12 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class SudokuTests
     {
-        [Test]
+        [TestMethod]
         public void Solve()
         {
             var expected = new int[,]

@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class SimilarityTests
     {
-        [Test]
+        [TestMethod]
         public void EditDistanceString()
         {
             var expected = 2;
@@ -16,7 +16,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void EditDistanceEnumerable()
         {
             var expected = 2;
@@ -25,7 +25,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void EditDistanceSame()
         {
             var expected = 0;
@@ -34,19 +34,21 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void EditDistanceBadArguments()
         {
-            Assert.Throws<ArgumentNullException>(() =>Similarity.EditDistance(null, "this is just a test".ToCharArray()));
+            Similarity.EditDistance(null, "this is just a test".ToCharArray());
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void EditDistanceBadArguments2()
         {
-            Assert.Throws<ArgumentNullException>(() =>Similarity.EditDistance("this is just a test".ToCharArray(), null));
+            Similarity.EditDistance("this is just a test".ToCharArray(), null);
         }
 
-        [Test]
+        [TestMethod]
         public void EditDistanceEmpty()
         {
             var expected = 19;
@@ -55,7 +57,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void EditDistanceEmpty2()
         {
             var expected = 19;
@@ -64,19 +66,21 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void EditDistanceStringBadArguments()
         {
-            Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance(null, "this is just a test"));
+            Similarity.EditDistance(null, "this is just a test");
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void EditDistanceStringBadArguments2()
         {
-            Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance("this is just a test", null));
+            Similarity.EditDistance("this is just a test", null);
         }
 
-        [Test]
+        [TestMethod]
         public void EditDistanceStringEmpty()
         {
             var expected = 19;
@@ -85,7 +89,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void EditDistanceStringEmpty2()
         {
             var expected = 19;

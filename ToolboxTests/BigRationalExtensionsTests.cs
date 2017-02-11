@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System.Linq;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class BigRationalExtensionsTests
     {
-        [Test]
+        [TestMethod]
         public void ToBigRationalsIrrational()
         {
             var expected = new[]
@@ -23,7 +23,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void ToBigRationalsPerfectSquareTest1()
         {
             var expected = new[]
@@ -35,7 +35,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void ToBigRationalsIrrationalTest2()
         {
             var expected = new[]
@@ -51,7 +51,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void ToBigRationalsPerfectSquareTest3()
         {
             var expected = new[]
@@ -63,7 +63,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void ToBigRationalsE()
         {
             var expected = new[]

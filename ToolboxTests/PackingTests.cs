@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +6,10 @@ using System.Numerics;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class PackingTests
     {
-        [Test]
+        [TestMethod]
         public void Knapsack()
         {
             var expected = new long[] { 3, 2 };
@@ -18,7 +18,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void Knapsack01()
         {
             var items = Enumerable.Range(1, 45)
@@ -31,7 +31,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void Knapsack01ZeroItems()
         {
             var items = new List<BigInteger>();
@@ -42,7 +42,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void Knapsack01OneItem()
         {
             var items = Enumerable.Range(1, 1)

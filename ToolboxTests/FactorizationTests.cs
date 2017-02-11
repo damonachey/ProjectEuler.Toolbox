@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
@@ -6,10 +6,10 @@ using System.Numerics;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class FactorizationTests
     {
-        [Test]
+        [TestMethod]
         public void FactorCountZero()
         {
             var expected = 0;
@@ -18,7 +18,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void FactorCount()
         {
             var expected = 12;
@@ -27,7 +27,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void FactorsInt()
         {
 
@@ -37,7 +37,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.OrderBy(sequence => sequence).SequenceEqual(actual.OrderBy(sequence => sequence)));
         }
 
-        [Test]
+        [TestMethod]
         public void FactorsLong()
         {
             var expected = new long[] { 1, 2, 4, 103, 206, 412 };
@@ -46,7 +46,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.OrderBy(sequence => sequence).SequenceEqual(actual.OrderBy(sequence => sequence)));
         }
 
-        [Test]
+        [TestMethod]
         public void FactorsBigInteger()
         {
             var expected = new BigInteger[] { 1, 2, 4, 103, 206, 412 };
@@ -55,7 +55,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.OrderBy(sequence => sequence).SequenceEqual(actual.OrderBy(sequence => sequence)));
         }
 
-        [Test]
+        [TestMethod]
         public void FactorsBigIntegerPrime()
         {
             var expected = 2;
@@ -64,7 +64,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void FactorsBigIntegerNonPrime()
         {
             var expected = 32;
@@ -73,7 +73,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void GCDInt()
         {
             var expected = 4;
@@ -82,7 +82,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void GCDLong()
         {
             var expected = 4;
@@ -91,25 +91,28 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void LCMIntArgumentOutOfRange()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Factorization.LCM(0, 5));
+            Factorization.LCM(0, 5);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void LCMLongArgumentOutOfRange()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Factorization.LCM(0L, 5));
+            Factorization.LCM(0L, 5);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void LCMBigIntegerArgumentOutOfRange()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Factorization.LCM(BigInteger.Zero, 5));
+            Factorization.LCM(BigInteger.Zero, 5);
         }
 
-        [Test]
+        [TestMethod]
         public void LCMInt()
         {
             var expected = 336;
@@ -118,7 +121,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void LCMLong()
         {
             var expected = 336;
@@ -127,7 +130,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void LCMBigInteger()
         {
             var expected = new BigInteger(336);
@@ -136,7 +139,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PrimeFactorsIntZero()
         {
             var expected = new int[] { };
@@ -145,7 +148,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void PrimeFactorsInt()
         {
             var expected = new int[] { 2, 2, 5, 103 };
@@ -154,7 +157,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void PrimeFactorsLongZero()
         {
             var expected = new long[] { };
@@ -163,7 +166,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void PrimeFactorsLong()
         {
             var expected = new long[] { 2, 2, 5, 103 };
@@ -172,7 +175,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void PrimeFactorsBigIntegerZero()
         {
             var expected = new BigInteger[] { };
@@ -181,7 +184,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void PrimeFactorsBigInteger()
         {
             var expected = new BigInteger[] { 2, 3, 13, 163, 514884037 };
@@ -190,7 +193,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void PrimeFactorsPrime()
         {
             var expected = 1;
@@ -199,7 +202,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PrimeFactorsNonPrime()
         {
             var expected = 5;

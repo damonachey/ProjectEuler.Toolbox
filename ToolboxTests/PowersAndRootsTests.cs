@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Numerics;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class PowersAndRootsTests
     {
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareFalse()
         {
             var actual = PowersAndRoots.IsPerfectSquare(9223372036854775807);
@@ -16,7 +16,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareFalse2()
         {
             var actual = PowersAndRoots.IsPerfectSquare(24);
@@ -24,7 +24,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareTrue()
         {
             var actual = PowersAndRoots.IsPerfectSquare(9223372036854775808);
@@ -32,7 +32,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareBigIntegerTrue()
         {
             var actual = PowersAndRoots.IsPerfectSquare(BigInteger.Parse("119395365954817634641176944193187475791716"));
@@ -40,7 +40,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareBigIntegerFalse()
         {
             var actual = PowersAndRoots.IsPerfectSquare(BigInteger.Parse("119395365954817634641176944193187475791715"));
@@ -48,7 +48,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareBigIntegerFalse2()
         {
             var actual = PowersAndRoots.IsPerfectSquare(new BigInteger(24));
@@ -56,7 +56,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareZero()
         {
             var actual = PowersAndRoots.IsPerfectSquare(0);
@@ -64,7 +64,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareOne()
         {
             var actual = PowersAndRoots.IsPerfectSquare(1);
@@ -72,7 +72,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareNegative()
         {
             var actual = PowersAndRoots.IsPerfectSquare(-4);
@@ -80,7 +80,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareBigIntegerZero()
         {
             var actual = PowersAndRoots.IsPerfectSquare(BigInteger.Zero);
@@ -88,7 +88,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareBigIntegerOne()
         {
             var actual = PowersAndRoots.IsPerfectSquare(new BigInteger(1));
@@ -96,7 +96,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPerfectSquareBigIntegerNegative()
         {
             var actual = PowersAndRoots.IsPerfectSquare(new BigInteger(-4));
@@ -104,7 +104,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void SqrtFloor()
         {
             var expected = new BigInteger(35130);
@@ -113,7 +113,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void SqrtFloorZero()
         {
             var expected = BigInteger.Zero;
@@ -122,13 +122,14 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArithmeticException))]
         public void SqrtFloorNegative()
         {
-            Assert.Throws<ArithmeticException>(() => PowersAndRoots.SqrtFloor(BigInteger.MinusOne));
+            PowersAndRoots.SqrtFloor(BigInteger.MinusOne);
         }
 
-        [Test]
+        [TestMethod]
         public void SqrtIrrational()
         {
             var expected = 1.4142135623730950488016887242m;
@@ -137,7 +138,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void SqrtSquare()
         {
             var expected = 4;
@@ -146,7 +147,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
         
-        [Test]
+        [TestMethod]
         public void SqrtZero()
         {
             var expected = 0;
@@ -155,10 +156,11 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SqrtDecimalNegative()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => PowersAndRoots.Sqrt(-2));
+            PowersAndRoots.Sqrt(-2);
         }
     }
 }

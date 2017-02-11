@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
@@ -6,10 +6,10 @@ using System.Numerics;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class NumericExtensionsTests
     {
-        [Test]
+        [TestMethod]
         public void ReduceRomanNumeral()
         {
             var expected = "MCMCXCXLXIXIV";
@@ -18,7 +18,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ReverseInt()
         {
 
@@ -28,7 +28,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ReverseLong()
         {
             var expected = 321;
@@ -37,7 +37,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ReverseBigInteger()
         {
             var expected = new BigInteger(321);
@@ -46,7 +46,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void ToDigitsInt()
         {
             var expected = new int[] { 4, 3, 2, 1 };
@@ -55,7 +55,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void ToDigitsLong()
         {
             var expected = new int[] { 4, 3, 2, 1 };
@@ -64,7 +64,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void ToDigitsBigInteger()
         {
             var expected = new int[] { 4, 3, 2, 1 };

@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class TotientTests
     {
-        [Test]
+        [TestMethod]
         public void PhiMaxSet()
         {
             var expected = 3852;
@@ -17,7 +17,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PhiOne()
         {
             var expected = 1;
@@ -27,7 +27,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void Phi()
         {
             var expected = 8;
@@ -37,14 +37,15 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void PhiGreaterThanN()
         {
             var totient = new Totient(10);
-            Assert.Throws<ArgumentOutOfRangeException>(() => totient.Phi(20));
+            totient.Phi(20);
         }
 
-        [Test]
+        [TestMethod]
         public void Phi2()
         {
             var expected = 10083087720778;
@@ -53,7 +54,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PhiPhi2()
         {
             var totient = new Totient(100);
@@ -63,7 +64,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void MaxnOverPhin()
         {
             var expected = 30;
@@ -72,7 +73,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void MinnOverPhin()
         {
             var expected = 49;

@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class ParsersTests
     {
-        [Test]
+        [TestMethod]
         public void ParseStringLists()
         {
             var expected = new List<List<string>>
@@ -24,7 +24,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SelectMany(sequence => sequence).SequenceEqual(actual.SelectMany(sequence => sequence)));
         }
 
-        [Test]
+        [TestMethod]
         public void ParseStringList()
         {
             var expected = new List<string>
@@ -41,7 +41,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
 
-        [Test]
+        [TestMethod]
         public void ParseLongLists()
         {
             var expected = new List<List<long>>
@@ -57,7 +57,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(expected.SelectMany(sequence => sequence).SequenceEqual(actual.SelectMany(sequence => sequence)));
         }
 
-        [Test]
+        [TestMethod]
         public void ParseLongGrid()
         {
             var expected = new int[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };
@@ -75,7 +75,7 @@ namespace ProjectEuler.ToolboxTests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void ParseIntGrid()
         {
             var expected = new long[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };

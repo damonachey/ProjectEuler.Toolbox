@@ -1,10 +1,5 @@
 ﻿<ProjectConfiguration>
   <Settings>
-    <HiddenComponentWarnings>
-      <Value>AssemblyReferenceToBuildOutputDirectory</Value>
-      <Value>LongTestTimesWithoutParallelExecution</Value>
-      <Value>MSTestAccessorsExist</Value>
-    </HiddenComponentWarnings>
     <PreviouslyBuiltSuccessfully>True</PreviouslyBuiltSuccessfully>
   </Settings>
 </ProjectConfiguration>

@@ -1,22 +1,23 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class LinearAssignmentProblemTests
     {
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void FindAssignmentsNull()
         {
-            Assert.Throws<ArgumentNullException>(() => LinearAssignmentProblem
+            LinearAssignmentProblem
                 .HungarianAlgorithm
-                .FindAssignments(null));
+                .FindAssignments(null);
         }
 
-        [Test]
+        [TestMethod]
         public void FindAssignments()
         {
             var expected = new[] { 4, 1, 2, 3, 0 };
@@ -30,7 +31,7 @@ namespace ProjectEuler.ToolboxTests
                     -767 -473 -103 -699 -303
                     "));
 
-            Assert.AreEqual(expected, actual);
+            Assert.IsTrue(expected.SequenceEqual(actual), actual.EnumerableToString());
         }
     }
 }

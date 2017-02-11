@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
@@ -6,10 +6,28 @@ using System.Numerics;
 
 namespace ProjectEuler.ToolboxTests
 {
-    [TestFixture]
+    [TestClass]
     public class CombinatoricsTests
     {
-        [Test]
+        [TestMethod]
+        public void AnagramCount()
+        {
+            var expected = 60;
+            var actual = Combinatorics.AnagramCount(new[] { 1, 2, 3 });
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CircularPermutationcount()
+        {
+            var expected = 120;
+            var actual = Combinatorics.CircularPermutationCount(6);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         public void CombinationCount()
         {
             var expected = new BigInteger(84);
@@ -18,13 +36,14 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CombinationCountInvalidArgument()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Combinatorics.CombinationCount(0, 0));
+            Combinatorics.CombinationCount(0, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void CombinationsString()
         {
             var expected = 84;
@@ -34,7 +53,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual.Distinct().Count());
         }
 
-        [Test]
+        [TestMethod]
         public void CombinationsEnumerable()
         {
             var expected = 84;
@@ -44,7 +63,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual.Distinct().Count());
         }
 
-        [Test]
+        [TestMethod]
         public void PartitionCountInt()
         {
             var expected = new BigInteger(30);
@@ -53,7 +72,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PartitionCountUnits()
         {
             var expected = new BigInteger(292);
@@ -62,7 +81,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PartitionsInt()
         {
             var expected = 30;
@@ -72,7 +91,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual0.Distinct().Count());
         }
 
-        [Test]
+        [TestMethod]
         public void PartitionsUnits()
         {
             var expected = 292;
@@ -82,7 +101,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual.Distinct().Count());
         }
 
-        [Test]
+        [TestMethod]
         public void IsPermutationTrue()
         {
             var actual = "1234567890".IsPermutation("0192837465");
@@ -90,7 +109,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsTrue(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void IsPermutationFalse()
         {
             var actual = "1234567890".IsPermutation("0192827465");
@@ -98,7 +117,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.IsFalse(actual);
         }
 
-        [Test]
+        [TestMethod]
         public void PermutationCountNK()
         {
             var expected = new BigInteger(970200);
@@ -107,13 +126,14 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void PermutationCountInvalidArguments()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Combinatorics.PermutationCount(0, 0));
+            Combinatorics.PermutationCount(0, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void PermutationsString()
         {
             var expected = 720;
@@ -123,7 +143,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual.Distinct().Count());
         }
 
-        [Test]
+        [TestMethod]
         public void PermutationsStringK()
         {
             var expected = 720;
@@ -133,7 +153,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual.Distinct().Count());
         }
 
-        [Test]
+        [TestMethod]
         public void PermutationsEnumerable()
         {
             var expected = 720;
@@ -143,7 +163,7 @@ namespace ProjectEuler.ToolboxTests
             Assert.AreEqual(expected, actual.Distinct().Count());
         }
 
-        [Test]
+        [TestMethod]
         public void PermutationsEnumerableK()
         {
             var expected = 720;

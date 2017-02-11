@@ -8,10 +8,10 @@ namespace ProjectEuler.Toolbox
 {
     public class Circle2
     {
-        public Point2<double> C { get; }
+        public Point2 C { get; }
         public double R { get; }
 
-        public Circle2(Point2<double> c, double r)
+        public Circle2(Point2 c, double r)
         {
             C = c;
             R = r;

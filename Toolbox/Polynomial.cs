@@ -16,7 +16,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="x">Starting x interpolation range.</param>
         /// <param name="dx">Delta x for interpolations.</param>
         /// <returns></returns>
-        public static IEnumerable<Vector> Lagrange(IList<Vector> points, double x, double dx)
+        public static IEnumerable<Point2> Lagrange(IList<Point2> points, double x, double dx)
         {
             while (true)
             {
@@ -37,7 +37,7 @@ namespace ProjectEuler.Toolbox
 
                 var y = points.Select((t, i) => l[i] * t.Y).Sum();
 
-                yield return new Vector(x, y);
+                yield return new Point2(x, y);
 
                 x += dx;
             }
