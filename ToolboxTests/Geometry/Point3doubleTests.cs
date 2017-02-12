@@ -6,49 +6,41 @@ using System.Linq;
 namespace ProjectEuler.ToolboxTests
 {
     [TestClass]
-    public class Point2Tests
+    public class Point3doubleTests
     {
         [TestMethod]
-        public void Point2()
+        public void Point3double()
         {
-            var p = new Point2(1, 2);
+            var p = new Point3double(1, 2, 3);
 
             Assert.AreEqual(1, p.X);
             Assert.AreEqual(2, p.Y);
+            Assert.AreEqual(3, p.Z);
         }
 
         [TestMethod]
         public new void ToString()
         {
-            var expected = "(1, 2)";
-            var p = new Point2(1, 2);
+            var expected = "(1, 2, 3)";
+            var p = new Point3double(1, 2, 3);
             var actual = p.ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void EqualsFalse()
+        public void Equals()
         {
-            var p = new Point2(1, 2);
+            var p = new Point3double(1, 2, 3);
 
             Assert.AreNotEqual(p, 1);
         }
 
         [TestMethod]
-        public void EqualsFalse2()
+        public void Equals2()
         {
-            var p1 = new Point2(2, 2);
-            var p2 = new Point2(1, 2);
-
-            Assert.AreNotEqual(p1, p2);
-        }
-
-        [TestMethod]
-        public void EqualsTrue()
-        {
-            var p1 = new Point2(1, 2);
-            var p2 = new Point2(1, 2);
+            var p1 = new Point3double(1, 2, 3);
+            var p2 = new Point3double(1, 2, 3);
 
             Assert.AreEqual(p1, p2);
         }
@@ -56,8 +48,8 @@ namespace ProjectEuler.ToolboxTests
         [TestMethod]
         public new void GetHashCode()
         {
-            var expected = 2146435072;
-            var p = new Point2(1, 2);
+            var expected = 1073217536;
+            var p = new Point3double(1, 2, 3);
             var actual = p.GetHashCode();
 
             Assert.AreEqual(expected, actual);
@@ -66,8 +58,8 @@ namespace ProjectEuler.ToolboxTests
         [TestMethod]
         public void op_Equals()
         {
-            var p1 = new Point2(1, 2);
-            var p2 = new Point2(1, 2);
+            var p1 = new Point3double(1, 2, 3);
+            var p2 = new Point3double(1, 2, 3);
 
             Assert.IsTrue(p1 == p2);
         }
@@ -75,8 +67,8 @@ namespace ProjectEuler.ToolboxTests
         [TestMethod]
         public void op_NotEquals()
         {
-            var p1 = new Point2(1, 2);
-            var p2 = new Point2(1, 3);
+            var p1 = new Point3double(1, 2, 3);
+            var p2 = new Point3double(1, 2, 4);
 
             Assert.IsTrue(p1 != p2);
         }

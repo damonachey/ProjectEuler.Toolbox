@@ -64,7 +64,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="b"></param>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static bool IsPointInTriangle(Point3 p, Point3 a, Point3 b, Point3 c) => 
+        public static bool IsPointInTriangle(Point3double p, Point3double a, Point3double b, Point3double c) => 
             SameSide(p, a, b, c) && SameSide(p, b, a, c) && SameSide(p, c, a, b);
 
         /// <summary>
@@ -122,15 +122,15 @@ namespace ProjectEuler.Toolbox
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        private static bool SameSide(Point3 p1, Point3 p2, Point3 a, Point3 b)
+        private static bool SameSide(Point3double p1, Point3double p2, Point3double a, Point3double b)
         {
-            var cp1 = Point3.Cross(b - a, p1 - a);
-            var cp2 = Point3.Cross(b - a, p2 - a);
+            var cp1 = (b - a).Cross(p1 - a);
+            var cp2 = (b - a).Cross(p2 - a);
 
-            return Point3.Dot(cp1, cp2) >= 0;
+            return cp1.Dot(cp2) >= 0;
         }
 
-        public static BigRational Distance(Point2 p1, Point2 p2)
+        public static double Distance(Point2double p1, Point2double p2)
         {
             var dx = p2.X - p1.X;
             var dy = p2.Y - p1.Y;
@@ -138,10 +138,10 @@ namespace ProjectEuler.Toolbox
             var dx2 = dx * dx;
             var dy2 = dy * dy;
 
-            return BigRational.Sqrt(dx2 + dy2, 10);
+            return Math.Sqrt(dx2 + dy2);
         }
 
-        public static double Side(Point2 p1, Point2 p2, Point2 p3) => 
+        public static double Side(Point2double p1, Point2double p2, Point2double p3) => 
             (p2.X - p1.X) * (p3.Y - p1.Y) - (p2.Y - p1.Y) * (p3.X - p1.X);
     }
 }

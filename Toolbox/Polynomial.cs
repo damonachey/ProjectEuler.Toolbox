@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 
 namespace ProjectEuler.Toolbox
 {
@@ -16,7 +14,7 @@ namespace ProjectEuler.Toolbox
         /// <param name="x">Starting x interpolation range.</param>
         /// <param name="dx">Delta x for interpolations.</param>
         /// <returns></returns>
-        public static IEnumerable<Point2> Lagrange(IList<Point2> points, double x, double dx)
+        public static IEnumerable<Point2double> Lagrange(IList<Point2double> points, double x, double dx)
         {
             while (true)
             {
@@ -37,7 +35,7 @@ namespace ProjectEuler.Toolbox
 
                 var y = points.Select((t, i) => l[i] * t.Y).Sum();
 
-                yield return new Point2(x, y);
+                yield return new Point2double(x, y);
 
                 x += dx;
             }
