@@ -66,6 +66,7 @@
     <Compile Include="Geometry\Point2BigRational.cs" />
     <Compile Include="Geometry\Point2double.cs" />
     <Compile Include="Geometry\Point3Extensions.cs" />
+    <Compile Include="Geometry\Polygon2BigRational.cs" />
     <Compile Include="Geometry\Polygon2double.cs" />
     <Compile Include="Geometry\Triangle2Extensions.cs" />
     <Compile Include="Geometry\Triangle2double.cs" />

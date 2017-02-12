@@ -141,6 +141,17 @@ namespace ProjectEuler.Toolbox
             return Math.Sqrt(dx2 + dy2);
         }
 
+        public static BigRational Distance(Point2BigRational p1, Point2BigRational p2)
+        {
+            var dx = p2.X - p1.X;
+            var dy = p2.Y - p1.Y;
+
+            var dx2 = dx * dx;
+            var dy2 = dy * dy;
+
+            return BigRational.Sqrt(dx2 + dy2, 6);
+        }
+
         public static double Side(Point2double p1, Point2double p2, Point2double p3) => 
             (p2.X - p1.X) * (p3.Y - p1.Y) - (p2.Y - p1.Y) * (p3.X - p1.X);
     }

@@ -59,11 +59,22 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [TestMethod]
-        public void Distance()
+        public void DistanceDouble()
         {
-            var expected = new BigRational(5);
+            var expected = 5;
             var p1 = new Point2double(1, 2);
             var p2 = new Point2double(4, 6);
+            var actual = Geometry.Distance(p1, p2);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void DistanceBigRational()
+        {
+            var expected = new BigRational(5);
+            var p1 = new Point2BigRational(1, 2);
+            var p2 = new Point2BigRational(4, 6);
             var actual = Geometry.Distance(p1, p2);
 
             Assert.AreEqual(expected, actual);
