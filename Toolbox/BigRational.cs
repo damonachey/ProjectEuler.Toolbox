@@ -367,7 +367,7 @@ namespace ProjectEuler.Toolbox
 
             var fraction = GetFractionPart();
             var adjustedNumerator = (fraction.Numerator * BigInteger.Pow(10, precision));
-            var decimalPlaces = adjustedNumerator / fraction.Denominator;
+            var decimalPlaces = BigInteger.Abs(adjustedNumerator / fraction.Denominator);
 
             // Case where precision wasn't large enough.
             if (decimalPlaces == 0)

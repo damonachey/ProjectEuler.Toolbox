@@ -1090,6 +1090,24 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [TestMethod]
+        public void ToDecimalStringNegative()
+        {
+            var expected = "-3.5";
+            var actual = new BigRational(-7, 2).ToDecimalString(2);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ToDecimalStringNegative2()
+        {
+            var expected = "-3.5";
+            var actual = new BigRational(7, -2).ToDecimalString(2);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         public void PI()
         {
             var expected = Math.PI;
