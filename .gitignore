@@ -10,3 +10,5 @@ __pycache__
 _Resharper*
 packages/
 *.cache
+/.vs/ProjectEuler.Toolbox/DesignTimeBuild
+/.vs/ProjectEuler.Toolbox/v15/Server/sqlite3
