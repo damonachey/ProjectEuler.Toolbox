@@ -334,6 +334,74 @@ namespace ProjectEuler.Toolbox
             return queue.AsEnumerable();
         }
 
+        public static IEnumerable<TSource> TakeUntil<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        {
+            foreach (var item in source)
+            {
+                yield return item;
+
+                if (predicate(item)) break;
+            }
+        }
+
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+            => source
+                .GroupBy(keySelector)
+                .Select(group => group.First());
+
+        public static T SecondLast<T>(this IEnumerable<T> items)
+        {
+            var any = false;
+            var found = false;
+            T current = default;
+            T secondLast = default;
+
+            foreach (var item in items)
+            {
+                if (any)
+                {
+                    secondLast = current;
+                    found = true;
+                }
+
+                current = item;
+                any = true;
+            }
+
+            if (!found)
+            {
+                throw new InvalidOperationException("Sequence contains fewer than two elements");
+            }
+
+            return secondLast;
+        }
+
+        public static List<object> Errors = new List<object>();
+
+        public static IEnumerable<TResult> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+        {
+            foreach (var item in source)
+            {
+                var result = default(TResult);
+                var wasSuccesful = false;
+
+                try
+                {
+                    result = selector(item);
+                    wasSuccesful = true;
+                }
+                catch (Exception ex)
+                {
+                    Errors.Add(new { item, ex });
+                }
+
+                if (wasSuccesful)
+                {
+                    yield return result;
+                }
+            }
+        }
+
         /// <summary>
         /// Enumerable ForAll
         /// </summary>

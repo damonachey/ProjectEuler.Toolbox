@@ -12,3 +12,4 @@ packages/
 *.cache
 /.vs/ProjectEuler.Toolbox/DesignTimeBuild
 /.vs/ProjectEuler.Toolbox/v15/Server/sqlite3
+/.vs/ProjectEuler.Toolbox/v16/Server/sqlite3
