@@ -127,6 +127,15 @@ namespace ProjectEuler.ToolboxTests
         }
 
         [TestMethod]
+        public void PermutationCountDistinct()
+        {
+            var expected = new BigInteger(120);
+            var actual = Combinatorics.PermutationCountDistinct("ABCDAA");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void PermutationCountInvalidArguments()
         {
@@ -137,37 +146,43 @@ namespace ProjectEuler.ToolboxTests
         public void PermutationsString()
         {
             var expected = 720;
-            var actual = "123456".Permutations().ToList();
+            var actual = "113456".Permutations().ToList();
 
             Assert.AreEqual(expected, actual.Count);
-            Assert.AreEqual(expected, actual.Distinct().Count());
+        }
+
+        [TestMethod]
+        public void PermutationsDistinctString()
+        {
+            var expected = 360;
+            var actual = "113456".PermutationsDistinct().ToList();
+
+            Assert.AreEqual(expected, actual.Count);
         }
 
         [TestMethod]
         public void PermutationsStringK()
         {
             var expected = 720;
-            var actual = "123456".Permutations(6).ToList();
+            var actual = "113456".Permutations(6).ToList();
 
             Assert.AreEqual(expected, actual.Count);
-            Assert.AreEqual(expected, actual.Distinct().Count());
         }
 
         [TestMethod]
-        public void PermutationsEnumerable()
+        public void PermutationsDistinctEnumerable()
         {
-            var expected = 720;
-            var actual = Enumerable.Range(1, 6).Permutations().ToList();
+            var expected = 360;
+            var actual = new[] { 1, 1, 3, 4, 5, 6 }.PermutationsDistinct().ToList();
 
             Assert.AreEqual(expected, actual.Count);
-            Assert.AreEqual(expected, actual.Distinct().Count());
         }
 
         [TestMethod]
         public void PermutationsEnumerableK()
         {
             var expected = 720;
-            var actual = Enumerable.Range(1, 6).Permutations(6).ToList();
+            var actual = new[] { 1, 1, 3, 4, 5, 6 }.Permutations(6).ToList();
 
             Assert.AreEqual(expected, actual.Count);
             Assert.AreEqual(expected, actual.Distinct().Count());

@@ -35,7 +35,8 @@ namespace ProjectEuler.Toolbox
         /// <param name="s"></param>
         /// <param name="k"></param>
         /// <returns></returns>
-        public static IEnumerable<string> Combinations(this string s, int k) => Combinations(s.ToCharArray(), k).Select(c => string.Join("", c));
+        public static IEnumerable<string> Combinations(this string s, int k) => 
+            Combinations(s.ToCharArray(), k).Select(c => string.Join("", c));
 
         /// <summary>
         /// Generate all combinations of s of k size
@@ -242,7 +243,8 @@ namespace ProjectEuler.Toolbox
         /// <param name="s1"></param>
         /// <param name="s2"></param>
         /// <returns></returns>
-        public static bool IsPermutation(this string s1, string s2) => s1.Length == s2.Length && s1.OrderBy(c => c).SequenceEqual(s2.OrderBy(c2 => c2));
+        public static bool IsPermutation(this string s1, string s2) => 
+            s1.Length == s2.Length && s1.OrderBy(c => c).SequenceEqual(s2.OrderBy(c2 => c2));
 
         /// <summary>
         /// Compute the number of permutations nPk.
@@ -258,6 +260,27 @@ namespace ProjectEuler.Toolbox
             }
 
             return MathLibrary.Factorial(n) / MathLibrary.Factorial(n - k);
+        }
+
+        /// <summary>
+        /// Compute the number of distinct permutations when duplicate values are present
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static BigInteger PermutationCountDistinct(string str)
+        {
+            var digitCounts = str
+                .GroupBy(i => i)
+                .Select(kvp => kvp.Count())
+                .ToList();
+
+            var num = MathLibrary.Factorial(str.Length);
+            var den = BigInteger.One;
+
+            foreach (var count in digitCounts)
+                den *= MathLibrary.Factorial(count);
+
+            return num / den;
         }
 
         /// <summary>
@@ -280,6 +303,50 @@ namespace ProjectEuler.Toolbox
                 foreach (var perm in Permutations(s2, p + s[i]))
                 {
                     yield return perm;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generates all permutations of s.  Guaranteed to be lexicographical if s was sorted initially.  No duplicates.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> PermutationsDistinct(this string str)
+        {
+            foreach (var p in PermutationsDistinct(str.ToCharArray(), 0, str.Length))
+                yield return string.Join("", p);
+
+            IEnumerable<T[]> PermutationsDistinct<T>(T[] chrs1, int index, int n)
+            {
+                if (index >= n)
+                {
+                    yield return chrs1;
+                    yield break;
+                }
+
+                for (int i = index; i < n; i++)
+                {
+                    bool check = shouldSwap(chrs1, index, i);
+                    if (check)
+                    {
+                        chrs1.Swap(index, i);
+                        foreach (var r in PermutationsDistinct(chrs1, index + 1, n))
+                            yield return r;
+                        chrs1.Swap(index, i);
+                    }
+                }
+
+                bool shouldSwap(T[] chrs2, int start, int curr)
+                {
+                    for (int i = start; i < curr; i++)
+                    {
+                        if (chrs2[i].Equals(chrs2[curr]))
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
                 }
             }
         }
@@ -311,6 +378,40 @@ namespace ProjectEuler.Toolbox
         }
 
         /// <summary>
+        /// Get the next permutations of the sequence in place.  Duplicates are not repeated.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static IEnumerable<T[]> PermutationsDistinct<T>(this IEnumerable<T> s) where T : IComparable
+        {
+            var sa = s.ToArray();
+            yield return sa.ToArray();
+
+            var i = sa.Length - 1;
+
+            while (i != 0)
+            {
+                var ii = i--;
+
+                if (sa[i].CompareTo(sa[ii]) < 0)
+                {
+                    var j = sa.Length - 1;
+
+                    while (!(sa[i].CompareTo(sa[j]) < 0))
+                    {
+                        j--;
+                    }
+
+                    sa.Swap(i, j);
+                    sa.ReverseRange(ii, sa.Length);
+                    yield return sa.ToArray();
+                    i = sa.Length - 1;
+                }
+            }
+        }
+
+        /// <summary>
         /// Generates all permutations of s.  Duplicates are treated as unique.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -336,40 +437,6 @@ namespace ProjectEuler.Toolbox
                     {
                         yield return new[] { e }.Concat(perm).ToArray();
                     }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get the next permutations of the sequence in place.  Duplicates are not repeated.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public static IEnumerable<T[]> Permutations<T>(this IEnumerable<T> s) where T : IComparable
-        {
-            var sa = s.ToArray();
-            yield return sa.ToArray();
-
-            var i = sa.Length - 1;
-
-            while (i != 0)
-            {
-                var ii = i--;
-
-                if (sa[i].CompareTo(sa[ii]) < 0)
-                {
-                    var j = sa.Length - 1;
-
-                    while (!(sa[i].CompareTo(sa[j]) < 0))
-                    {
-                        j--;
-                    }
-
-                    sa.Swap(i, j);
-                    sa.ReverseRange(ii, sa.Length);
-                    yield return sa.ToArray();
-                    i = sa.Length - 1;
                 }
             }
         }
