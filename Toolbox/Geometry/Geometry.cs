@@ -154,5 +154,23 @@ namespace ProjectEuler.Toolbox
 
         public static double Side(Point2double p1, Point2double p2, Point2double p3) => 
             (p2.X - p1.X) * (p3.Y - p1.Y) - (p2.Y - p1.Y) * (p3.X - p1.X);
+
+        public static double TriangleInscribedCirlceRadius(int a, int b, int c)
+        {
+            var s = (a + b + c) / 2.0;
+
+            return Math.Sqrt((s - a) * (s - b) * (s - c) / s);
+        }
+
+        public static Point2double TriangleThirdPoint(Point2double B, double ba, Point2double C, double ca)
+        {
+            if (B != (0, 0)) throw new Exception();
+            if (C.Y != 0) throw new Exception();
+
+            var x = (ba * ba - ca * ca + C.X * C.X) / (2 * C.X);
+            var y = Math.Sqrt(ba * ba - x * x);
+
+            return (x, y);
+        }
     }
 }

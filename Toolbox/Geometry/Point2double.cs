@@ -14,6 +14,15 @@ namespace ProjectEuler.Toolbox
             Y = y;
         }
 
+        public static implicit operator Point2double((double x, double y) p) =>
+            new Point2double(p.x, p.y);
+
+        public void Deconstruct(out double x, out double y)
+        {
+            x = X;
+            y = Y;
+        }
+
         public override string ToString() =>
             $"({X}, {Y})";
 
