@@ -12,10 +12,6 @@
 //
 // Version: 1.5.0 final
 
-using System;
-
-#pragma warning disable RCS1110 // Declare type inside namespace.
-#pragma warning disable RCS1123 // Add parentheses according to operator precedence.
 #pragma warning disable CS0675 // Bitwise-or operator used on a sign-extended operand
 static class QuickLZ
 {
@@ -480,5 +476,3 @@ static class QuickLZ
     }
 }
 #pragma warning restore CS0675 // Bitwise-or operator used on a sign-extended operand
-#pragma warning restore RCS1123 // Add parentheses according to operator precedence.
-#pragma warning restore RCS1110 // Declare type inside namespace.

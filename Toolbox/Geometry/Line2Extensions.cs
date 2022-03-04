@@ -1,64 +1,61 @@
-﻿using System;
+﻿namespace ProjectEuler.Toolbox;
 
-namespace ProjectEuler.Toolbox
+public static class Line2Extensions
 {
-    public static class Line2Extensions
+    public static double Slope(this Line2double l) =>
+        (l.P2.Y - l.P1.Y) / (l.P2.X - l.P1.X);
+
+    public static double YIntercept(this Line2double l) =>
+        l.P1.Y - l.Slope() * l.P1.X;
+
+    public static double YIntercept(this Point2double p, double m) =>
+        p.Y - m * p.X;
+
+    public static double Length(this Line2double l)
     {
-        public static double Slope(this Line2double l) =>
-            (l.P2.Y - l.P1.Y) / (l.P2.X - l.P1.X);
+        var dx = l.P2.X - l.P1.X;
+        var dy = l.P2.Y - l.P1.Y;
 
-        public static double YIntercept(this Line2double l) =>
-            l.P1.Y - l.Slope() * l.P1.X;
+        var dx2 = dx * dx;
+        var dy2 = dy * dy;
 
-        public static double YIntercept(this Point2double p, double m) =>
-            p.Y - m * p.X;
+        return Math.Sqrt(dx2 + dy2);
+    }
 
-        public static double Length(this Line2double l)
+    public static bool Intersects(this Line2double l1, Line2double l2, out Point2double p)
+    {
+        p = default(Point2double);
+
+        var d = (l1.P1.X - l1.P2.X) * (l2.P1.Y - l2.P2.Y) - (l1.P1.Y - l1.P2.Y) * (l2.P1.X - l2.P2.X);
+
+        if (d != 0)
         {
-            var dx = l.P2.X - l.P1.X;
-            var dy = l.P2.Y - l.P1.Y;
+            var x = ((l1.P1.X * l1.P2.Y - l1.P1.Y * l1.P2.X) * (l2.P1.X - l2.P2.X) - (l1.P1.X - l1.P2.X) * (l2.P1.X * l2.P2.Y - l2.P1.Y * l2.P2.X)) / d;
+            var y = ((l1.P1.X * l1.P2.Y - l1.P1.Y * l1.P2.X) * (l2.P1.Y - l2.P2.Y) - (l1.P1.Y - l1.P2.Y) * (l2.P1.X * l2.P2.Y - l2.P1.Y * l2.P2.X)) / d;
 
-            var dx2 = dx * dx;
-            var dy2 = dy * dy;
+            var t = new Point2double(x, y);
 
-            return Math.Sqrt(dx2 + dy2);
-        }
-
-        public static bool Intersects(this Line2double l1, Line2double l2, out Point2double p)
-        {
-            p = default(Point2double);
-
-            var d = (l1.P1.X - l1.P2.X) * (l2.P1.Y - l2.P2.Y) - (l1.P1.Y - l1.P2.Y) * (l2.P1.X - l2.P2.X);
-
-            if (d != 0)
+            if (((l1.P1.X <= t.X && t.X <= l1.P2.X) || (l1.P2.X <= t.X && t.X <= l1.P1.X)) && ((l2.P1.X <= t.X && t.X <= l2.P2.X) || (l2.P2.X <= t.X && t.X <= l2.P1.X)) &&
+                ((l1.P1.Y <= t.Y && t.Y <= l1.P2.Y) || (l1.P2.Y <= t.Y && t.Y <= l1.P1.Y)) && ((l2.P1.Y <= t.Y && t.Y <= l2.P2.Y) || (l2.P2.Y <= t.Y && t.Y <= l2.P1.Y)) &&
+                l1.P1 != t && l1.P2 != t && l2.P1 != t && l2.P2 != t)
             {
-                var x = ((l1.P1.X * l1.P2.Y - l1.P1.Y * l1.P2.X) * (l2.P1.X - l2.P2.X) - (l1.P1.X - l1.P2.X) * (l2.P1.X * l2.P2.Y - l2.P1.Y * l2.P2.X)) / d;
-                var y = ((l1.P1.X * l1.P2.Y - l1.P1.Y * l1.P2.X) * (l2.P1.Y - l2.P2.Y) - (l1.P1.Y - l1.P2.Y) * (l2.P1.X * l2.P2.Y - l2.P1.Y * l2.P2.X)) / d;
+                p = t;
 
-                var t = new Point2double(x, y);
-
-                if (((l1.P1.X <= t.X && t.X <= l1.P2.X) || (l1.P2.X <= t.X && t.X <= l1.P1.X)) && ((l2.P1.X <= t.X && t.X <= l2.P2.X) || (l2.P2.X <= t.X && t.X <= l2.P1.X)) &&
-                    ((l1.P1.Y <= t.Y && t.Y <= l1.P2.Y) || (l1.P2.Y <= t.Y && t.Y <= l1.P1.Y)) && ((l2.P1.Y <= t.Y && t.Y <= l2.P2.Y) || (l2.P2.Y <= t.Y && t.Y <= l2.P1.Y)) &&
-                    l1.P1 != t && l1.P2 != t && l2.P1 != t && l2.P2 != t)
-                {
-                    p = t;
-
-                    return true;
-                }
+                return true;
             }
-
-            return false;
         }
 
-        public static Point2double ReflectPoint(this Line2double l, Point2double p)
-        {
-            var m = l.Slope();
-            var c = l.YIntercept();
-            var d = (p.X + (p.Y - c) * m) / (1 + m * m);
-            var x = 2 * d - p.X;
-            var y = 2 * d * m - p.Y + 2 * c;
+        return false;
+    }
 
-            return new Point2double(x, y);
-        }
+    public static Point2double ReflectPoint(this Line2double l, Point2double p)
+    {
+        var m = l.Slope();
+        var c = l.YIntercept();
+        var d = (p.X + (p.Y - c) * m) / (1 + m * m);
+        var x = 2 * d - p.X;
+        var y = 2 * d * m - p.Y + 2 * c;
+
+        return new Point2double(x, y);
     }
 }

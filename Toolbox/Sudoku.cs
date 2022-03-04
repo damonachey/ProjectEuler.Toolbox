@@ -1,98 +1,94 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace ProjectEuler.Toolbox;
 
-namespace ProjectEuler.Toolbox
+public static class Sudoku
 {
-    public static class Sudoku
+    /// <summary>
+    /// Recursively solve Sudoku puzzles via trial and error
+    /// </summary>
+    /// <param name="grid">Puzzle grid</param>
+    /// <returns>Completed puzzle or null if no solution</returns>
+    public static int[,] Solve(int[,] grid)
     {
-        /// <summary>
-        /// Recursively solve Sudoku puzzles via trial and error
-        /// </summary>
-        /// <param name="grid">Puzzle grid</param>
-        /// <returns>Completed puzzle or null if no solution</returns>
-        public static int[,] Solve(int[,] grid)
+        var possibleCellValues = InitializePossibleEmptyCellValues(grid);
+
+        while (true)
         {
-            var possibleCellValues = InitializePossibleEmptyCellValues(grid);
+            RemoveUsedRowColValuesFromPossibleCellValues(grid, possibleCellValues);
+            RemoveUsedBoxValuesFromPossibleCellValues(grid, possibleCellValues);
 
-            while (true)
+            if (!possibleCellValues.Any())
             {
-                RemoveUsedRowColValuesFromPossibleCellValues(grid, possibleCellValues);
-                RemoveUsedBoxValuesFromPossibleCellValues(grid, possibleCellValues);
+                return CheckAllSums(grid) ? grid : null;
+            }
 
-                if (!possibleCellValues.Any())
-                {
-                    return CheckAllSums(grid) ? grid : null;
-                }
+            if (!AssignCellsWithOnlyOnePossibleValue(grid, possibleCellValues))
+            {
+                return RecursivelyGuess(grid, possibleCellValues);
+            }
+        }
+    }
 
-                if (!AssignCellsWithOnlyOnePossibleValue(grid, possibleCellValues))
+    private static Dictionary<dynamic, IList<int>> InitializePossibleEmptyCellValues(int[,] grid)
+    {
+        var possibleCellValues = new Dictionary<dynamic, IList<int>>();
+
+        for (var x = 0; x < 9; x++)
+        {
+            for (var y = 0; y < 9; y++)
+            {
+                if (grid[x, y] == 0)
                 {
-                    return RecursivelyGuess(grid, possibleCellValues);
+                    var cell = new { x, y };
+                    possibleCellValues[cell] = Enumerable.Range(1, 9).ToList();
                 }
             }
         }
 
-        private static Dictionary<dynamic, IList<int>> InitializePossibleEmptyCellValues(int[,] grid)
-        {
-            var possibleCellValues = new Dictionary<dynamic, IList<int>>();
+        return possibleCellValues;
+    }
 
-            for (var x = 0; x < 9; x++)
+    private static void RemoveUsedRowColValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    {
+        for (var x = 0; x < 9; x++)
+        {
+            for (var y = 0; y < 9; y++)
             {
-                for (var y = 0; y < 9; y++)
+                if (grid[x, y] != 0)
                 {
-                    if (grid[x, y] == 0)
+                    for (var x1 = 0; x1 < 9; x1++)
                     {
-                        var cell = new { x = x, y = y };
-                        possibleCellValues[cell] = Enumerable.Range(1, 9).ToList();
+                        var cell = new { x = x1, y = y };
+                        RemovePossibleCellValue(possibleCellValues, cell, grid[x, y]);
                     }
-                }
-            }
 
-            return possibleCellValues;
-        }
-
-        private static void RemoveUsedRowColValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
-        {
-            for (var x = 0; x < 9; x++)
-            {
-                for (var y = 0; y < 9; y++)
-                {
-                    if (grid[x, y] != 0)
+                    for (var y1 = 0; y1 < 9; y1++)
                     {
-                        for (var x1 = 0; x1 < 9; x1++)
-                        {
-                            var cell = new { x = x1, y = y };
-                            RemovePossibleCellValue(possibleCellValues, cell, grid[x, y]);
-                        }
-
-                        for (var y1 = 0; y1 < 9; y1++)
-                        {
-                            var cell = new { x = x, y = y1 };
-                            RemovePossibleCellValue(possibleCellValues, cell, grid[x, y]);
-                        }
+                        var cell = new { x = x, y = y1 };
+                        RemovePossibleCellValue(possibleCellValues, cell, grid[x, y]);
                     }
                 }
             }
         }
+    }
 
-        private static void RemoveUsedBoxValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    private static void RemoveUsedBoxValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    {
+        for (var x = 0; x < 9; x += 3)
         {
-            for (var x = 0; x < 9; x += 3)
+            for (var y = 0; y < 9; y += 3)
             {
-                for (var y = 0; y < 9; y += 3)
+                for (var dx = 0; dx < 3; dx++)
                 {
-                    for (var dx = 0; dx < 3; dx++)
+                    for (var dy = 0; dy < 3; dy++)
                     {
-                        for (var dy = 0; dy < 3; dy++)
+                        if (grid[x + dx, y + dy] != 0)
                         {
-                            if (grid[x + dx, y + dy] != 0)
+                            for (var x1 = 0; x1 < 3; x1++)
                             {
-                                for (var x1 = 0; x1 < 3; x1++)
+                                for (var y1 = 0; y1 < 3; y1++)
                                 {
-                                    for (var y1 = 0; y1 < 3; y1++)
-                                    {
-                                        var cell = new { x = x + x1, y = y + y1 };
-                                        RemovePossibleCellValue(possibleCellValues, cell, grid[x + dx, y + dy]);
-                                    }
+                                    var cell = new { x = x + x1, y = y + y1 };
+                                    RemovePossibleCellValue(possibleCellValues, cell, grid[x + dx, y + dy]);
                                 }
                             }
                         }
@@ -100,53 +96,79 @@ namespace ProjectEuler.Toolbox
                 }
             }
         }
+    }
 
-        private static void RemovePossibleCellValue(Dictionary<dynamic, IList<int>> possibleCellValues, dynamic cell, int value)
+    private static void RemovePossibleCellValue(Dictionary<dynamic, IList<int>> possibleCellValues, dynamic cell, int value)
+    {
+        if (possibleCellValues.TryGetValue(cell, out IList<int> valueList))
         {
-            if (possibleCellValues.TryGetValue(cell, out IList<int> valueList))
-            {
-                valueList.Remove(value);
+            valueList.Remove(value);
 
-                if (!valueList.Any())
-                {
-                    possibleCellValues.Remove(cell);
-                }
+            if (!valueList.Any())
+            {
+                possibleCellValues.Remove(cell);
             }
         }
+    }
 
-        private static int ExpectedSum { get; } = 45;
+    private static int ExpectedSum { get; } = 45;
 
-        private static bool CheckAllSums(int[,] grid) => CheckColSums(grid) && CheckRowSums(grid) && CheckBoxSums(grid);
+    private static bool CheckAllSums(int[,] grid) => CheckColSums(grid) && CheckRowSums(grid) && CheckBoxSums(grid);
 
-        private static bool CheckColSums(int[,] grid)
+    private static bool CheckColSums(int[,] grid)
+    {
+        for (var x = 0; x < 9; x++)
         {
-            for (var x = 0; x < 9; x++)
-            {
-                var sum = 0;
+            var sum = 0;
 
-                for (var y = 0; y < 9; y++)
-                {
-                    sum += grid[x, y];
-                }
-
-                if (sum != ExpectedSum)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private static bool CheckRowSums(int[,] grid)
-        {
             for (var y = 0; y < 9; y++)
             {
+                sum += grid[x, y];
+            }
+
+            if (sum != ExpectedSum)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool CheckRowSums(int[,] grid)
+    {
+        for (var y = 0; y < 9; y++)
+        {
+            var sum = 0;
+
+            for (var x = 0; x < 9; x++)
+            {
+                sum += grid[x, y];
+            }
+
+            if (sum != ExpectedSum)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool CheckBoxSums(int[,] grid)
+    {
+        for (var x = 0; x < 9; x += 3)
+        {
+            for (var y = 0; y < 9; y += 3)
+            {
                 var sum = 0;
 
-                for (var x = 0; x < 9; x++)
+                for (var dx = 0; dx < 3; dx++)
                 {
-                    sum += grid[x, y];
+                    for (var dy = 0; dy < 3; dy++)
+                    {
+                        sum += grid[x + dx, y + dy];
+                    }
                 }
 
                 if (sum != ExpectedSum)
@@ -154,71 +176,45 @@ namespace ProjectEuler.Toolbox
                     return false;
                 }
             }
-
-            return true;
         }
 
-        private static bool CheckBoxSums(int[,] grid)
+        return true;
+    }
+
+    private static bool AssignCellsWithOnlyOnePossibleValue(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    {
+        var cellsWithOnePossibleValue = possibleCellValues
+            .Where(kvp => kvp.Value.Count == 1)
+            .ToList();
+
+        foreach (var cell in cellsWithOnePossibleValue)
         {
-            for (var x = 0; x < 9; x += 3)
-            {
-                for (var y = 0; y < 9; y += 3)
-                {
-                    var sum = 0;
-
-                    for (var dx = 0; dx < 3; dx++)
-                    {
-                        for (var dy = 0; dy < 3; dy++)
-                        {
-                            sum += grid[x + dx, y + dy];
-                        }
-                    }
-
-                    if (sum != ExpectedSum)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
+            grid[cell.Key.x, cell.Key.y] = cell.Value.Single();
+            possibleCellValues.Remove(cell.Key);
         }
 
-        private static bool AssignCellsWithOnlyOnePossibleValue(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+        return cellsWithOnePossibleValue.Any();
+    }
+
+    private static int[,] RecursivelyGuess(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    {
+        var emptyCellWithFewestPossibleValues = possibleCellValues
+            .OrderBy(kvp => kvp.Value.Count)
+            .First();
+
+        foreach (var value in emptyCellWithFewestPossibleValues.Value)
         {
-            var cellsWithOnePossibleValue = possibleCellValues
-                .Where(kvp => kvp.Value.Count == 1)
-                .ToList();
+            var tempGrid = (int[,])grid.Clone();
+            tempGrid[emptyCellWithFewestPossibleValues.Key.x, emptyCellWithFewestPossibleValues.Key.y] = value;
 
-            foreach (var cell in cellsWithOnePossibleValue)
+            var tempSolution = Solve(tempGrid);
+
+            if (tempSolution != null)
             {
-                grid[cell.Key.x, cell.Key.y] = cell.Value.Single();
-                possibleCellValues.Remove(cell.Key);
+                return tempSolution;
             }
-
-            return cellsWithOnePossibleValue.Any();
         }
 
-        private static int[,] RecursivelyGuess(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
-        {
-            var emptyCellWithFewestPossibleValues = possibleCellValues
-                .OrderBy(kvp => kvp.Value.Count)
-                .First();
-
-            foreach (var value in emptyCellWithFewestPossibleValues.Value)
-            {
-                var tempGrid = (int[,])grid.Clone();
-                tempGrid[emptyCellWithFewestPossibleValues.Key.x, emptyCellWithFewestPossibleValues.Key.y] = value;
-
-                var tempSolution = Solve(tempGrid);
-
-                if (tempSolution != null)
-                {
-                    return tempSolution;
-                }
-            }
-
-            return null;
-        }
+        return null;
     }
 }
