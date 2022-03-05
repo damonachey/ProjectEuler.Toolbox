@@ -37,7 +37,7 @@ public class SudokuTests
         {
             for (int j = 0; j < expected.GetLength(1); j++)
             {
-                Assert.Equal(expected[i, j], actual[i, j]);
+                Assert.Equal(expected[i, j], actual?[i, j]);
             }
         }
     }

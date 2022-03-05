@@ -54,7 +54,7 @@ public static class PathFinding
     /// <param name="goal"></param>
     /// <param name="neighbors"></param>
     /// <returns></returns>
-    public static long[,] DijkstraMinPathWeights(this long[,] grid, Coordinate start, Coordinate goal, Func<long[,], Coordinate, IEnumerable<Coordinate>> neighbors)
+    public static long[,] DijkstraMinPathWeights(this long[,] grid, Coordinate start, Coordinate? goal, Func<long[,], Coordinate, IEnumerable<Coordinate>> neighbors)
     {
         var dist = new long[grid.GetLength(0), grid.GetLength(1)];
         var q = new HashSet<Coordinate>();
@@ -73,7 +73,7 @@ public static class PathFinding
         while (q.Any())
         {
             var min = long.MaxValue;
-            var u = default(Coordinate);
+            var u = default(Coordinate)!;
 
             foreach (var t in q)
             {
@@ -183,7 +183,7 @@ public static class PathFinding
 
                 if (tentativeIsBetter)
                 {
-                    if (cameFrom.TryGetValue(neighbor, out Coordinate value))
+                    if (cameFrom.TryGetValue(neighbor, out var value))
                     {
                         value = u;
                     }
@@ -326,7 +326,7 @@ public static class PathFinding
 
     private static IEnumerable<Coordinate> ReconstitutePath(IDictionary<Coordinate, Coordinate> cameFrom, Coordinate current)
     {
-        if (cameFrom.TryGetValue(current, out Coordinate value))
+        if (cameFrom.TryGetValue(current, out var value))
         {
             foreach (var p in ReconstitutePath(cameFrom, value))
             {
@@ -358,7 +358,7 @@ public static class PathFinding
             return false;
         }
 
-        public bool Equals(Coordinate c)
+        public bool Equals(Coordinate? c)
         {
             if (c == null)
             {

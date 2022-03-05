@@ -204,63 +204,54 @@ public static class LinqExtensions
     /// <param name="second">The second sequence</param>
     /// <param name="operation">The operation used to merge the two sequences</param>
     /// <returns></returns>
-    public static IEnumerable<T3> MergeRepeatLast<T1, T2, T3>(this IEnumerable<T1> first, IEnumerable<T2> second, Func<T1, T2, T3> operation)
+    public static IEnumerable<T3> MergeRepeatLast<T1, T2, T3>(this IEnumerable<T1> first, IEnumerable<T2> second, Func<T1?, T2?, T3> operation)
     {
-        using (var iter1 = first.GetEnumerator())
-        using (var iter2 = second.GetEnumerator())
+        using var iter1 = first.GetEnumerator();
+        using var iter2 = second.GetEnumerator();
+        
+        var last1 = default(T1);
+        var last2 = default(T2);
+
+        while (iter1.MoveNext())
         {
-            var last1 = default(T1);
-            var last2 = default(T2);
+            last1 = iter1.Current;
 
-            while (iter1.MoveNext())
+            if (iter2.MoveNext())
             {
-                last1 = iter1.Current;
-
-                if (iter2.MoveNext())
-                {
-                    last2 = iter2.Current;
-                }
-
-                yield return operation(last1, last2);
+                last2 = iter2.Current;
             }
 
-            while (iter2.MoveNext())
-            {
-                yield return operation(last1, iter2.Current);
-            }
+            yield return operation(last1, last2);
+        }
+
+        while (iter2.MoveNext())
+        {
+            yield return operation(last1, iter2.Current);
         }
     }
 
     public static T SecondLast<T>(this IEnumerable<T> items)
     {
-        var any = false;
-        var found = false;
-        T current = default;
-        T secondLast = default;
+        var current = default(T);
+        var secondLast = default(T);
 
         foreach (var item in items)
         {
-            if (any)
+            if (current != null)
             {
                 secondLast = current;
-                found = true;
             }
 
             current = item;
-            any = true;
         }
 
-        if (!found)
-        {
-            throw new InvalidOperationException("Sequence contains fewer than two elements");
-        }
-
-        return secondLast;
+        return secondLast
+            ?? throw new InvalidOperationException("Sequence contains fewer than two elements"); ;
     }
 
     public static List<object> Errors = new List<object>();
 
-    public static IEnumerable<TResult> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+    public static IEnumerable<TResult?> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
     {
         foreach (var item in source)
         {
@@ -294,18 +285,13 @@ public static class LinqExtensions
     /// <exception cref="System.ArgumentNullException"></exception>
     public static void ForAll<T>(this IEnumerable<T> source, Action<T> action)
     {
-        if (action == null)
-        {
-            throw new ArgumentNullException("action");
-        }
-
         foreach (var item in source)
         {
             action(item);
         }
     }
 
-    public static string EnumerableToString<T>(this IEnumerable<T> source)
+    public static string EnumerableToString<T>(this IEnumerable<T> source) where T : notnull
     {
         return $"[{string.Join(", ", source.Select(item => item.ToString()))}]";
     }

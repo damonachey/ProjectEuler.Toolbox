@@ -221,7 +221,7 @@ public class PathFindingTests
     public void CoordinateEqualsNotCoordinateNull()
     {
         var expected = new PathFinding.Coordinate(1, 2);
-        var actual = (object)null;
+        var actual = (object?)null;
 
         Assert.False(expected.Equals(actual));
     }

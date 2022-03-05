@@ -225,7 +225,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_SubtractionRational()
+    public void Op_SubtractionRational()
     {
         var expected = new BigRational(-2, 5);
         var actual = new BigRational(1, 5) - new BigRational(3, 5);
@@ -234,7 +234,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_SubtractionWholeNumber()
+    public void Op_SubtractionWholeNumber()
     {
         var expected = new BigRational(-2, 3);
         var actual = new BigRational(1, 3) - 1;
@@ -243,7 +243,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_SubtractionDifferentDenominator()
+    public void Op_SubtractionDifferentDenominator()
     {
         var expected = new BigRational(3, 4);
         var actual = new BigRational(1, 3) - new BigRational(2, 5);
@@ -252,7 +252,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_UnaryNegationNegativeToPositive()
+    public void Op_UnaryNegationNegativeToPositive()
     {
         var expected = new BigRational(-1, 2);
         var actual = -new BigRational(1, 2);
@@ -261,7 +261,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_UnaryNegationPositiveToNegative()
+    public void Op_UnaryNegationPositiveToNegative()
     {
         var expected = new BigRational(1, 2);
         var actual = -new BigRational(1, 2);
@@ -270,7 +270,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_InequalityBigRationalNotEqualRationalTrue()
+    public void Op_InequalityBigRationalNotEqualRationalTrue()
     {
         var actual = new BigRational(1, 3) != new BigRational(1, 2);
 
@@ -278,7 +278,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_InequalityRationalNotEqualIntTrue()
+    public void Op_InequalityRationalNotEqualIntTrue()
     {
         var actual = new BigRational(1, 3) != 2;
 
@@ -286,7 +286,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_InequalityIntNotEqualRationalTrue()
+    public void Op_InequalityIntNotEqualRationalTrue()
     {
         var actual = 2 != new BigRational(1, 3);
 
@@ -294,7 +294,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_InequalityIntNotEqualRationalFalse()
+    public void Op_InequalityIntNotEqualRationalFalse()
     {
         var actual = 2 != new BigRational(4, 2);
 
@@ -302,7 +302,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_Modulus()
+    public void Op_Modulus()
     {
         var expected = new BigRational(1, 5);
         var actual = new BigRational(3, 5) % new BigRational(2, 5);
@@ -311,7 +311,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_MultiplyWholeNumber()
+    public void Op_MultiplyWholeNumber()
     {
         var expected = new BigRational(2, 3);
         var actual = new BigRational(1, 3) * 2;
@@ -320,7 +320,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_MultiplyRational()
+    public void Op_MultiplyRational()
     {
         var expected = new BigRational(1, 12);
         var actual = new BigRational(1, 6) * new BigRational(1, 2);
@@ -329,7 +329,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_DivisionWholeNumber()
+    public void Op_DivisionWholeNumber()
     {
         var expected = new BigRational(1, 6);
         var actual = new BigRational(1, 3) / 2;
@@ -338,7 +338,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_DivisionRational()
+    public void Op_DivisionRational()
     {
         var expected = new BigRational(1, 3);
         var actual = new BigRational(1, 6) / new BigRational(1, 2);
@@ -347,7 +347,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_AdditionRationalSameDenominator()
+    public void Op_AdditionRationalSameDenominator()
     {
         var expected = new BigRational(4, 5);
         var actual = new BigRational(1, 5) + new BigRational(3, 5);
@@ -356,7 +356,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_AdditionWholeNumber()
+    public void Op_AdditionWholeNumber()
     {
         var expected = new BigRational(4, 3);
         var actual = new BigRational(1, 3) + 1;
@@ -365,7 +365,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_AdditionDifferentDenominator()
+    public void Op_AdditionDifferentDenominator()
     {
         var expected = new BigRational(3, 4);
         var actual = new BigRational(1, 3) + new BigRational(2, 5);
@@ -374,7 +374,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_LessThanRational()
+    public void Op_LessThanRational()
     {
         var actual = new BigRational(1, 3) < new BigRational(2, 5);
 
@@ -382,7 +382,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_LessThanRationalLessThanWholeNumber()
+    public void Op_LessThanRationalLessThanWholeNumber()
     {
         var actual = new BigRational(2, 5) < 1;
 
@@ -390,7 +390,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_LessThanWholeNumberLessThanRational()
+    public void Op_LessThanWholeNumberLessThanRational()
     {
         var actual = 1 < new BigRational(3, 2);
 
@@ -398,7 +398,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_LessThanWholeNumberLessThanRationalFalse()
+    public void Op_LessThanWholeNumberLessThanRationalFalse()
     {
         var actual = 2 < new BigRational(1, 3);
 
@@ -406,7 +406,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_LessThanOrEqual()
+    public void Op_LessThanOrEqual()
     {
         var actual = new BigRational(4, 6) <= new BigRational(2, 3);
 
@@ -414,7 +414,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_LessThanOrEqualLessWholeNumberLeft()
+    public void Op_LessThanOrEqualLessWholeNumberLeft()
     {
         var actual = 1 <= new BigRational(3, 2);
 
@@ -422,7 +422,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_LessThanOrEqualGreaterWholeNumberLeft()
+    public void Op_LessThanOrEqualGreaterWholeNumberLeft()
     {
         var actual = 2 <= new BigRational(3, 2);
 
@@ -430,7 +430,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_LessThanOrEqualLessWholeNumberRight()
+    public void Op_LessThanOrEqualLessWholeNumberRight()
     {
         var actual = new BigRational(3, 2) <= 1;
 
@@ -438,7 +438,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_LessThanOrEqualGreaterWholeNumberRight()
+    public void Op_LessThanOrEqualGreaterWholeNumberRight()
     {
         var actual = new BigRational(3, 2) <= 2;
 
@@ -446,7 +446,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_EqualityReduction()
+    public void Op_EqualityReduction()
     {
         var actual = new BigRational(2, 3) == new BigRational(4, 6);
 
@@ -454,7 +454,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_EqualityWholeNumberRight()
+    public void Op_EqualityWholeNumberRight()
     {
         var actual = new BigRational(9, 3) == 3;
 
@@ -462,7 +462,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_EqualityWholeNumberLeft()
+    public void Op_EqualityWholeNumberLeft()
     {
         var actual = 3 == new BigRational(9, 3);
 
@@ -470,7 +470,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_EqualityNotEqualWholeNumber()
+    public void Op_EqualityNotEqualWholeNumber()
     {
         var actual = 4 == new BigRational(1, 3);
 
@@ -478,15 +478,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_EqualityNull()
-    {
-        var actual = null == new BigRational(1, 3);
-
-        Assert.False(actual);
-    }
-
-    [Fact]
-    public void op_GreaterThan()
+    public void Op_GreaterThan()
     {
         var actual = new BigRational(2, 5) > new BigRational(1, 3);
 
@@ -494,7 +486,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_GreaterThanWholeNumberLeft()
+    public void Op_GreaterThanWholeNumberLeft()
     {
         var actual = 1 > new BigRational(2, 5);
 
@@ -502,7 +494,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_GreaterThanWholeNumberRight()
+    public void Op_GreaterThanWholeNumberRight()
     {
         var actual = new BigRational(3, 2) > 1;
 
@@ -510,7 +502,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_GreaterThanWholeNumberRightFalse()
+    public void Op_GreaterThanWholeNumberRightFalse()
     {
         var actual = new BigRational(1, 3) > 2;
 
@@ -518,7 +510,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_GreaterThanOrEqual()
+    public void Op_GreaterThanOrEqual()
     {
         var actual = new BigRational(2, 3) >= new BigRational(4, 6);
 
@@ -526,7 +518,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_GreaterThanOrEqualWholeNumberSmaller()
+    public void Op_GreaterThanOrEqualWholeNumberSmaller()
     {
         var actual = new BigRational(3, 2) >= 1;
 
@@ -534,7 +526,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_GreaterThanOrEqualWholeNumberBigger()
+    public void Op_GreaterThanOrEqualWholeNumberBigger()
     {
         var actual = new BigRational(3, 2) >= 2;
 
@@ -542,7 +534,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_GreaterThanOrEqualWholeNumberBiggerLeft()
+    public void Op_GreaterThanOrEqualWholeNumberBiggerLeft()
     {
         var actual = 2 >= new BigRational(3, 2);
 
@@ -550,7 +542,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ExplicitDouble()
+    public void Op_ExplicitDouble()
     {
         var expected = 0.5;
         var actual = (double)new BigRational(1, 2);
@@ -559,7 +551,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ExplicitDoubleENotation()
+    public void Op_ExplicitDoubleENotation()
     {
         var expected = 6.21e-11;
         var actual = (double)new BigRational(621, 10000000000000);
@@ -568,7 +560,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ExplicitDecimal()
+    public void Op_ExplicitDecimal()
     {
         var expected = 0.5m;
         var actual = (decimal)new BigRational(1, 2);
@@ -577,7 +569,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ExplicitBigIntegerTrue()
+    public void Op_ExplicitBigIntegerTrue()
     {
         var expected = new BigInteger(3);
         var actual = (BigInteger)new BigRational(9, 3);
@@ -586,7 +578,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ExplicitBigIntergerFalse()
+    public void Op_ExplicitBigIntergerFalse()
     {
         var expected = new BigInteger(4);
         var actual = (BigInteger)new BigRational(13, 3);
@@ -595,7 +587,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ImplicitInt()
+    public void Op_ImplicitInt()
     {
         var expected = new BigRational(4, 1);
         var actual = (BigRational)4;
@@ -604,7 +596,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ImplicitLong()
+    public void Op_ImplicitLong()
     {
         var expected = new BigRational(4, 1);
         var actual = (BigRational)4L;
@@ -613,7 +605,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ImplicitBigInteger()
+    public void Op_ImplicitBigInteger()
     {
         var expected = new BigRational(4, 1);
         var actual = (BigRational)new BigInteger(4);
@@ -622,7 +614,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ImplicitDouble()
+    public void Op_ImplicitDouble()
     {
         var expected = new BigRational(1, 2);
         var actual = (BigRational)0.5;
@@ -631,7 +623,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ImplicitDoubleNegativeENotation1()
+    public void Op_ImplicitDoubleNegativeENotation1()
     {
         var expected = new BigRational(-100, 1);
         var actual = (BigRational)(-1e2);
@@ -640,7 +632,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ImplicitDoubleNegativeENotation2()
+    public void Op_ImplicitDoubleNegativeENotation2()
     {
         var expected = new BigRational(-120, 1);
         var actual = (BigRational)(-1.2e2);
@@ -649,7 +641,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ImplicitDoubleNegativeENotation3()
+    public void Op_ImplicitDoubleNegativeENotation3()
     {
         var expected = -1.2 * new BigRational(BigInteger.Pow(10, 20), 1);
         var actual = (BigRational)(-1.2e20);
@@ -658,7 +650,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ImplicitDoubleNegativeENotation4()
+    public void Op_ImplicitDoubleNegativeENotation4()
     {
         var expected = new BigRational(BigInteger.Pow(10, 20), 1);
         var actual = (BigRational)(1e20);
@@ -667,7 +659,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void op_ImplicitDecimal()
+    public void Op_ImplicitDecimal()
     {
         var expected = new BigRational(1, 2);
         var actual = (BigRational)0.5m;

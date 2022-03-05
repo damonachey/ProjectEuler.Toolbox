@@ -147,12 +147,6 @@ public class LinqExtensionsTests
     }
 
     [Fact]
-    public void ForAllArgumentNull()
-    {
-        Assert.Throws<ArgumentNullException>(() => Enumerable.Range(1, 2).ForAll(null));
-    }
-
-    [Fact]
     public void MergeFirstLonger()
     {
         var expected = new[] { 2, 4, 6, 4, 5 };

@@ -345,7 +345,7 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
         return ToString("{0}/{1}");
     }
 
-    public string ToString(string format, IFormatProvider? formatProvider = null)
+    public string ToString(string? format, IFormatProvider? formatProvider = null)
     {
         if (string.IsNullOrEmpty(format))
         {

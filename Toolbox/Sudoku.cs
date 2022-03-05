@@ -7,7 +7,7 @@ public static class Sudoku
     /// </summary>
     /// <param name="grid">Puzzle grid</param>
     /// <returns>Completed puzzle or null if no solution</returns>
-    public static int[,] Solve(int[,] grid)
+    public static int[,]? Solve(int[,] grid)
     {
         var possibleCellValues = InitializePossibleEmptyCellValues(grid);
 
@@ -196,7 +196,7 @@ public static class Sudoku
         return cellsWithOnePossibleValue.Any();
     }
 
-    private static int[,] RecursivelyGuess(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    private static int[,]? RecursivelyGuess(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
     {
         var emptyCellWithFewestPossibleValues = possibleCellValues
             .OrderBy(kvp => kvp.Value.Count)

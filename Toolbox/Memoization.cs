@@ -5,13 +5,13 @@ namespace ProjectEuler.Toolbox;
 // also see http://explodingcoder.com/blog/content/painless-caching-memoization-net
 public static class Memoization
 {
-    public static Func<A, R> Memoize<A, R>(this Func<A, R> f)
+    public static Func<A, R> Memoize<A, R>(this Func<A, R> f) where A : notnull
     {
         var map = new ConcurrentDictionary<A, R>();
 
         return a =>
         {
-            if (!map.TryGetValue(a, out R value))
+            if (!map.TryGetValue(a, out R? value))
             {
                 map.TryAdd(a, value = f(a));
             }

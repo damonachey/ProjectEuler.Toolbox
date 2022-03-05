@@ -17,7 +17,7 @@ public class Circle2doubleTests
     }
 
     [Fact]
-    public new void ToStringTest()
+    public void ToStringTest()
     {
         var expected = "(1, 1) R = 1";
         var c = new Point2double(1, 1);
@@ -68,7 +68,7 @@ public class Circle2doubleTests
     }
 
     [Fact]
-    public new void GetHashCodeTest()
+    public void GetHashCodeTest()
     {
         var expected = 1072693248;
         var c = new Point2double(1, 1);

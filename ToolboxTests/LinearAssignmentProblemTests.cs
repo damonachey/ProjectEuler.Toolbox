@@ -8,14 +8,6 @@ namespace ProjectEuler.ToolboxTests;
 public class LinearAssignmentProblemTests
 {
     [Fact]
-    public void FindAssignmentsNull()
-    {
-        Assert.Throws<ArgumentNullException>(() => LinearAssignmentProblem
-            .HungarianAlgorithm
-            .FindAssignments(null));
-    }
-
-    [Fact]
     public void FindAssignments()
     {
         var expected = new[] { 4, 1, 2, 3, 0 };

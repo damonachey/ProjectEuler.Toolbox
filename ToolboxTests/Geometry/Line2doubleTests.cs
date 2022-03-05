@@ -40,7 +40,7 @@ public class Line2doubleTests
     }
 
     [Fact]
-    public new void ToStringTest()
+    public void ToStringTest()
     {
         var expected = "((1, 2), (3, 4))";
         var p1 = new Point2double(1, 2);
@@ -97,7 +97,7 @@ public class Line2doubleTests
     }
 
     [Fact]
-    public new void GetHashCodeTest()
+    public void GetHashCodeTest()
     {
         var expected = 2145910784;
         var p1 = new Point2double(1, 2);

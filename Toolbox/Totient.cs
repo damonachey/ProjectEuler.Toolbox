@@ -2,7 +2,7 @@
 
 public class Totient
 {
-    private int[] _smallestFactors;
+    private int[] _smallestFactors = default!;
     private int _lastSmallestFactor;
     private readonly object _smallestFactorsLock = new();
 

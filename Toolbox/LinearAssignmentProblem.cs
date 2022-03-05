@@ -20,11 +20,6 @@ public static class LinearAssignmentProblem
         /// <exception cref="ArgumentNullException"><paramref name="costs"/> is <see langword="null"/>.</exception>
         public static int[] FindAssignments(int[,] costs)
         {
-            if (costs == null)
-            {
-                throw new ArgumentNullException(nameof(costs));
-            }
-
             var h = costs.GetLength(0);
             var w = costs.GetLength(1);
 

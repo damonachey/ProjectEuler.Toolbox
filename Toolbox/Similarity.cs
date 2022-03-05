@@ -9,10 +9,6 @@ public static class Similarity
     /// <RETURNS>The edit distance.</RETURNS>
     public static int EditDistance<T>(IEnumerable<T> x, IEnumerable<T> y) where T : IEquatable<T>
     {
-        // Validate parameters
-        if (x == null) throw new ArgumentNullException(nameof(x));
-        if (y == null) throw new ArgumentNullException(nameof(y));
-
         // Convert the parameters into IList instances
         // in order to obtain indexing capabilities
         var first = x as IList<T> ?? new List<T>(x);
@@ -75,10 +71,6 @@ public static class Similarity
 
     public static int EditDistance(string s, string t)
     {
-        // Validate parameters
-        if (s == null) throw new ArgumentNullException(nameof(s));
-        if (t == null) throw new ArgumentNullException(nameof(t));
-
         var n = s.Length;
         var m = t.Length;
         var d = new int[n + 1, m + 1];

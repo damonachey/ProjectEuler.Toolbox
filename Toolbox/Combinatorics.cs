@@ -4,10 +4,10 @@ namespace ProjectEuler.Toolbox;
 
 public static class Combinatorics
 {
-    public static BigInteger AnagramCount(IEnumerable<int> m) => 
+    public static BigInteger AnagramCount(IEnumerable<int> m) =>
         MathLibrary.Factorial(m.Aggregate((a, v) => a + v)) / m.Aggregate(BigInteger.One, (a, v) => a * MathLibrary.Factorial(v));
 
-    public static BigInteger CircularPermutationCount(long n) => 
+    public static BigInteger CircularPermutationCount(long n) =>
         MathLibrary.Factorial(n - 1);
 
     /// <summary>
@@ -32,7 +32,7 @@ public static class Combinatorics
     /// <param name="s"></param>
     /// <param name="k"></param>
     /// <returns></returns>
-    public static IEnumerable<string> Combinations(this string s, int k) => 
+    public static IEnumerable<string> Combinations(this string s, int k) =>
         Combinations(s.ToCharArray(), k).Select(c => string.Join("", c));
 
     /// <summary>
@@ -240,7 +240,7 @@ public static class Combinatorics
     /// <param name="s1"></param>
     /// <param name="s2"></param>
     /// <returns></returns>
-    public static bool IsPermutation(this string s1, string s2) => 
+    public static bool IsPermutation(this string s1, string s2) =>
         s1.Length == s2.Length && s1.OrderBy(c => c).SequenceEqual(s2.OrderBy(c2 => c2));
 
     /// <summary>
@@ -314,7 +314,7 @@ public static class Combinatorics
         foreach (var p in PermutationsDistinct(str.ToCharArray(), 0, str.Length))
             yield return string.Join("", p);
 
-        IEnumerable<T[]> PermutationsDistinct<T>(T[] chrs1, int index, int n)
+        static IEnumerable<T[]> PermutationsDistinct<T>(T[] chrs1, int index, int n) where T : notnull
         {
             if (index >= n)
             {
@@ -334,7 +334,7 @@ public static class Combinatorics
                 }
             }
 
-            bool shouldSwap(T[] chrs2, int start, int curr)
+            static bool shouldSwap(T[] chrs2, int start, int curr)
             {
                 for (int i = start; i < curr; i++)
                 {

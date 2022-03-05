@@ -34,18 +34,6 @@ public class SimilarityTests
     }
 
     [Fact]
-    public void EditDistanceBadArguments()
-    {
-        Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance(null, "this is just a test".ToCharArray()));
-    }
-
-    [Fact]
-    public void EditDistanceBadArguments2()
-    {
-        Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance("this is just a test".ToCharArray(), null));
-    }
-
-    [Fact]
     public void EditDistanceEmpty()
     {
         var expected = 19;
@@ -61,18 +49,6 @@ public class SimilarityTests
         var actual = Similarity.EditDistance("".ToCharArray(), "this is just a test".ToCharArray());
 
         Assert.Equal(expected, actual);
-    }
-
-    [Fact]
-    public void EditDistanceStringBadArguments()
-    {
-        Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance(null, "this is just a test"));
-    }
-
-    [Fact]
-    public void EditDistanceStringBadArguments2()
-    {
-        Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance("this is just a test", null));
     }
 
     [Fact]
