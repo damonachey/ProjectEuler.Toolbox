@@ -1,50 +1,48 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class Circle2ExtensionsTests
 {
-    [TestClass]
-    public class Circle2ExtensionsTests
+    [Fact]
+    public void Area()
     {
-        [TestMethod]
-        public void Area()
-        {
-            var expected = Math.PI;
-            var c = new Point2double(1, 1);
-            var r = 1;
-            var actual = new Circle2double(c, r).Area();
+        var expected = Math.PI;
+        var c = new Point2double(1, 1);
+        var r = 1;
+        var actual = new Circle2double(c, r).Area();
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void Circumfrence()
-        {
-            var expected = 2 * Math.PI;
-            var c = new Point2double(1, 1);
-            var r = 1;
-            var actual = new Circle2double(c, r).Circumfrence();
+    [Fact]
+    public void Circumfrence()
+    {
+        var expected = 2 * Math.PI;
+        var c = new Point2double(1, 1);
+        var r = 1;
+        var actual = new Circle2double(c, r).Circumfrence();
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void ChordAngle()
-        {
-            var expected = 1.047;
-            var actual = Circle2Extensions.ChordAngle(2, 2);
+    [Fact]
+    public void ChordAngle()
+    {
+        var expected = 1.047;
+        var actual = Circle2Extensions.ChordAngle(2, 2);
 
-            Assert.AreEqual(expected, actual, 0.001);
-        }
+        Assert.Equal(expected, actual, 3);
+    }
 
-        [TestMethod]
-        public void SegmentArea()
-        {
-            var expected = 1.141;
-            var actual = Circle2Extensions.SegmentArea(Math.PI / 2, 2);
+    [Fact]
+    public void SegmentArea()
+    {
+        var expected = 1.141;
+        var actual = Circle2Extensions.SegmentArea(Math.PI / 2, 2);
 
-            Assert.AreEqual(expected, actual, 0.001);
-        }
+        Assert.Equal(expected, actual, 3);
     }
 }

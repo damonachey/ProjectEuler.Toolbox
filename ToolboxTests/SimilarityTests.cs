@@ -1,101 +1,95 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class SimilarityTests
 {
-    [TestClass]
-    public class SimilarityTests
+    [Fact]
+    public void EditDistanceString()
     {
-        [TestMethod]
-        public void EditDistanceString()
-        {
-            var expected = 2;
-            var actual = Similarity.EditDistance("this is just a test", "this was just a test");
+        var expected = 2;
+        var actual = Similarity.EditDistance("this is just a test", "this was just a test");
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void EditDistanceEnumerable()
-        {
-            var expected = 2;
-            var actual = Similarity.EditDistance("this is just a test".ToCharArray(), "this was just a test".ToCharArray());
+    [Fact]
+    public void EditDistanceEnumerable()
+    {
+        var expected = 2;
+        var actual = Similarity.EditDistance("this is just a test".ToCharArray(), "this was just a test".ToCharArray());
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void EditDistanceSame()
-        {
-            var expected = 0;
-            var actual = Similarity.EditDistance("this is just a test".ToCharArray(), "this is just a test".ToCharArray());
+    [Fact]
+    public void EditDistanceSame()
+    {
+        var expected = 0;
+        var actual = Similarity.EditDistance("this is just a test".ToCharArray(), "this is just a test".ToCharArray());
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void EditDistanceBadArguments()
-        {
-            Similarity.EditDistance(null, "this is just a test".ToCharArray());
-        }
+    [Fact]
+    public void EditDistanceBadArguments()
+    {
+        Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance(null, "this is just a test".ToCharArray()));
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void EditDistanceBadArguments2()
-        {
-            Similarity.EditDistance("this is just a test".ToCharArray(), null);
-        }
+    [Fact]
+    public void EditDistanceBadArguments2()
+    {
+        Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance("this is just a test".ToCharArray(), null));
+    }
 
-        [TestMethod]
-        public void EditDistanceEmpty()
-        {
-            var expected = 19;
-            var actual = Similarity.EditDistance("this is just a test".ToCharArray(), "".ToCharArray());
+    [Fact]
+    public void EditDistanceEmpty()
+    {
+        var expected = 19;
+        var actual = Similarity.EditDistance("this is just a test".ToCharArray(), "".ToCharArray());
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void EditDistanceEmpty2()
-        {
-            var expected = 19;
-            var actual = Similarity.EditDistance("".ToCharArray(), "this is just a test".ToCharArray());
+    [Fact]
+    public void EditDistanceEmpty2()
+    {
+        var expected = 19;
+        var actual = Similarity.EditDistance("".ToCharArray(), "this is just a test".ToCharArray());
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void EditDistanceStringBadArguments()
-        {
-            Similarity.EditDistance(null, "this is just a test");
-        }
+    [Fact]
+    public void EditDistanceStringBadArguments()
+    {
+        Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance(null, "this is just a test"));
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void EditDistanceStringBadArguments2()
-        {
-            Similarity.EditDistance("this is just a test", null);
-        }
+    [Fact]
+    public void EditDistanceStringBadArguments2()
+    {
+        Assert.Throws<ArgumentNullException>(() => Similarity.EditDistance("this is just a test", null));
+    }
 
-        [TestMethod]
-        public void EditDistanceStringEmpty()
-        {
-            var expected = 19;
-            var actual = Similarity.EditDistance("this is just a test", "");
+    [Fact]
+    public void EditDistanceStringEmpty()
+    {
+        var expected = 19;
+        var actual = Similarity.EditDistance("this is just a test", "");
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void EditDistanceStringEmpty2()
-        {
-            var expected = 19;
-            var actual = Similarity.EditDistance("", "this is just a test");
+    [Fact]
+    public void EditDistanceStringEmpty2()
+    {
+        var expected = 19;
+        var actual = Similarity.EditDistance("", "this is just a test");
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
     }
 }

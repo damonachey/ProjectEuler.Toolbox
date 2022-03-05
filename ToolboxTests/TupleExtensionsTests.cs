@@ -1,20 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class TupleExtensionsTests
 {
-    [TestClass]
-    public class TupleExtensionsTests
+    [Fact]
+    public void Sum()
     {
-        [TestMethod]
-        public void Sum()
-        {
-            var expected = 123;
-            var tuple = Tuple.Create(100, 20, 3);
-            var actual = tuple.Sum();
+        var expected = 123;
+        var tuple = Tuple.Create(100, 20, 3);
+        var actual = tuple.Sum();
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
     }
 }

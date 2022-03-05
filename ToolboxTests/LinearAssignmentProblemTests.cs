@@ -1,29 +1,27 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class LinearAssignmentProblemTests
 {
-    [TestClass]
-    public class LinearAssignmentProblemTests
+    [Fact]
+    public void FindAssignmentsNull()
     {
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void FindAssignmentsNull()
-        {
-            LinearAssignmentProblem
-                .HungarianAlgorithm
-                .FindAssignments(null);
-        }
+        Assert.Throws<ArgumentNullException>(() => LinearAssignmentProblem
+            .HungarianAlgorithm
+            .FindAssignments(null));
+    }
 
-        [TestMethod]
-        public void FindAssignments()
-        {
-            var expected = new[] { 4, 1, 2, 3, 0 };
-            var actual = LinearAssignmentProblem
-                .HungarianAlgorithm
-                .FindAssignments(Parsers.ParseIntGrid(@"
+    [Fact]
+    public void FindAssignments()
+    {
+        var expected = new[] { 4, 1, 2, 3, 0 };
+        var actual = LinearAssignmentProblem
+            .HungarianAlgorithm
+            .FindAssignments(Parsers.ParseIntGrid(@"
                       -7  -53 -183 -439 -863
                     -497 -383 -563  -79 -973
                     -287  -63 -343 -169 -583
@@ -31,7 +29,6 @@ namespace ProjectEuler.ToolboxTests
                     -767 -473 -103 -699 -303
                     "));
 
-            Assert.IsTrue(expected.SequenceEqual(actual), actual.EnumerableToString());
-        }
+        Assert.True(expected.SequenceEqual(actual), actual.EnumerableToString());
     }
 }

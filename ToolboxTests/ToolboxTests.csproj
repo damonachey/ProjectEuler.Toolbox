@@ -1,108 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1E38D649-E2D5-4C88-BA07-8470C3C3F8A1}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ToolboxTests</RootNamespace>
-    <AssemblyName>ToolboxTests</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\ProjectEuler\csharp\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\ProjectEuler\csharp\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.1.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="BackingStoreQueueTests.cs" />
-    <Compile Include="BaseTests.cs" />
-    <Compile Include="BigRationalExtensionsTests.cs" />
-    <Compile Include="BigRationalTests.cs" />
-    <Compile Include="CombinatoricsTests.cs" />
-    <Compile Include="DiceTests.cs" />
-    <Compile Include="ExpressionTests.cs" />
-    <Compile Include="FactorizationTests.cs" />
-    <Compile Include="Geometry\Circle2ExtensionsTests.cs" />
-    <Compile Include="Geometry\Circle2doubleTests.cs" />
-    <Compile Include="Geometry\GeometryTests.cs" />
-    <Compile Include="Geometry\Line2ExtensionsTests.cs" />
-    <Compile Include="Geometry\Line2doubleTests.cs" />
-    <Compile Include="Geometry\Point2BigRationalTests.cs" />
-    <Compile Include="Geometry\Point2longTests.cs" />
-    <Compile Include="Geometry\Point2doubleTests.cs" />
-    <Compile Include="Geometry\Point3ExtensionsTests.cs" />
-    <Compile Include="Geometry\Point3doubleTests.cs" />
-    <Compile Include="Geometry\Polygon2BigRationalTests.cs" />
-    <Compile Include="Geometry\Polygon2doubleTests.cs" />
-    <Compile Include="Geometry\Triangle2ExtensionsTests.cs" />
-    <Compile Include="Geometry\Triangle2doubleTests.cs" />
-    <Compile Include="HashingTests.cs" />
-    <Compile Include="LinearAssignmentProblemTests.cs" />
-    <Compile Include="LinqExtensionsTests.cs" />
-    <Compile Include="MathLibraryTests.cs" />
-    <Compile Include="MemoizationTests.cs" />
-    <Compile Include="NumericExtensionsTests.cs" />
-    <Compile Include="PackingTests.cs" />
-    <Compile Include="ParsersTests.cs" />
-    <Compile Include="PathFindingTests.cs" />
-    <Compile Include="PolynomialTests.cs" />
-    <Compile Include="PowersAndRootsTests.cs" />
-    <Compile Include="PrimeHelperTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimilarityTests.cs" />
-    <Compile Include="StringExtensionsTests.cs" />
-    <Compile Include="StringExtensionTests.cs" />
-    <Compile Include="SudokuTests.cs" />
-    <Compile Include="TotientTests.cs" />
-    <Compile Include="TupleExtensionsTests.cs" />
+    <ProjectReference Include="..\Toolbox\Toolbox.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Toolbox\Toolbox.csproj">
-      <Project>{08d4ed5f-16ea-4a2d-b5c8-0713df40743e}</Project>
-      <Name>Toolbox</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-  </Target>
+
 </Project>

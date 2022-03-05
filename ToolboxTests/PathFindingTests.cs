@@ -1,248 +1,246 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System.Linq;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class PathFindingTests
 {
-    [TestClass]
-    public class PathFindingTests
+    [Fact]
+    public void DijkstraMinPathWeightStartGoal()
     {
-        [TestMethod]
-        public void DijkstraMinPathWeightStartGoal()
+        var expected = 12;
+
+        var grid = new long[,]
         {
-            var expected = 12;
+            { 1, 2, 6, 4 },
+            { 4, 4, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+        };
 
-            var grid = new long[,]
-            {
-                { 1, 2, 6, 4 },
-                { 4, 4, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-            };
+        var actual = grid.DijkstraMinPathWeight(grid.UpperLeft(), grid.LowerRight());
 
-            var actual = grid.DijkstraMinPathWeight(grid.UpperLeft(), grid.LowerRight());
+        Assert.Equal(expected, actual);
+    }
 
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void DijkstraMinPathWeightStart()
+    [Fact]
+    public void DijkstraMinPathWeightStart()
+    {
+        var expected = new long[,]
         {
-            var expected = new long[,]
+            { 1, 3, 9, 10 },
+            { 5, 5, 6, 10 },
+            { 6, 7, 8, 10 },
+            { 7, 8, 10, 12 },
+        };
+
+        var grid = new long[,]
+        {
+            { 1, 2, 6, 4 },
+            { 4, 4, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+        };
+
+        var actual = grid.DijkstraMinPathWeights(grid.UpperLeft());
+
+        Assert.Equal(expected.GetLength(0), actual.GetLength(0));
+        Assert.Equal(expected.GetLength(1), actual.GetLength(1));
+
+        for (var i = 0; i < grid.GetLength(0); i++)
+        {
+            for (var j = 0; j < grid.GetLength(1); j++)
             {
-                { 1, 3, 9, 10 },
-                { 5, 5, 6, 10 },
-                { 6, 7, 8, 10 },
-                { 7, 8, 10, 12 },
-            };
-
-            var grid = new long[,]
-            {
-                { 1, 2, 6, 4 },
-                { 4, 4, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-            };
-
-            var actual = grid.DijkstraMinPathWeights(grid.UpperLeft());
-
-            Assert.AreEqual(expected.GetLength(0), actual.GetLength(0));
-            Assert.AreEqual(expected.GetLength(1), actual.GetLength(1));
-
-            for (var i = 0; i < grid.GetLength(0); i++)
-            {
-                for (var j = 0; j < grid.GetLength(1); j++)
-                {
-                    Assert.AreEqual(expected[i, j], actual[i, j], $"expected[{i}, {j}]: {expected[i, j]} != actual[{i}, {j}]: {actual[i, j]}");
-                }
+                Assert.True(expected[i, j] == actual[i, j], $"expected[{i}, {j}]: {expected[i, j]} != actual[{i}, {j}]: {actual[i, j]}");
             }
         }
+    }
 
-        [TestMethod]
-        public void DijkstraMinPathWeightRightAndDown()
+    [Fact]
+    public void DijkstraMinPathWeightRightAndDown()
+    {
+        var expected = 16;
+
+        var grid = new long[,]
         {
-            var expected = 16;
+            { 1, 2, 6, 4 },
+            { 4, 4, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+        };
 
-            var grid = new long[,]
-            {
-                { 1, 2, 6, 4 },
-                { 4, 4, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-            };
+        var actual = grid.DijkstraMinPathWeight(grid.UpperLeft(), grid.LowerRight(), PathFinding.NeighborsRightAndDown);
 
-            var actual = grid.DijkstraMinPathWeight(grid.UpperLeft(), grid.LowerRight(), PathFinding.NeighborsRightAndDown);
+        Assert.Equal(expected, actual);
+    }
 
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void DijkstraMinPathWeightStartNeighbors()
+    [Fact]
+    public void DijkstraMinPathWeightStartNeighbors()
+    {
+        var expected = new long[,]
         {
-            var expected = new long[,]
+            { 1, 3, 9, 13 },
+            { 5, 7, 10, 14 },
+            { 6, 8, 11, 15 },
+            { 7, 9, 12, 16 },
+        };
+
+        var grid = new long[,]
+        {
+            { 1, 2, 6, 4 },
+            { 4, 4, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+        };
+
+        var actual = grid.DijkstraMinPathWeights(grid.UpperLeft(), PathFinding.NeighborsRightAndDown);
+
+        Assert.Equal(expected.GetLength(0), actual.GetLength(0));
+        Assert.Equal(expected.GetLength(1), actual.GetLength(1));
+
+        for (var i = 0; i < grid.GetLength(0); i++)
+        {
+            for (var j = 0; j < grid.GetLength(1); j++)
             {
-                { 1, 3, 9, 13 },
-                { 5, 7, 10, 14 },
-                { 6, 8, 11, 15 },
-                { 7, 9, 12, 16 },
-            };
-
-            var grid = new long[,]
-            {
-                { 1, 2, 6, 4 },
-                { 4, 4, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-            };
-
-            var actual = grid.DijkstraMinPathWeights(grid.UpperLeft(), PathFinding.NeighborsRightAndDown);
-
-            Assert.AreEqual(expected.GetLength(0), actual.GetLength(0));
-            Assert.AreEqual(expected.GetLength(1), actual.GetLength(1));
-
-            for (var i = 0; i < grid.GetLength(0); i++)
-            {
-                for (var j = 0; j < grid.GetLength(1); j++)
-                {
-                    Assert.AreEqual(expected[i, j], actual[i, j], $"expected[{i}, {j}]: {expected[i, j]} != actual[{i}, {j}]: {actual[i, j]}");
-                }
+                Assert.True(expected[i, j] == actual[i, j], $"expected[{i}, {j}]: {expected[i, j]} != actual[{i}, {j}]: {actual[i, j]}");
             }
         }
+    }
 
-        [TestMethod]
-        public void DijkstraMinPathWeightNeighbors4()
+    [Fact]
+    public void DijkstraMinPathWeightNeighbors4()
+    {
+        var expected = 16;
+
+        var grid = new long[,]
         {
-            var expected = 16;
+            { 1, 2, 6, 4 },
+            { 4, 4, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+        };
 
-            var grid = new long[,]
-            {
-                { 1, 2, 6, 4 },
-                { 4, 4, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-            };
+        var actual = grid.DijkstraMinPathWeight(grid.UpperLeft(), grid.LowerRight(), PathFinding.Neighbors4);
 
-            var actual = grid.DijkstraMinPathWeight(grid.UpperLeft(), grid.LowerRight(), PathFinding.Neighbors4);
+        Assert.Equal(expected, actual);
+    }
 
-            Assert.AreEqual(expected, actual);
-        }
+    [Fact]
+    public void DijkstraMinPathWeightNeighbors8()
+    {
+        var expected = 12;
 
-        [TestMethod]
-        public void DijkstraMinPathWeightNeighbors8()
+        var grid = new long[,]
         {
-            var expected = 12;
+            { 1, 2, 6, 4 },
+            { 4, 4, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+        };
 
-            var grid = new long[,]
-            {
-                { 1, 2, 6, 4 },
-                { 4, 4, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-            };
+        var actual = grid.DijkstraMinPathWeight(grid.UpperLeft(), grid.LowerRight(), PathFinding.Neighbors8);
 
-            var actual = grid.DijkstraMinPathWeight(grid.UpperLeft(), grid.LowerRight(), PathFinding.Neighbors8);
+        Assert.Equal(expected, actual);
+    }
 
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void AstarStartGoal()
+    [Fact]
+    public void AstarStartGoal()
+    {
+        var expected = new[]
         {
-            var expected = new[]
-            {
-                new PathFinding.Coordinate(0, 0),
-                new PathFinding.Coordinate(1, 1),
-                new PathFinding.Coordinate(2, 2),
-                new PathFinding.Coordinate(3, 3),
-            };
+            new PathFinding.Coordinate(0, 0),
+            new PathFinding.Coordinate(1, 1),
+            new PathFinding.Coordinate(2, 2),
+            new PathFinding.Coordinate(3, 3),
+        };
 
-            var grid = new long[,]
-            {
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-            };
-
-            var actual = grid
-                .Astar(grid.UpperLeft(), grid.LowerRight())
-                .ToList();
-
-            Assert.IsTrue(expected.SequenceEqual(actual), actual.EnumerableToString());
-        }
-
-        [TestMethod]
-        public void Astar()
+        var grid = new long[,]
         {
-            var expected = new[]
-            {
-                new PathFinding.Coordinate(0, 0),
-                new PathFinding.Coordinate(1, 0),
-                new PathFinding.Coordinate(2, 0),
-                new PathFinding.Coordinate(3, 0),
-                new PathFinding.Coordinate(3, 1),
-                new PathFinding.Coordinate(3, 2),
-                new PathFinding.Coordinate(3, 3),
-            };
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+        };
 
-            var grid = new long[,]
-            {
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-                { 1, 2, 3, 4 },
-            };
+        var actual = grid
+            .Astar(grid.UpperLeft(), grid.LowerRight())
+            .ToList();
 
-            var actual = grid
-                .Astar(grid.UpperLeft(), grid.LowerRight(), PathFinding.NeighborsRightAndDown)
-                .ToList();
+        Assert.True(expected.SequenceEqual(actual), actual.EnumerableToString());
+    }
 
-            Assert.IsTrue(expected.SequenceEqual(actual), actual.EnumerableToString());
-        }
-
-        [TestMethod]
-        public void CoordinateEquals()
+    [Fact]
+    public void Astar()
+    {
+        var expected = new[]
         {
-            var expected = new PathFinding.Coordinate(1, 2);
-            var actual = (object)new PathFinding.Coordinate(1, 2);
+            new PathFinding.Coordinate(0, 0),
+            new PathFinding.Coordinate(1, 0),
+            new PathFinding.Coordinate(2, 0),
+            new PathFinding.Coordinate(3, 0),
+            new PathFinding.Coordinate(3, 1),
+            new PathFinding.Coordinate(3, 2),
+            new PathFinding.Coordinate(3, 3),
+        };
 
-            Assert.IsTrue(expected.Equals(actual));
-        }
-
-        [TestMethod]
-        public void CoordinateEqualsCoordinateNull()
+        var grid = new long[,]
         {
-            var expected = new PathFinding.Coordinate(1, 2);
-            var actual = default(PathFinding.Coordinate);
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+            { 1, 2, 3, 4 },
+        };
 
-            Assert.IsFalse(expected.Equals(actual));
-        }
+        var actual = grid
+            .Astar(grid.UpperLeft(), grid.LowerRight(), PathFinding.NeighborsRightAndDown)
+            .ToList();
 
-        [TestMethod]
-        public void CoordinateEqualsNotCoordinateNull()
-        {
-            var expected = new PathFinding.Coordinate(1, 2);
-            var actual = (object)null;
+        Assert.True(expected.SequenceEqual(actual), actual.EnumerableToString());
+    }
 
-            Assert.IsFalse(expected.Equals(actual));
-        }
+    [Fact]
+    public void CoordinateEquals()
+    {
+        var expected = new PathFinding.Coordinate(1, 2);
+        var actual = (object)new PathFinding.Coordinate(1, 2);
 
-        [TestMethod]
-        public void CoordinateEqualsNotCoordinateOther()
-        {
-            var expected = new PathFinding.Coordinate(1, 2);
-            var actual = 1;
+        Assert.True(expected.Equals(actual));
+    }
 
-            Assert.IsFalse(expected.Equals(actual));
-        }
+    [Fact]
+    public void CoordinateEqualsCoordinateNull()
+    {
+        var expected = new PathFinding.Coordinate(1, 2);
+        var actual = default(PathFinding.Coordinate);
 
-        [TestMethod]
-        public void CoordinateToString()
-        {
-            var expected = "(1, 2)";
-            var actual = new PathFinding.Coordinate(1, 2).ToString();
+        Assert.False(expected.Equals(actual));
+    }
 
-            Assert.AreEqual(expected, actual);
-        }
+    [Fact]
+    public void CoordinateEqualsNotCoordinateNull()
+    {
+        var expected = new PathFinding.Coordinate(1, 2);
+        var actual = (object)null;
+
+        Assert.False(expected.Equals(actual));
+    }
+
+    [Fact]
+    public void CoordinateEqualsNotCoordinateOther()
+    {
+        var expected = new PathFinding.Coordinate(1, 2);
+        var actual = 1;
+
+        Assert.False(expected.Equals(actual));
+    }
+
+    [Fact]
+    public void CoordinateToString()
+    {
+        var expected = "(1, 2)";
+        var actual = new PathFinding.Coordinate(1, 2).ToString();
+
+        Assert.Equal(expected, actual);
     }
 }

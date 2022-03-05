@@ -1,21 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System.Linq;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class BaseTests
 {
-    [TestClass]
-    public class BaseTests
+    [Fact]
+    public void ConvertBase10toBase2()
     {
-        [TestMethod]
-        public void ConvertBase10toBase2()
         {
-            {
-                var expected = new[] { 0, 0, 1, 1 };
-                var actual = Base.Convert(12.ToDigits(), 10, 2);
+            var expected = new[] { 0, 0, 1, 1 };
+            var actual = Base.Convert(12.ToDigits(), 10, 2);
 
-                Assert.IsTrue(expected.SequenceEqual(actual));
-            }
+            Assert.True(expected.SequenceEqual(actual));
         }
     }
 }

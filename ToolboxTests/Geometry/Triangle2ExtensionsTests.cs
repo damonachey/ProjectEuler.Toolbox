@@ -1,21 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class Triangle2ExtensionsTests
 {
-    [TestClass]
-    public class Triangle2ExtensionsTests
+    [Fact]
+    public void Area()
     {
-        [TestMethod]
-        public void Area()
-        {
-            var expected = 1.5;
-            var p1 = new Point2double(0, 0);
-            var p2 = new Point2double(1, 1);
-            var p3 = new Point2double(3, 0);
-            var actual = new Triangle2double(p1, p2, p3).Area();
+        var expected = 1.5;
+        var p1 = new Point2double(0, 0);
+        var p2 = new Point2double(1, 1);
+        var p3 = new Point2double(3, 0);
+        var actual = new Triangle2double(p1, p2, p3).Area();
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
     }
 }

@@ -1,191 +1,187 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System;
 using System.Linq;
 using System.Numerics;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class CombinatoricsTests
 {
-    [TestClass]
-    public class CombinatoricsTests
+    [Fact]
+    public void AnagramCount()
     {
-        [TestMethod]
-        public void AnagramCount()
-        {
-            var expected = 60;
-            var actual = Combinatorics.AnagramCount(new[] { 1, 2, 3 });
+        var expected = 60;
+        var actual = Combinatorics.AnagramCount(new[] { 1, 2, 3 });
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void CircularPermutationcount()
-        {
-            var expected = 120;
-            var actual = Combinatorics.CircularPermutationCount(6);
+    [Fact]
+    public void CircularPermutationcount()
+    {
+        var expected = 120;
+        var actual = Combinatorics.CircularPermutationCount(6);
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void CombinationCount()
-        {
-            var expected = new BigInteger(84);
-            var actual = Combinatorics.CombinationCount(9, 6);
+    [Fact]
+    public void CombinationCount()
+    {
+        var expected = new BigInteger(84);
+        var actual = Combinatorics.CombinationCount(9, 6);
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void CombinationCountInvalidArgument()
-        {
-            Combinatorics.CombinationCount(0, 0);
-        }
+    [Fact]
+    public void CombinationCountInvalidArgument()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => Combinatorics.CombinationCount(0, 0));
+    }
 
-        [TestMethod]
-        public void CombinationsString()
-        {
-            var expected = 84;
-            var actual = "123456789".Combinations(6).ToList();
+    [Fact]
+    public void CombinationsString()
+    {
+        var expected = 84;
+        var actual = "123456789".Combinations(6).ToList();
 
-            Assert.AreEqual(expected, actual.Count);
-            Assert.AreEqual(expected, actual.Distinct().Count());
-        }
+        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Distinct().Count());
+    }
 
-        [TestMethod]
-        public void CombinationsEnumerable()
-        {
-            var expected = 84;
-            var actual = Enumerable.Range(1, 9).Combinations(6).ToList();
+    [Fact]
+    public void CombinationsEnumerable()
+    {
+        var expected = 84;
+        var actual = Enumerable.Range(1, 9).Combinations(6).ToList();
 
-            Assert.AreEqual(expected, actual.Count);
-            Assert.AreEqual(expected, actual.Distinct().Count());
-        }
+        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Distinct().Count());
+    }
 
-        [TestMethod]
-        public void PartitionCountInt()
-        {
-            var expected = new BigInteger(30);
-            var actual = Combinatorics.PartitionCount(9);
+    [Fact]
+    public void PartitionCountInt()
+    {
+        var expected = new BigInteger(30);
+        var actual = Combinatorics.PartitionCount(9);
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void PartitionCountUnits()
-        {
-            var expected = new BigInteger(292);
-            var actual = Combinatorics.PartitionCount(100, new int[] { 1, 5, 10, 25, 50 });
+    [Fact]
+    public void PartitionCountUnits()
+    {
+        var expected = new BigInteger(292);
+        var actual = Combinatorics.PartitionCount(100, new int[] { 1, 5, 10, 25, 50 });
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void PartitionsInt()
-        {
-            var expected = 30;
-            var actual0 = Combinatorics.Partitions(9).ToList();
+    [Fact]
+    public void PartitionsInt()
+    {
+        var expected = 30;
+        var actual0 = Combinatorics.Partitions(9).ToList();
 
-            Assert.AreEqual(expected, actual0.Count());
-            Assert.AreEqual(expected, actual0.Distinct().Count());
-        }
+        Assert.Equal(expected, actual0.Count());
+        Assert.Equal(expected, actual0.Distinct().Count());
+    }
 
-        [TestMethod]
-        public void PartitionsUnits()
-        {
-            var expected = 292;
-            var actual = Combinatorics.Partitions(100, new int[] { 1, 5, 10, 25, 50 }).ToList();
+    [Fact]
+    public void PartitionsUnits()
+    {
+        var expected = 292;
+        var actual = Combinatorics.Partitions(100, new int[] { 1, 5, 10, 25, 50 }).ToList();
 
-            Assert.AreEqual(expected, actual.Count());
-            Assert.AreEqual(expected, actual.Distinct().Count());
-        }
+        Assert.Equal(expected, actual.Count());
+        Assert.Equal(expected, actual.Distinct().Count());
+    }
 
-        [TestMethod]
-        public void IsPermutationTrue()
-        {
-            var actual = "1234567890".IsPermutation("0192837465");
+    [Fact]
+    public void IsPermutationTrue()
+    {
+        var actual = "1234567890".IsPermutation("0192837465");
 
-            Assert.IsTrue(actual);
-        }
+        Assert.True(actual);
+    }
 
-        [TestMethod]
-        public void IsPermutationFalse()
-        {
-            var actual = "1234567890".IsPermutation("0192827465");
+    [Fact]
+    public void IsPermutationFalse()
+    {
+        var actual = "1234567890".IsPermutation("0192827465");
 
-            Assert.IsFalse(actual);
-        }
+        Assert.False(actual);
+    }
 
-        [TestMethod]
-        public void PermutationCountNK()
-        {
-            var expected = new BigInteger(970200);
-            var actual = Combinatorics.PermutationCount(100, 3);
+    [Fact]
+    public void PermutationCountNK()
+    {
+        var expected = new BigInteger(970200);
+        var actual = Combinatorics.PermutationCount(100, 3);
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void PermutationCountDistinct()
-        {
-            var expected = new BigInteger(120);
-            var actual = Combinatorics.PermutationCountDistinct("ABCDAA");
+    [Fact]
+    public void PermutationCountDistinct()
+    {
+        var expected = new BigInteger(120);
+        var actual = Combinatorics.PermutationCountDistinct("ABCDAA");
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void PermutationCountInvalidArguments()
-        {
-            Combinatorics.PermutationCount(0, 0);
-        }
+    [Fact]
+    public void PermutationCountInvalidArguments()
+    {
+        Assert.Throws< ArgumentOutOfRangeException>(() => Combinatorics.PermutationCount(0, 0));
+    }
 
-        [TestMethod]
-        public void PermutationsString()
-        {
-            var expected = 720;
-            var actual = "113456".Permutations().ToList();
+    [Fact]
+    public void PermutationsString()
+    {
+        var expected = 720;
+        var actual = "113456".Permutations().ToList();
 
-            Assert.AreEqual(expected, actual.Count);
-        }
+        Assert.Equal(expected, actual.Count);
+    }
 
-        [TestMethod]
-        public void PermutationsDistinctString()
-        {
-            var expected = 360;
-            var actual = "113456".PermutationsDistinct().ToList();
+    [Fact]
+    public void PermutationsDistinctString()
+    {
+        var expected = 360;
+        var actual = "113456".PermutationsDistinct().ToList();
 
-            Assert.AreEqual(expected, actual.Count);
-        }
+        Assert.Equal(expected, actual.Count);
+    }
 
-        [TestMethod]
-        public void PermutationsStringK()
-        {
-            var expected = 720;
-            var actual = "113456".Permutations(6).ToList();
+    [Fact]
+    public void PermutationsStringK()
+    {
+        var expected = 720;
+        var actual = "113456".Permutations(6).ToList();
 
-            Assert.AreEqual(expected, actual.Count);
-        }
+        Assert.Equal(expected, actual.Count);
+    }
 
-        [TestMethod]
-        public void PermutationsDistinctEnumerable()
-        {
-            var expected = 360;
-            var actual = new[] { 1, 1, 3, 4, 5, 6 }.PermutationsDistinct().ToList();
+    [Fact]
+    public void PermutationsDistinctEnumerable()
+    {
+        var expected = 360;
+        var actual = new[] { 1, 1, 3, 4, 5, 6 }.PermutationsDistinct().ToList();
 
-            Assert.AreEqual(expected, actual.Count);
-        }
+        Assert.Equal(expected, actual.Count);
+    }
 
-        [TestMethod]
-        public void PermutationsEnumerableK()
-        {
-            var expected = 720;
-            var actual = new[] { 1, 1, 3, 4, 5, 6 }.Permutations(6).ToList();
+    [Fact]
+    public void PermutationsEnumerableK()
+    {
+        var expected = 720;
+        var actual = new[] { 1, 1, 3, 4, 5, 6 }.Permutations(6).ToList();
 
-            Assert.AreEqual(expected, actual.Count);
-            Assert.AreEqual(expected, actual.Distinct().Count());
-        }
+        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Distinct().Count());
     }
 }

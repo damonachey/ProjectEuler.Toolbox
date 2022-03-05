@@ -1,29 +1,25 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
-using System;
-using System.Linq;
+﻿using ProjectEuler.Toolbox;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class HashingTests
 {
-    [TestClass]
-    public class HashingTests
+    [Fact]
+    public void ModifiedFnv32()
     {
-        [TestMethod]
-        public void ModifiedFnv32()
-        {
-            var expected = 2730030712;
-            var actual = Hashing.ModifiedFnv32(new byte[] { 1, 2, 3 });
+        var expected = 2730030712;
+        var actual = Hashing.ModifiedFnv32(new byte[] { 1, 2, 3 });
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void EvaluateRPN()
-        {
-            var expected = 8270004038646870267ul;
-            var actual = Hashing.ModifiedFnv64(new byte[] { 1, 2, 3 });
+    [Fact]
+    public void EvaluateRPN()
+    {
+        var expected = 8270004038646870267ul;
+        var actual = Hashing.ModifiedFnv64(new byte[] { 1, 2, 3 });
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
     }
 }

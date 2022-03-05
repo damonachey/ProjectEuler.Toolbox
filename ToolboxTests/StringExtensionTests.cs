@@ -1,42 +1,38 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class StringExtensionTests
 {
-    [TestClass]
-    public class StringExtensionTests
+    [Fact]
+    public void SubstringFound()
     {
-        [TestMethod]
-        public void SubstringFound()
-        {
-            var expected = " a midnight ";
-            var actual = "Once upon a midnight dreary".Substring("upon", "dreary");
+        var expected = " a midnight ";
+        var actual = "Once upon a midnight dreary".Substring("upon", "dreary");
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void SubstringStartNotFound()
-        {
-            "Once upon a midnight dreary".Substring("upn", "dreary");
-        }
+    [Fact]
+    public void SubstringStartNotFound()
+    {
+        Assert.Throws<ArgumentException>(() => "Once upon a midnight dreary".Substring("upn", "dreary"));
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void SubstringEndNotFound()
-        {
-            "Once upon a midnight dreary".Substring("upon", "drery");
-        }
+    [Fact]
+    public void SubstringEndNotFound()
+    {
+        Assert.Throws<ArgumentException>(() => "Once upon a midnight dreary".Substring("upon", "drery"));
+    }
 
-        [TestMethod]
-        public void TestRandomString()
-        {
-            var s1 = StringExtensions.RandomString();
-            var s2 = StringExtensions.RandomString();
+    [Fact]
+    public void TestRandomString()
+    {
+        var s1 = StringExtensions.RandomString();
+        var s2 = StringExtensions.RandomString();
 
-            Assert.AreNotEqual(s1, s2);
-        }
+        Assert.NotEqual(s1, s2);
     }
 }

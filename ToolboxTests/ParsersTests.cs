@@ -1,95 +1,93 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class ParsersTests
 {
-    [TestClass]
-    public class ParsersTests
+    [Fact]
+    public void ParseStringLists()
     {
-        [TestMethod]
-        public void ParseStringLists()
-        {
-            var expected = new List<List<string>>
-                {
-                    new List<string>{ "1", "2", "3", "4" },
-                    new List<string>{ "5", "6", "7", "8" },
-                };
-            var actual = Parsers.ParseStringLists(@"
+        var expected = new List<List<string>>
+            {
+                new List<string>{ "1", "2", "3", "4" },
+                new List<string>{ "5", "6", "7", "8" },
+            };
+        var actual = Parsers.ParseStringLists(@"
                     1 2 3 4
                     5 6 7 8
                     ");
 
-            Assert.IsTrue(expected.SelectMany(sequence => sequence).SequenceEqual(actual.SelectMany(sequence => sequence)));
-        }
+        Assert.True(expected.SelectMany(sequence => sequence).SequenceEqual(actual.SelectMany(sequence => sequence)));
+    }
 
-        [TestMethod]
-        public void ParseStringList()
-        {
-            var expected = new List<string>
-                {
-                    "1 2 3 4",
-                    "5 6 7 8",
-                };
-            var actual = Parsers.ParseStringList(@"
+    [Fact]
+    public void ParseStringList()
+    {
+        var expected = new List<string>
+            {
+                "1 2 3 4",
+                "5 6 7 8",
+            };
+        var actual = Parsers.ParseStringList(@"
                     1 2 3 4
                     5 6 7 8
                     ")
-                .Select(str => str.Trim());
+            .Select(str => str.Trim());
 
-            Assert.IsTrue(expected.SequenceEqual(actual));
-        }
+        Assert.True(expected.SequenceEqual(actual));
+    }
 
-        [TestMethod]
-        public void ParseLongLists()
-        {
-            var expected = new List<List<long>>
-                {
-                    new List<long>{ 1, 2, 3, 4 },
-                    new List<long>{ 5, 6, 7, 8 },
-                };
-            var actual = Parsers.ParseLongLists(@"
-                    1 2 3 4
-                    5 6 7 8
-                    ");
-
-            Assert.IsTrue(expected.SelectMany(sequence => sequence).SequenceEqual(actual.SelectMany(sequence => sequence)));
-        }
-
-        [TestMethod]
-        public void ParseLongGrid()
-        {
-            var expected = new int[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };
-            var actual = Parsers.ParseIntGrid(@"
-                    1 2 3 4
-                    5 6 7 8
-                    ");
-
-            for (var i = 0; i < expected.GetLength(0); i++)
+    [Fact]
+    public void ParseLongLists()
+    {
+        var expected = new List<List<long>>
             {
-                for (int j = 0; j < expected.GetLength(1); j++)
-                {
-                    Assert.AreEqual(expected[i, j], actual[i, j]);
-                }
+                new List<long>{ 1, 2, 3, 4 },
+                new List<long>{ 5, 6, 7, 8 },
+            };
+        var actual = Parsers.ParseLongLists(@"
+                    1 2 3 4
+                    5 6 7 8
+                    ");
+
+        Assert.True(expected.SelectMany(sequence => sequence).SequenceEqual(actual.SelectMany(sequence => sequence)));
+    }
+
+    [Fact]
+    public void ParseLongGrid()
+    {
+        var expected = new int[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };
+        var actual = Parsers.ParseIntGrid(@"
+                    1 2 3 4
+                    5 6 7 8
+                    ");
+
+        for (var i = 0; i < expected.GetLength(0); i++)
+        {
+            for (int j = 0; j < expected.GetLength(1); j++)
+            {
+                Assert.Equal(expected[i, j], actual[i, j]);
             }
         }
+    }
 
-        [TestMethod]
-        public void ParseIntGrid()
-        {
-            var expected = new long[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };
-            var actual = Parsers.ParseLongGrid(@"
+    [Fact]
+    public void ParseIntGrid()
+    {
+        var expected = new long[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };
+        var actual = Parsers.ParseLongGrid(@"
                     1 2 3 4
                     5 6 7 8
                     ");
 
-            for (var i = 0; i < expected.GetLength(0); i++)
+        for (var i = 0; i < expected.GetLength(0); i++)
+        {
+            for (int j = 0; j < expected.GetLength(1); j++)
             {
-                for (int j = 0; j < expected.GetLength(1); j++)
-                {
-                    Assert.AreEqual(expected[i, j], actual[i, j]);
-                }
+                Assert.Equal(expected[i, j], actual[i, j]);
             }
         }
     }

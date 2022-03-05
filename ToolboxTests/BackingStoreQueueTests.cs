@@ -1,50 +1,48 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System.Linq;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class BackingStoreQueueTests
 {
-    [TestClass]
-    public class BackingStoreQueueTests
+    [Fact]
+    public void Constructor()
     {
-        [TestMethod]
-        public void Constructor()
-        {
-            var bsq = new CompressedQueue();
+        var bsq = new CompressedQueue();
 
-            Assert.IsNotNull(bsq);
+        Assert.NotNull(bsq);
+    }
+
+    [Fact]
+    public void Enqueue()
+    {
+        var expectedCount = 2 * CompressedQueue.CompressThreshold;
+        var actual = new CompressedQueue();
+
+        for (var i = 0; i < expectedCount; i++)
+        {
+            actual.Enqueue(i);
         }
 
-        [TestMethod]
-        public void Enqueue()
+        Assert.Equal(expectedCount, actual.Count);
+    }
+
+    [Fact]
+    public void Dequeue()
+    {
+        var expectedCount = 2 * CompressedQueue.CompressThreshold;
+        var expectedList = Enumerable.Range(0, expectedCount);
+        var actual = new CompressedQueue();
+
+        for (var i = 0; i < expectedCount; i++)
         {
-            var expectedCount = 2 * CompressedQueue.CompressThreshold;
-            var actual = new CompressedQueue();
-
-            for (var i = 0; i < expectedCount; i++)
-            {
-                actual.Enqueue(i);
-            }
-
-            Assert.AreEqual(expectedCount, actual.Count);
+            actual.Enqueue(i);
         }
 
-        [TestMethod]
-        public void Dequeue()
+        foreach (var expected in expectedList)
         {
-            var expectedCount = 2 * CompressedQueue.CompressThreshold;
-            var expectedList = Enumerable.Range(0, expectedCount);
-            var actual = new CompressedQueue();
-
-            for (var i = 0; i < expectedCount; i++)
-            {
-                actual.Enqueue(i);
-            }
-
-            foreach (var expected in expectedList)
-            {
-                Assert.AreEqual(expected, actual.Dequeue());
-            }
+            Assert.Equal(expected, actual.Dequeue());
         }
     }
 }

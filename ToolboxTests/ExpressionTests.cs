@@ -1,29 +1,25 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
-using System;
-using System.Linq;
+﻿using ProjectEuler.Toolbox;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class ExpressionTests
 {
-    [TestClass]
-    public class ExpressionTests
+    [Fact]
+    public void Evaluate()
     {
-        [TestMethod]
-        public void Evaluate()
-        {
-            var expected = 7;
-            var actual = Expression.Evaluate("1 + (2 * 3)");
+        var expected = 7;
+        var actual = Expression.Evaluate("1 + (2 * 3)");
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void EvaluateRPN()
-        {
-            var expected = 7;
-            var actual = Expression.EvaluateRPN("3 2 * 1 +");
+    [Fact]
+    public void EvaluateRPN()
+    {
+        var expected = 7;
+        var actual = Expression.EvaluateRPN("3 2 * 1 +");
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
     }
 }

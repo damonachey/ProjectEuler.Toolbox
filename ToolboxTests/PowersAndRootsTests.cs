@@ -1,166 +1,162 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System;
 using System.Numerics;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class PowersAndRootsTests
 {
-    [TestClass]
-    public class PowersAndRootsTests
+    [Fact]
+    public void IsPerfectSquareFalse()
     {
-        [TestMethod]
-        public void IsPerfectSquareFalse()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(9223372036854775807);
+        var actual = PowersAndRoots.IsPerfectSquare(9223372036854775807);
 
-            Assert.IsFalse(actual);
-        }
+        Assert.False(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareFalse2()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(24);
+    [Fact]
+    public void IsPerfectSquareFalse2()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(24);
 
-            Assert.IsFalse(actual);
-        }
+        Assert.False(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareTrue()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(9223372036854775808);
+    [Fact]
+    public void IsPerfectSquareTrue()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(9223372036854775808);
 
-            Assert.IsFalse(actual);
-        }
+        Assert.False(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareBigIntegerTrue()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(BigInteger.Parse("119395365954817634641176944193187475791716"));
+    [Fact]
+    public void IsPerfectSquareBigIntegerTrue()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(BigInteger.Parse("119395365954817634641176944193187475791716"));
 
-            Assert.IsTrue(actual);
-        }
+        Assert.True(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareBigIntegerFalse()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(BigInteger.Parse("119395365954817634641176944193187475791715"));
+    [Fact]
+    public void IsPerfectSquareBigIntegerFalse()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(BigInteger.Parse("119395365954817634641176944193187475791715"));
 
-            Assert.IsFalse(actual);
-        }
+        Assert.False(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareBigIntegerFalse2()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(new BigInteger(24));
+    [Fact]
+    public void IsPerfectSquareBigIntegerFalse2()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(new BigInteger(24));
 
-            Assert.IsFalse(actual);
-        }
+        Assert.False(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareZero()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(0);
+    [Fact]
+    public void IsPerfectSquareZero()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(0);
 
-            Assert.IsTrue(actual);
-        }
+        Assert.True(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareOne()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(1);
+    [Fact]
+    public void IsPerfectSquareOne()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(1);
 
-            Assert.IsTrue(actual);
-        }
+        Assert.True(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareNegative()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(-4);
+    [Fact]
+    public void IsPerfectSquareNegative()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(-4);
 
-            Assert.IsFalse(actual);
-        }
+        Assert.False(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareBigIntegerZero()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(BigInteger.Zero);
+    [Fact]
+    public void IsPerfectSquareBigIntegerZero()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(BigInteger.Zero);
 
-            Assert.IsTrue(actual);
-        }
+        Assert.True(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareBigIntegerOne()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(new BigInteger(1));
+    [Fact]
+    public void IsPerfectSquareBigIntegerOne()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(new BigInteger(1));
 
-            Assert.IsTrue(actual);
-        }
+        Assert.True(actual);
+    }
 
-        [TestMethod]
-        public void IsPerfectSquareBigIntegerNegative()
-        {
-            var actual = PowersAndRoots.IsPerfectSquare(new BigInteger(-4));
+    [Fact]
+    public void IsPerfectSquareBigIntegerNegative()
+    {
+        var actual = PowersAndRoots.IsPerfectSquare(new BigInteger(-4));
 
-            Assert.IsFalse(actual);
-        }
+        Assert.False(actual);
+    }
 
-        [TestMethod]
-        public void SqrtFloor()
-        {
-            var expected = new BigInteger(35130);
-            var actual = PowersAndRoots.SqrtFloor(1234134534);
+    [Fact]
+    public void SqrtFloor()
+    {
+        var expected = new BigInteger(35130);
+        var actual = PowersAndRoots.SqrtFloor(1234134534);
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void SqrtFloorZero()
-        {
-            var expected = BigInteger.Zero;
-            var actual = PowersAndRoots.SqrtFloor(BigInteger.Zero);
+    [Fact]
+    public void SqrtFloorZero()
+    {
+        var expected = BigInteger.Zero;
+        var actual = PowersAndRoots.SqrtFloor(BigInteger.Zero);
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArithmeticException))]
-        public void SqrtFloorNegative()
-        {
-            PowersAndRoots.SqrtFloor(BigInteger.MinusOne);
-        }
+    [Fact]
+    public void SqrtFloorNegative()
+    {
+        Assert.Throws<ArithmeticException>(() => PowersAndRoots.SqrtFloor(BigInteger.MinusOne));
+    }
 
-        [TestMethod]
-        public void SqrtIrrational()
-        {
-            var expected = 1.4142135623730950488016887242m;
-            var actual = PowersAndRoots.Sqrt(2m);
+    [Fact]
+    public void SqrtIrrational()
+    {
+        var expected = 1.4142135623730950488016887242m;
+        var actual = PowersAndRoots.Sqrt(2m);
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void SqrtSquare()
-        {
-            var expected = 4;
-            var actual = PowersAndRoots.Sqrt(16m);
+    [Fact]
+    public void SqrtSquare()
+    {
+        var expected = 4;
+        var actual = PowersAndRoots.Sqrt(16m);
 
-            Assert.AreEqual(expected, actual);
-        }
-        
-        [TestMethod]
-        public void SqrtZero()
-        {
-            var expected = 0;
-            var actual = PowersAndRoots.Sqrt(0);
+        Assert.Equal(expected, actual);
+    }
+    
+    [Fact]
+    public void SqrtZero()
+    {
+        var expected = 0;
+        var actual = PowersAndRoots.Sqrt(0);
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void SqrtDecimalNegative()
-        {
-            PowersAndRoots.Sqrt(-2);
-        }
+    [Fact]
+    public void SqrtDecimalNegative()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => PowersAndRoots.Sqrt(-2));
     }
 }

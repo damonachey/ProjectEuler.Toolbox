@@ -1,76 +1,72 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
-using System;
-using System.Linq;
+﻿using ProjectEuler.Toolbox;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class Point3doubleTests
 {
-    [TestClass]
-    public class Point3doubleTests
+    [Fact]
+    public void Point3double()
     {
-        [TestMethod]
-        public void Point3double()
-        {
-            var p = new Point3double(1, 2, 3);
+        var p = new Point3double(1, 2, 3);
 
-            Assert.AreEqual(1, p.X);
-            Assert.AreEqual(2, p.Y);
-            Assert.AreEqual(3, p.Z);
-        }
+        Assert.Equal(1, p.X);
+        Assert.Equal(2, p.Y);
+        Assert.Equal(3, p.Z);
+    }
 
-        [TestMethod]
-        public new void ToString()
-        {
-            var expected = "(1, 2, 3)";
-            var p = new Point3double(1, 2, 3);
-            var actual = p.ToString();
+    [Fact]
+    public void ToStringTest()
+    {
+        var expected = "(1, 2, 3)";
+        var p = new Point3double(1, 2, 3);
+        var actual = p.ToString();
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void Equals()
-        {
-            var p = new Point3double(1, 2, 3);
+    [Fact]
+    public void EqualsTest()
+    {
+        var p = new Point3double(1, 2, 3);
 
-            Assert.AreNotEqual(p, 1);
-        }
+        Assert.False(p.Equals(1));
+    }
 
-        [TestMethod]
-        public void Equals2()
-        {
-            var p1 = new Point3double(1, 2, 3);
-            var p2 = new Point3double(1, 2, 3);
+    [Fact]
+    public void Equals2()
+    {
+        var p1 = new Point3double(1, 2, 3);
+        var p2 = new Point3double(1, 2, 3);
 
-            Assert.AreEqual(p1, p2);
-        }
+        Assert.Equal(p1, p2);
+    }
 
-        [TestMethod]
-        public new void GetHashCode()
-        {
-            var expected = 1073217536;
-            var p = new Point3double(1, 2, 3);
-            var actual = p.GetHashCode();
+    [Fact]
+    public void GetHashCodeTest()
+    {
+        var expected = 1073217536;
+        var p = new Point3double(1, 2, 3);
+        var actual = p.GetHashCode();
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
+    }
 
-        [TestMethod]
-        public void op_Equals()
-        {
-            var p1 = new Point3double(1, 2, 3);
-            var p2 = new Point3double(1, 2, 3);
+    [Fact]
+    public void op_Equals()
+    {
+        var p1 = new Point3double(1, 2, 3);
+        var p2 = new Point3double(1, 2, 3);
 
-            Assert.IsTrue(p1 == p2);
-        }
+        Assert.True(p1 == p2);
+    }
 
-        [TestMethod]
-        public void op_NotEquals()
-        {
-            var p1 = new Point3double(1, 2, 3);
-            var p2 = new Point3double(1, 2, 4);
+    [Fact]
+    public void op_NotEquals()
+    {
+        var p1 = new Point3double(1, 2, 3);
+        var p2 = new Point3double(1, 2, 4);
 
-            Assert.IsTrue(p1 != p2);
-        }
+        Assert.True(p1 != p2);
     }
 }

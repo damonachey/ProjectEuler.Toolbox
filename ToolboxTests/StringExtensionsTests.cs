@@ -1,18 +1,16 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class StringExtensionsTests
 {
-    [TestClass]
-    public class StringExtensionsTests
+    [Fact]
+    public void Replace()
     {
-        [TestMethod]
-        public void Replace()
-        {
-            var expected = "testing";
-            var actual = "tasting".Replace(1, 'e');
+        var expected = "testing";
+        var actual = "tasting".Replace(1, 'e');
 
-            Assert.AreEqual(expected, actual);
-        }
+        Assert.Equal(expected, actual);
     }
 }

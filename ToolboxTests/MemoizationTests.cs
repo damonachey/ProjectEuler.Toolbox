@@ -1,100 +1,98 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ProjectEuler.Toolbox;
+﻿using ProjectEuler.Toolbox;
 using System;
+using Xunit;
 
-namespace ProjectEuler.ToolboxTests
+namespace ProjectEuler.ToolboxTests;
+
+public class MemoizationTests
 {
-    [TestClass]
-    public class MemoizationTests
+    [Fact]
+    public void MemoizeOneParameter()
     {
-        [TestMethod]
-        public void MemoizeOneParameter()
-        {
-            var count = 0;
-            Func<int, int> func = (input) => count++;
-            func = func.Memoize();
+        var count = 0;
+        Func<int, int> func = (input) => count++;
+        func = func.Memoize();
 
-            var expected = 0;
-            var actual = func(1); // first call
-            actual = func(1);     // if not memoized this would increment a second time
+        var expected = 0;
+        var actual = func(1); // first call
+        actual = func(1);     // if not memoized this would increment a second time
 
-            Assert.AreEqual(expected, actual);
+        Assert.Equal(expected, actual);
 
-            actual = func(2);
+        actual = func(2);
 
-            Assert.AreEqual(expected + 1, actual);
-        }
+        Assert.Equal(expected + 1, actual);
+    }
 
-        [TestMethod]
-        public void MemoizeTwoParameters()
-        {
-            var count = 0;
-            Func<int, int, int> func = (input1, input2) => count++;
-            func = func.Memoize();
+    [Fact]
+    public void MemoizeTwoParameters()
+    {
+        var count = 0;
+        Func<int, int, int> func = (input1, input2) => count++;
+        func = func.Memoize();
 
-            var expected = 0;
-            var actual = func(1, 2); // first call
-            actual = func(1, 2);     // if not memoized this would increment a second time
+        var expected = 0;
+        var actual = func(1, 2); // first call
+        actual = func(1, 2);     // if not memoized this would increment a second time
 
-            Assert.AreEqual(expected, actual);
+        Assert.Equal(expected, actual);
 
-            actual = func(2, 2);
+        actual = func(2, 2);
 
-            Assert.AreEqual(expected + 1, actual);
-        }
+        Assert.Equal(expected + 1, actual);
+    }
 
-        [TestMethod]
-        public void MemoizeThreeParameters()
-        {
-            var count = 0;
-            Func<int, int, int, int> func = (input1, input2, input3) => count++;
-            func = func.Memoize();
+    [Fact]
+    public void MemoizeThreeParameters()
+    {
+        var count = 0;
+        Func<int, int, int, int> func = (input1, input2, input3) => count++;
+        func = func.Memoize();
 
-            var expected = 0;
-            var actual = func(1, 2, 3); // first call
-            actual = func(1, 2, 3);     // if not memoized this would increment a second time
+        var expected = 0;
+        var actual = func(1, 2, 3); // first call
+        actual = func(1, 2, 3);     // if not memoized this would increment a second time
 
-            Assert.AreEqual(expected, actual);
+        Assert.Equal(expected, actual);
 
-            actual = func(2, 2, 3);
+        actual = func(2, 2, 3);
 
-            Assert.AreEqual(expected + 1, actual);
-        }
+        Assert.Equal(expected + 1, actual);
+    }
 
-        [TestMethod]
-        public void MemoizeFourParameters()
-        {
-            var count = 0;
-            Func<int, int, int, int, int> func = (input1, input2, input3, input4) => count++;
-            func = func.Memoize();
+    [Fact]
+    public void MemoizeFourParameters()
+    {
+        var count = 0;
+        Func<int, int, int, int, int> func = (input1, input2, input3, input4) => count++;
+        func = func.Memoize();
 
-            var expected = 0;
-            var actual = func(1, 2, 3, 4); // first call
-            actual = func(1, 2, 3, 4);     // if not memoized this would increment a second time
+        var expected = 0;
+        var actual = func(1, 2, 3, 4); // first call
+        actual = func(1, 2, 3, 4);     // if not memoized this would increment a second time
 
-            Assert.AreEqual(expected, actual);
+        Assert.Equal(expected, actual);
 
-            actual = func(2, 2, 3, 4);
+        actual = func(2, 2, 3, 4);
 
-            Assert.AreEqual(expected + 1, actual);
-        }
+        Assert.Equal(expected + 1, actual);
+    }
 
-        [TestMethod]
-        public void MemoizeFiveParameters()
-        {
-            var count = 0;
-            Func<int, int, int, int, int, int> func = (input, input2, input3, input4, input5) => count++;
-            func = func.Memoize();
+    [Fact]
+    public void MemoizeFiveParameters()
+    {
+        var count = 0;
+        Func<int, int, int, int, int, int> func = (input, input2, input3, input4, input5) => count++;
+        func = func.Memoize();
 
-            var expected = 0;
-            var actual = func(1, 2, 3, 4, 5); // first call
-            actual = func(1, 2, 3, 4, 5);     // if not memoized this would increment a second time
+        var expected = 0;
+        var actual = func(1, 2, 3, 4, 5); // first call
+        actual = func(1, 2, 3, 4, 5);     // if not memoized this would increment a second time
 
-            Assert.AreEqual(expected, actual);
+        Assert.Equal(expected, actual);
 
-            actual = func(2, 2, 3, 4, 5);
+        actual = func(2, 2, 3, 4, 5);
 
-            Assert.AreEqual(expected + 1, actual);
-        }
+        Assert.Equal(expected + 1, actual);
     }
 }
