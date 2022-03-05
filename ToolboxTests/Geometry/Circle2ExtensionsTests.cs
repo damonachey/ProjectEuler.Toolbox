@@ -40,9 +40,9 @@ public class Circle2ExtensionsTests
     [Fact]
     public void SegmentArea()
     {
-        var expected = 1.141;
+        var expected = 1.1416;
         var actual = Circle2Extensions.SegmentArea(Math.PI / 2, 2);
 
-        Assert.Equal(expected, actual, 3);
+        Assert.Equal(expected, actual, 4);
     }
 }
