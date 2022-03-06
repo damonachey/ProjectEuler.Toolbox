@@ -3,11 +3,11 @@
 public static class PrimeHelper
 {
     private static string PrimeFile { get; } = @"C:\Users\Damon\OneDrive\Development\Data\Primes32bit.bin";
-    private static Func<long, bool> IsPrimeMemoized { get; } = n => IsPrime(n);
+    private static Func<long, bool> IsPrimeMemoizedLocal { get; } = n => IsPrime(n);
 
     static PrimeHelper()
     {
-        IsPrimeMemoized = IsPrimeMemoized.Memoize();
+        IsPrimeMemoizedLocal = IsPrimeMemoizedLocal.Memoize();
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public static class PrimeHelper
     /// </summary>
     /// <param name="n"></param>
     /// <returns></returns>
-    public static bool IsPrimeMemoized(long n) => IsPrimeMemoized(n);
+    public static bool IsPrimeMemoized(long n) => IsPrimeMemoizedLocal(n);
 
     /// <summary>
     /// Enumerates all prime values previously computed
