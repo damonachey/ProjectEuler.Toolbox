@@ -64,10 +64,7 @@ public static class LinqExtensions
     /// <param name="b"></param>
     public static IList<T> Swap<T>(this IList<T> list, int a, int b)
     {
-        var temp = list[a];
-        list[a] = list[b];
-        list[b] = temp;
-
+        (list[b], list[a]) = (list[a], list[b]);
         return list;
     }
 
@@ -175,25 +172,24 @@ public static class LinqExtensions
     /// <returns></returns>
     public static IEnumerable<T3> Merge<T1, T2, T3>(this IEnumerable<T1> first, IEnumerable<T2> second, Func<T1, T2, T3> operation, Func<T1> default1, Func<T2> default2)
     {
-        using (var iter1 = first.GetEnumerator())
-        using (var iter2 = second.GetEnumerator())
+        using var iter1 = first.GetEnumerator();
+        using var iter2 = second.GetEnumerator();
+        
+        while (iter1.MoveNext())
         {
-            while (iter1.MoveNext())
+            if (iter2.MoveNext())
             {
-                if (iter2.MoveNext())
-                {
-                    yield return operation(iter1.Current, iter2.Current);
-                }
-                else
-                {
-                    yield return operation(iter1.Current, default2());
-                }
+                yield return operation(iter1.Current, iter2.Current);
             }
+            else
+            {
+                yield return operation(iter1.Current, default2());
+            }
+        }
 
-            while (iter2.MoveNext())
-            {
-                yield return operation(default1(), iter2.Current);
-            }
+        while (iter2.MoveNext())
+        {
+            yield return operation(default1(), iter2.Current);
         }
     }
 
@@ -249,7 +245,7 @@ public static class LinqExtensions
             ?? throw new InvalidOperationException("Sequence contains fewer than two elements"); ;
     }
 
-    public static List<object> Errors = new List<object>();
+    public static readonly List<object> Errors = new();
 
     public static IEnumerable<TResult?> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
     {

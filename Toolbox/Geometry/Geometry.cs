@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ProjectEuler.Toolbox;
+﻿namespace ProjectEuler.Toolbox;
 
 public static class Geometry
 {
@@ -103,9 +100,7 @@ public static class Geometry
                     // we may not be unique, but lets at least be ordered
                     if (a > b)
                     {
-                        var t = a;
-                        a = b;
-                        b = t;
+                        (b, a) = (a, b);
                     }
 
                     yield return Tuple.Create(a, b, c);

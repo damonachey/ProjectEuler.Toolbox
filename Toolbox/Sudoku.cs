@@ -57,13 +57,13 @@ public static class Sudoku
                 {
                     for (var x1 = 0; x1 < 9; x1++)
                     {
-                        var cell = new { x = x1, y = y };
+                        var cell = (x: x1, y);
                         RemovePossibleCellValue(possibleCellValues, cell, grid[x, y]);
                     }
 
                     for (var y1 = 0; y1 < 9; y1++)
                     {
-                        var cell = new { x = x, y = y1 };
+                        var cell = (x, y: y1);
                         RemovePossibleCellValue(possibleCellValues, cell, grid[x, y]);
                     }
                 }

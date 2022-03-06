@@ -63,7 +63,7 @@ public class Totient
         {
             //InitializeSmallestFactors(n);
 
-            throw new ArgumentOutOfRangeException("Please InitializeSmallestFactors to a larger value or use PhiSlow(n)");
+            throw new ArgumentOutOfRangeException(nameof(n));
         }
 
         var f =
@@ -86,9 +86,9 @@ public class Totient
         return Phi(n) * (f - 1) * fp;
     }
 
-    static long isqrt(long a)
+    static long Isqrt(long a)
     {
-        var y = 0L;
+        var y = default(long);
         var x = a;
 
         while (x > 1)
@@ -113,7 +113,7 @@ public class Totient
         }
 
         var r = (p == 0) ? 1L : (1 << (p - 1));
-        var m = isqrt(n) + 1;
+        var m = Isqrt(n) + 1;
 
         for (var d = 3; d <= m; d += 2)
         {
@@ -122,7 +122,7 @@ public class Totient
                 for (n /= d, p = 1; n % d == 0; n /= d, p++)
                     r *= d;
                 r *= d - 1;
-                m = isqrt(n) + 1;
+                m = Isqrt(n) + 1;
             }
         }
 

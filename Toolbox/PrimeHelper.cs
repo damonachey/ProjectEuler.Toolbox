@@ -3,11 +3,11 @@
 public static class PrimeHelper
 {
     private static string PrimeFile { get; } = @"C:\Users\Damon\OneDrive\Development\Data\Primes32bit.bin";
-    private static Func<long, bool> isPrimeMemoized { get; } = n => IsPrime(n);
+    private static Func<long, bool> IsPrimeMemoized { get; } = n => IsPrime(n);
 
     static PrimeHelper()
     {
-        isPrimeMemoized = isPrimeMemoized.Memoize();
+        IsPrimeMemoized = IsPrimeMemoized.Memoize();
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public static class PrimeHelper
     /// </summary>
     /// <param name="n"></param>
     /// <returns></returns>
-    public static bool IsPrimeMemoized(long n) => isPrimeMemoized(n);
+    public static bool IsPrimeMemoized(long n) => IsPrimeMemoized(n);
 
     /// <summary>
     /// Enumerates all prime values previously computed
@@ -77,15 +77,14 @@ public static class PrimeHelper
     /// <returns></returns>
     public static IEnumerable<int> Primes(long index = 0)
     {
-        using (var stream = File.Open(PrimeFile, FileMode.Open, FileAccess.Read, FileShare.Read))
-        using (var reader = new BinaryReader(stream))
-        {
-            reader.BaseStream.Seek(index * 4, SeekOrigin.Begin);
+        using var stream = File.Open(PrimeFile, FileMode.Open, FileAccess.Read, FileShare.Read);
+        using var reader = new BinaryReader(stream);
 
-            while (true)
-            {
-                yield return reader.ReadInt32();
-            }
+        reader.BaseStream.Seek(index * 4, SeekOrigin.Begin);
+
+        while (true)
+        {
+            yield return reader.ReadInt32();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System;
 
 namespace ProjectEuler.Toolbox;
 
@@ -18,9 +19,14 @@ public static class Combinatorics
     /// <returns></returns>
     public static BigInteger CombinationCount(int n, int k)
     {
-        if (n < 1 || k < 0 || k > n)
+        if (n < 1)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(n));
+        }
+
+        if (k < 0 || k > n)
+        {
+            throw new ArgumentOutOfRangeException(nameof(k));
         }
 
         return MathLibrary.Factorial(n) / (MathLibrary.Factorial(k) * MathLibrary.Factorial(n - k));
@@ -251,9 +257,14 @@ public static class Combinatorics
     /// <returns></returns>
     public static BigInteger PermutationCount(int n, int k)
     {
-        if (n < 1 || k < 0 || k > n)
+        if (n < 1)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(n));
+        }
+
+        if (k < 0 || k > n)
+        {
+            throw new ArgumentOutOfRangeException(nameof(k));
         }
 
         return MathLibrary.Factorial(n) / MathLibrary.Factorial(n - k);
@@ -295,7 +306,7 @@ public static class Combinatorics
 
         for (var i = 0; i < s.Length; i++)
         {
-            var s2 = s.Substring(0, i) + s.Substring(i + 1);
+            var s2 = string.Concat(s.AsSpan(0, i), s.AsSpan(i + 1));
 
             foreach (var perm in Permutations(s2, p + s[i]))
             {
@@ -364,7 +375,7 @@ public static class Combinatorics
         {
             for (var i = 0; i < s.Length; i++)
             {
-                var s2 = s.Substring(0, i) + s.Substring(i + 1);
+                var s2 = string.Concat(s.AsSpan(0, i), s.AsSpan(i + 1));
 
                 foreach (var perm in Permutations(s2, k - 1))
                 {
@@ -419,7 +430,7 @@ public static class Combinatorics
     {
         if (k == 0)
         {
-            yield return new T[0];
+            yield return Array.Empty<T>();
         }
         else
         {

@@ -53,7 +53,7 @@ public class Point3doubleTests
     }
 
     [Fact]
-    public void op_Equals()
+    public void Op_Equals()
     {
         var p1 = new Point3double(1, 2, 3);
         var p2 = new Point3double(1, 2, 3);
@@ -62,7 +62,7 @@ public class Point3doubleTests
     }
 
     [Fact]
-    public void op_NotEquals()
+    public void Op_NotEquals()
     {
         var p1 = new Point3double(1, 2, 3);
         var p2 = new Point3double(1, 2, 4);

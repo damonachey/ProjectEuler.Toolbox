@@ -24,7 +24,7 @@ public static class Line2Extensions
 
     public static bool Intersects(this Line2double l1, Line2double l2, out Point2double p)
     {
-        p = default(Point2double);
+        p = default;
 
         var d = (l1.P1.X - l1.P2.X) * (l2.P1.Y - l2.P2.Y) - (l1.P1.Y - l1.P2.Y) * (l2.P1.X - l2.P2.X);
 

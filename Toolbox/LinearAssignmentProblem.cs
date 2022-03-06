@@ -332,7 +332,7 @@ public static class LinearAssignmentProblem
             dim != v.Length
             )
         {
-            throw new ArgumentException();
+            throw new ArgumentException(nameof(dim));
         }
 
         bool unassignedfound;
@@ -566,7 +566,7 @@ public static class LinearAssignmentProblem
         {
             j = rowsol[i];
             u[i] = assigncost[i][j] - v[j];
-            lapcost = lapcost + assigncost[i][j];
+            lapcost += assigncost[i][j];
         }
 
         return lapcost;

@@ -52,7 +52,7 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
         Denominator = value.Denominator;
     }
 
-    public static BigRational operator -(BigRational value) => new BigRational(-value.Numerator, value.Denominator);
+    public static BigRational operator -(BigRational value) => new(-value.Numerator, value.Denominator);
 
     public static BigRational operator -(BigRational left, BigRational right) => new(left.Numerator * right.Denominator - right.Numerator * left.Denominator, left.Denominator * right.Denominator);
 

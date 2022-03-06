@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ProjectEuler.Toolbox;
+﻿namespace ProjectEuler.Toolbox;
 
 public static class Circle2Extensions
 {

@@ -24,4 +24,12 @@
     <ProjectReference Include="..\Toolbox\Toolbox.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\damon\OneDrive\Development\ProjectEuler.Toolbox\ToolboxTests\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\damon\OneDrive\Development\ProjectEuler.Toolbox\ToolboxTests\.editorconfig" />
+  </ItemGroup>
+
 </Project>

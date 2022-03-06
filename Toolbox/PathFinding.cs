@@ -303,7 +303,7 @@ public static class PathFinding
     /// <param name="grid"></param>
     /// <returns></returns>
     public static Coordinate UpperLeft<T>(this T[,] grid) => 
-        new Coordinate(0, 0);
+        new(0, 0);
 
     /// <summary>
     /// Get the lower right coordinate of a grid.
@@ -311,7 +311,7 @@ public static class PathFinding
     /// <param name="grid"></param>
     /// <returns></returns>
     public static Coordinate LowerRight<T>(this T[,] grid) => 
-        new Coordinate(grid.GetLength(0) - 1, grid.GetLength(1) - 1);
+        new(grid.GetLength(0) - 1, grid.GetLength(1) - 1);
 
     private static long DistanceBetween(this long[,] grid, Coordinate square1, Coordinate square2) => 
         grid[square2.Row, square2.Col];

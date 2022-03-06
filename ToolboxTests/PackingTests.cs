@@ -36,7 +36,7 @@ public class PackingTests
         var items = new List<BigInteger>();
 
         var expected = new BigInteger(0);
-        var actual = Packing.Knapsack01(15, items, out List<BigInteger> bag);
+        var actual = Packing.Knapsack01(15, items, out _);
 
         Assert.Equal(expected, actual);
     }

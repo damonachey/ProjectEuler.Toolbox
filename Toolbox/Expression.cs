@@ -24,7 +24,7 @@ public static class Expression
         foreach (var match in Regex.Matches("+" + expr, @"\D ?-?[\d.]+").Cast<Match>())
         {
             var oper = match.Value[0];
-            var value = double.Parse(match.Value.Substring(1));
+            var value = double.Parse(match.Value[1..]);
             result = oper == '+' ? result + value : oper == '-' ? result - value : oper == '*' ? result * value : result / value;
         }
 
