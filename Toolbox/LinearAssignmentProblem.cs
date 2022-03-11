@@ -168,10 +168,10 @@ public static class LinearAssignmentProblem
                 }
 
                 pathIndex++;
-                path[pathIndex] = new Location(row, path[pathIndex - 1].Column);
+                path[pathIndex] = new(row, path[pathIndex - 1].Column);
                 var col = FindPrimeInRow(masks, w, path[pathIndex].Row);
                 pathIndex++;
-                path[pathIndex] = new Location(path[pathIndex - 1].Row, col);
+                path[pathIndex] = new(path[pathIndex - 1].Row, col);
             }
             ConvertPath(masks, path, pathIndex + 1);
             ClearCovers(rowsCovered, colsCovered, w, h);
@@ -223,11 +223,11 @@ public static class LinearAssignmentProblem
                 {
                     if (costs[i, j] == 0 && !rowsCovered[i] && !colsCovered[j])
                     {
-                        return new Location(i, j);
+                        return new(i, j);
                     }
                 }
             }
-            return new Location(-1, -1);
+            return new(-1, -1);
         }
 
         private static int FindMinimum(int[,] costs, bool[] rowsCovered, bool[] colsCovered, int w, int h)

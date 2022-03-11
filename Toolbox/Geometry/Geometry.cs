@@ -165,6 +165,6 @@ public static class Geometry
         var x = (ba * ba - ca * ca + C.X * C.X) / (2 * C.X);
         var y = Math.Sqrt(ba * ba - x * x);
 
-        return new Point2double(x, y);
+        return new(x, y);
     }
 }

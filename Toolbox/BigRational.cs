@@ -9,11 +9,11 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
     public BigInteger Numerator { get; }
     public BigInteger Denominator { get; }
 
-    public static BigRational Zero { get; } = new BigRational(0);
-    public static BigRational One { get; } = new BigRational(1);
-    public static BigRational MinusOne { get; } = new BigRational(-1);
-    public static BigRational PI { get; } = new BigRational(BigInteger.Parse("31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"), BigInteger.Pow(10, 100));
-    public static BigRational E { get; } = new BigRational(BigInteger.Parse("27182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274"), BigInteger.Pow(10, 100));
+    public static BigRational Zero { get; } = new(0);
+    public static BigRational One { get; } = new(1);
+    public static BigRational MinusOne { get; } = new(-1);
+    public static BigRational PI { get; } = new(BigInteger.Parse("31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"), BigInteger.Pow(10, 100));
+    public static BigRational E { get; } = new(BigInteger.Parse("27182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274"), BigInteger.Pow(10, 100));
 
     public bool IsOne => Numerator == Denominator;
     public bool IsZero => Numerator == 0;
@@ -76,9 +76,9 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
 
     public static bool operator >=(BigRational left, BigRational right) => left.Numerator * right.Denominator >= right.Numerator * left.Denominator;
 
-    public static explicit operator double (BigRational value) => (double)value.Numerator / (double)value.Denominator;
+    public static explicit operator double(BigRational value) => (double)value.Numerator / (double)value.Denominator;
 
-    public static explicit operator decimal (BigRational value) => (decimal)value.Numerator / (decimal)value.Denominator;
+    public static explicit operator decimal(BigRational value) => (decimal)value.Numerator / (decimal)value.Denominator;
 
     public static explicit operator BigInteger(BigRational value) => value.Numerator / value.Denominator;
 
@@ -94,7 +94,7 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
         var denominator = BigInteger.Pow(10, dot == -1 ? 1 : dlen - dot);
         var numerator = 10 * BigInteger.Parse(dstr);
 
-        return new BigRational(numerator, denominator);
+        return new(numerator, denominator);
     }
 
     private static string ToLongString(double input)
@@ -161,7 +161,7 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
         var denominator = BigInteger.Pow(10, dlen - dot);
         var numerator = 10 * BigInteger.Parse(dstr);
 
-        return new BigRational(numerator, denominator);
+        return new(numerator, denominator);
     }
 
     public static implicit operator BigRational(long value) => new(value);

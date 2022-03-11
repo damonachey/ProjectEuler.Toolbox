@@ -16,7 +16,7 @@ public struct Line2double : IEquatable<Line2double>
         : this()
     {
         P1 = p1;
-        P2 = new Point2double(0, p1.YIntercept(m));
+        P2 = new(0, p1.YIntercept(m));
 
         if (P1 == P2)
         {

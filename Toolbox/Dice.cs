@@ -50,7 +50,7 @@ public static class Dice
 
                 list.Shuffle();
 
-                queue = new Queue<int[]>(list);
+                queue = new(list);
             }
 
             yield return queue.Dequeue();

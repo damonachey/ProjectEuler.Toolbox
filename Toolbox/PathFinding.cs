@@ -64,7 +64,7 @@ public static class PathFinding
             for (var col = 0; col < dist.GetLength(1); col++)
             {
                 dist[row, col] = long.MaxValue;
-                q.Add(new Coordinate(row, col));
+                q.Add(new(row, col));
             }
         }
 
@@ -210,22 +210,22 @@ public static class PathFinding
     {
         if (square.Row > 0)
         {
-            yield return new Coordinate(square.Row - 1, square.Col); // left
+            yield return new(square.Row - 1, square.Col); // left
         }
 
         if (square.Row < grid.GetLength(0) - 1)
         {
-            yield return new Coordinate(square.Row + 1, square.Col); // right
+            yield return new(square.Row + 1, square.Col); // right
         }
 
         if (square.Col > 0)
         {
-            yield return new Coordinate(square.Row, square.Col - 1); // up
+            yield return new(square.Row, square.Col - 1); // up
         }
 
         if (square.Col < grid.GetLength(1) - 1)
         {
-            yield return new Coordinate(square.Row, square.Col + 1); // down
+            yield return new(square.Row, square.Col + 1); // down
         }
     }
 

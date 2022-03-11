@@ -41,13 +41,13 @@ public static class Parsers
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    public static IList<IList<string>> ParseStringLists(string str)
+    public static List<List<string>> ParseStringLists(string str)
     {
         return ParseStringList(str)
-            .Select(s => (IList<string>)s.Split(", \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+            .Select(s => s.Split(", \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                 .Select(s2 => s2)
-                .ToArray())
-            .ToArray();
+                .ToList())
+            .ToList();
     }
 
     /// <summary>
@@ -55,11 +55,11 @@ public static class Parsers
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    public static IList<IList<long>> ParseLongLists(string str)
+    public static List<List<long>> ParseLongLists(string str)
     {
         return ParseStringLists(str)
-            .Select(sl => (IList<long>)sl.Select(long.Parse).ToArray())
-            .ToArray();
+            .Select(sl => sl.Select(long.Parse).ToList())
+            .ToList();
     }
 
     /// <summary>

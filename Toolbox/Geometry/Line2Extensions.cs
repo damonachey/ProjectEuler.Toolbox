@@ -56,6 +56,6 @@ public static class Line2Extensions
         var x = 2 * d - p.X;
         var y = 2 * d * m - p.Y + 2 * c;
 
-        return new Point2double(x, y);
+        return new(x, y);
     }
 }
