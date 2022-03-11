@@ -61,21 +61,14 @@ public static class LinearAssignmentProblem
             var step = 1;
             while (step != -1)
             {
-                switch (step)
+                step = step switch
                 {
-                    case 1:
-                        step = RunStep1(costs, masks, rowsCovered, colsCovered, w, h);
-                        break;
-                    case 2:
-                        step = RunStep2(costs, masks, rowsCovered, colsCovered, w, h, ref pathStart);
-                        break;
-                    case 3:
-                        step = RunStep3(costs, masks, rowsCovered, colsCovered, w, h, path, pathStart);
-                        break;
-                    case 4:
-                        step = RunStep4(costs, masks, rowsCovered, colsCovered, w, h);
-                        break;
-                }
+                    1 => RunStep1(costs, masks, rowsCovered, colsCovered, w, h),
+                    2 => RunStep2(costs, masks, rowsCovered, colsCovered, w, h, ref pathStart),
+                    3 => RunStep3(costs, masks, rowsCovered, colsCovered, w, h, path, pathStart),
+                    4 => RunStep4(costs, masks, rowsCovered, colsCovered, w, h),
+                    _ => throw new NotImplementedException(),
+                };
             }
 
             var agentsTasks = new int[h];
