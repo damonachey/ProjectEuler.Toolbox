@@ -231,8 +231,8 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
         var d = 1;
         var a0 = a;
 
-        var tup = Tuple.Create(m, d, a);
-        var tuplist = new HashSet<Tuple<int, int, int>>();
+        var tup = (m, d, a);
+        var tuplist = new HashSet<(int, int, int)>();
 
         while (!tuplist.Contains(tup))
         {
@@ -243,7 +243,7 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
             d = (n - m * m) / d;
             a = (a0 + m) / d;
 
-            tup = Tuple.Create(m, d, a);
+            tup = (m, d, a);
         }
     }
 
@@ -267,8 +267,8 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
         var d = BigInteger.One;
         var a0 = a;
 
-        var tup = Tuple.Create(m, d, a);
-        var tuplist = new HashSet<Tuple<BigInteger, BigInteger, BigInteger>>();
+        var tup = (m, d, a);
+        var tuplist = new HashSet<(BigInteger, BigInteger, BigInteger)>();
 
         while (!tuplist.Contains(tup))
         {
@@ -279,7 +279,7 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
             d = (n - m * m) / d;
             a = (a0 + m) / d;
 
-            tup = Tuple.Create(m, d, a);
+            tup = (m, d, a);
         }
     }
 

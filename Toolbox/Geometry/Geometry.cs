@@ -69,7 +69,7 @@ public static class Geometry
     /// </summary>
     /// <param name="maxPerimeter"></param>
     /// <returns></returns>
-    public static IEnumerable<Tuple<int, int, int>> PythagoreanTriples(int maxPerimeter)
+    public static IEnumerable<(int, int, int)> PythagoreanTriples(int maxPerimeter)
     {
         var maxn = (int)Math.Sqrt(maxPerimeter / 2);
 
@@ -103,7 +103,7 @@ public static class Geometry
                         (b, a) = (a, b);
                     }
 
-                    yield return Tuple.Create(a, b, c);
+                    yield return (a, b, c);
                 }
             }
         }

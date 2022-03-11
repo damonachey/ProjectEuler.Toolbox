@@ -671,7 +671,7 @@ public class BigRationalTests
     public void PowSquaredRational()
     {
         var expected = new BigRational(1, 4);
-        var actual = BigRational.Pow(new BigRational(1, 2), 2);
+        var actual = BigRational.Pow(new(1, 2), 2);
 
         Assert.Equal(expected, actual);
     }
@@ -680,7 +680,7 @@ public class BigRationalTests
     public void PowCubedRational()
     {
         var expected = new BigRational(8, 27);
-        var actual = BigRational.Pow(new BigRational(2, 3), 3);
+        var actual = BigRational.Pow(new(2, 3), 3);
 
         Assert.Equal(expected, actual);
     }
@@ -689,7 +689,7 @@ public class BigRationalTests
     public void PowCubedWholeNumber()
     {
         var expected = new BigRational(27, 1);
-        var actual = BigRational.Pow(new BigRational(3, 1), 3);
+        var actual = BigRational.Pow(new(3, 1), 3);
 
         Assert.Equal(expected, actual);
     }
@@ -698,7 +698,7 @@ public class BigRationalTests
     public void Log()
     {
         var expected = BigInteger.Log(1) - BigInteger.Log(3);
-        var actual = BigRational.Log(new BigRational(1, 3));
+        var actual = BigRational.Log(new(1, 3));
 
         Assert.Equal(expected, actual);
     }
@@ -707,7 +707,7 @@ public class BigRationalTests
     public void Log10()
     {
         var expected = BigInteger.Log10(1) - BigInteger.Log10(3);
-        var actual = BigRational.Log10(new BigRational(1, 3));
+        var actual = BigRational.Log10(new(1, 3));
 
         Assert.Equal(expected, actual);
     }
@@ -716,7 +716,7 @@ public class BigRationalTests
     public void AbsNegative()
     {
         var expected = new BigRational(2, 3);
-        var actual = BigRational.Abs(new BigRational(-2, 3));
+        var actual = BigRational.Abs(new(-2, 3));
 
         Assert.Equal(expected, actual);
     }
@@ -725,7 +725,7 @@ public class BigRationalTests
     public void AbsPositive()
     {
         var expected = new BigRational(2, 3);
-        var actual = BigRational.Abs(new BigRational(2, 3));
+        var actual = BigRational.Abs(new(2, 3));
 
         Assert.Equal(expected, actual);
     }
@@ -734,7 +734,7 @@ public class BigRationalTests
     public void Inverse()
     {
         var expected = new BigRational(3, 2);
-        var actual = BigRational.Inverse(new BigRational(2, 3));
+        var actual = BigRational.Inverse(new(2, 3));
 
         Assert.Equal(expected, actual);
     }
@@ -787,7 +787,7 @@ public class BigRationalTests
     public void SqrtPerfectSquare()
     {
         var expected = new BigRational(5, 2);
-        var actual = BigRational.Sqrt(new BigRational(25, 4), 10);
+        var actual = BigRational.Sqrt(new(25, 4), 10);
 
         Assert.Equal(expected, actual);
     }
@@ -796,7 +796,7 @@ public class BigRationalTests
     public void SqrtIrrational()
     {
         var expected = BigRational.SqrtAsRationals(2).Skip(100).First();
-        var actual = BigRational.Sqrt(new BigRational(2), 13);
+        var actual = BigRational.Sqrt(new(2), 13);
 
         Assert.True(BigRational.Abs(expected - actual) < new BigRational(1, 1000000000));
     }
@@ -842,11 +842,11 @@ public class BigRationalTests
     {
         var expected = new BigRational[]
             {
-                new BigRational(1, 1),
-                new BigRational(3, 2),
-                new BigRational(7, 5),
-                new BigRational(17, 12),
-                new BigRational(41, 29),
+                new(1, 1),
+                new(3, 2),
+                new(7, 5),
+                new(17, 12),
+                new(41, 29),
             };
         var actual = BigRational.SqrtAsRationals(2).Take(5);
 
@@ -858,11 +858,11 @@ public class BigRationalTests
     {
         var expected = new BigRational[]
             {
-                new BigRational(1, 1),
-                new BigRational(3, 2),
-                new BigRational(7, 5),
-                new BigRational(17, 12),
-                new BigRational(41, 29),
+                new(1, 1),
+                new(3, 2),
+                new(7, 5),
+                new(17, 12),
+                new(41, 29),
             };
         var actual = BigRational.SqrtAsRationals(new BigInteger(2)).Take(5);
 
@@ -891,7 +891,7 @@ public class BigRationalTests
     public void CompareToEqual()
     {
         var expected = 0;
-        var actual = new BigRational(2, 3).CompareTo(new BigRational(2, 3));
+        var actual = new BigRational(2, 3).CompareTo(new(2, 3));
 
         Assert.Equal(expected, actual);
     }
@@ -900,7 +900,7 @@ public class BigRationalTests
     public void CompareToLess()
     {
         var expected = -1;
-        var actual = new BigRational(1, 3).CompareTo(new BigRational(2, 3));
+        var actual = new BigRational(1, 3).CompareTo(new(2, 3));
 
         Assert.Equal(expected, actual);
     }
@@ -909,7 +909,7 @@ public class BigRationalTests
     public void CompareToGreater()
     {
         var expected = 1;
-        var actual = new BigRational(4, 3).CompareTo(new BigRational(2, 3));
+        var actual = new BigRational(4, 3).CompareTo(new(2, 3));
 
         Assert.Equal(expected, actual);
     }
@@ -945,7 +945,7 @@ public class BigRationalTests
     public void CompareToNotBigRational()
     {
         var br = new BigRational(4, 3);
-        var tup = (object)Tuple.Create(2, 3);
+        var tup = (object)(2, 3);
 
         Assert.Throws<ArgumentException>(() => br.CompareTo(tup));
     }
@@ -953,7 +953,7 @@ public class BigRationalTests
     [Fact]
     public void EqualsRationalTrue()
     {
-        var actual = new BigRational(2, 3).Equals(new BigRational(2, 3));
+        var actual = new BigRational(2, 3).Equals(new(2, 3));
 
         Assert.True(actual);
     }
@@ -961,7 +961,7 @@ public class BigRationalTests
     [Fact]
     public void EqualsRationalFalse()
     {
-        var actual = new BigRational(2, 3).Equals(new BigRational(1, 3));
+        var actual = new BigRational(2, 3).Equals(new(1, 3));
 
         Assert.False(actual);
     }

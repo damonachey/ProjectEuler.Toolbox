@@ -20,10 +20,10 @@ public class GeometryTests
     public void PointInTriangleTrue()
     {
         var actual = Geometry.IsPointInTriangle(
-            new Point3double(0, 0, 0),
-            new Point3double(0, 1, 0),
-            new Point3double(1, -1, 0),
-            new Point3double(-1, -1, 0));
+            new(0, 0, 0),
+            new(0, 1, 0),
+            new(1, -1, 0),
+            new(-1, -1, 0));
 
         Assert.True(actual);
     }
@@ -32,10 +32,10 @@ public class GeometryTests
     public void PointInTriangleFalse()
     {
         var actual = Geometry.IsPointInTriangle(
-            new Point3double(2, 0, 0),
-            new Point3double(0, 1, 0),
-            new Point3double(1, -1, 0),
-            new Point3double(-1, -1, 0));
+            new(2, 0, 0),
+            new(0, 1, 0),
+            new(1, -1, 0),
+            new(-1, -1, 0));
 
         Assert.False(actual);
     }
@@ -43,13 +43,13 @@ public class GeometryTests
     [Fact]
     public void PythagoreanTriples()
     {
-        var expected = new Tuple<int, int, int>[]
+        var expected = new[]
             {
-                Tuple.Create(3, 4, 5),
-                Tuple.Create(6, 8, 10),
-                Tuple.Create(9, 12, 15),
-                Tuple.Create(8, 15, 17),
-                Tuple.Create(5, 12, 13),
+                (6, 8, 10),
+                (3, 4, 5),
+                (9, 12, 15),
+                (8, 15, 17),
+                (5, 12, 13),
             };
 
         var actual = Geometry.PythagoreanTriples(42);

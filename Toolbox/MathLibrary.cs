@@ -118,7 +118,7 @@ public static class MathLibrary
     /// <returns></returns>
     public static int CycleLength(long n, long d)
     {
-        var qrSet = new HashSet<Tuple<long, long>>();
+        var qrSet = new HashSet<(long, long)>();
 
         while (true)
         {
@@ -130,7 +130,7 @@ public static class MathLibrary
                 return qrSet.Count;
             }
 
-            var qr = Tuple.Create(q, r);
+            var qr = (q, r);
 
             if (qrSet.Contains(qr))
             {
