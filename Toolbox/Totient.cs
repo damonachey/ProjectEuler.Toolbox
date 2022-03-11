@@ -151,10 +151,10 @@ public class Totient
     {
         var best = 0;
 
-        var primes = PrimeHelper.Primes().TakeWhile(p => p < Math.Sqrt(n)).ToList();
+        var primes = PrimeHelper.Primes().TakeWhile(p => p < Math.Sqrt(n)).ToArray();
 
-        for (var i = 0; i < primes.Count; i++)
-            for (var j = i; j < primes.Count; j++)
+        for (var i = 0; i < primes.Length; i++)
+            for (var j = i; j < primes.Length; j++)
                 if (primes[i] * primes[j] < n && n - primes[i] * primes[j] < n - best)
                     best = primes[i] * primes[j];
 

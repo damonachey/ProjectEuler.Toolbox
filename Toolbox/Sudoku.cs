@@ -28,9 +28,9 @@ public static class Sudoku
         }
     }
 
-    private static Dictionary<dynamic, IList<int>> InitializePossibleEmptyCellValues(int[,] grid)
+    private static Dictionary<dynamic, List<int>> InitializePossibleEmptyCellValues(int[,] grid)
     {
-        var possibleCellValues = new Dictionary<dynamic, IList<int>>();
+        var possibleCellValues = new Dictionary<dynamic, List<int>>();
 
         for (var x = 0; x < 9; x++)
         {
@@ -47,7 +47,7 @@ public static class Sudoku
         return possibleCellValues;
     }
 
-    private static void RemoveUsedRowColValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    private static void RemoveUsedRowColValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, List<int>> possibleCellValues)
     {
         for (var x = 0; x < 9; x++)
         {
@@ -71,7 +71,7 @@ public static class Sudoku
         }
     }
 
-    private static void RemoveUsedBoxValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    private static void RemoveUsedBoxValuesFromPossibleCellValues(int[,] grid, Dictionary<dynamic, List<int>> possibleCellValues)
     {
         for (var x = 0; x < 9; x += 3)
         {
@@ -98,9 +98,9 @@ public static class Sudoku
         }
     }
 
-    private static void RemovePossibleCellValue(Dictionary<dynamic, IList<int>> possibleCellValues, dynamic cell, int value)
+    private static void RemovePossibleCellValue(Dictionary<dynamic, List<int>> possibleCellValues, dynamic cell, int value)
     {
-        if (possibleCellValues.TryGetValue(cell, out IList<int> valueList))
+        if (possibleCellValues.TryGetValue(cell, out List<int> valueList))
         {
             valueList.Remove(value);
 
@@ -181,11 +181,11 @@ public static class Sudoku
         return true;
     }
 
-    private static bool AssignCellsWithOnlyOnePossibleValue(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    private static bool AssignCellsWithOnlyOnePossibleValue(int[,] grid, Dictionary<dynamic, List<int>> possibleCellValues)
     {
         var cellsWithOnePossibleValue = possibleCellValues
             .Where(kvp => kvp.Value.Count == 1)
-            .ToList();
+            .ToArray();
 
         foreach (var cell in cellsWithOnePossibleValue)
         {
@@ -193,10 +193,10 @@ public static class Sudoku
             possibleCellValues.Remove(cell.Key);
         }
 
-        return cellsWithOnePossibleValue.Any();
+        return cellsWithOnePossibleValue.Length != 0;
     }
 
-    private static int[,]? RecursivelyGuess(int[,] grid, Dictionary<dynamic, IList<int>> possibleCellValues)
+    private static int[,]? RecursivelyGuess(int[,] grid, Dictionary<dynamic, List<int>> possibleCellValues)
     {
         var emptyCellWithFewestPossibleValues = possibleCellValues
             .OrderBy(kvp => kvp.Value.Count)

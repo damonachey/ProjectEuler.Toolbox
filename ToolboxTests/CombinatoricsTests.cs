@@ -45,9 +45,9 @@ public class CombinatoricsTests
     public void CombinationsString()
     {
         var expected = 84;
-        var actual = "123456789".Combinations(6).ToList();
+        var actual = "123456789".Combinations(6).ToArray();
 
-        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Length);
         Assert.Equal(expected, actual.Distinct().Count());
     }
 
@@ -55,9 +55,9 @@ public class CombinatoricsTests
     public void CombinationsEnumerable()
     {
         var expected = 84;
-        var actual = Enumerable.Range(1, 9).Combinations(6).ToList();
+        var actual = Enumerable.Range(1, 9).Combinations(6).ToArray();
 
-        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Length);
         Assert.Equal(expected, actual.Distinct().Count());
     }
 
@@ -83,9 +83,9 @@ public class CombinatoricsTests
     public void PartitionsInt()
     {
         var expected = 30;
-        var actual0 = Combinatorics.Partitions(9).ToList();
+        var actual0 = Combinatorics.Partitions(9).ToArray();
 
-        Assert.Equal(expected, actual0.Count());
+        Assert.Equal(expected, actual0.Length);
         Assert.Equal(expected, actual0.Distinct().Count());
     }
 
@@ -93,9 +93,9 @@ public class CombinatoricsTests
     public void PartitionsUnits()
     {
         var expected = 292;
-        var actual = Combinatorics.Partitions(100, new int[] { 1, 5, 10, 25, 50 }).ToList();
+        var actual = Combinatorics.Partitions(100, new int[] { 1, 5, 10, 25, 50 }).ToArray();
 
-        Assert.Equal(expected, actual.Count());
+        Assert.Equal(expected, actual.Length);
         Assert.Equal(expected, actual.Distinct().Count());
     }
 
@@ -143,45 +143,45 @@ public class CombinatoricsTests
     public void PermutationsString()
     {
         var expected = 720;
-        var actual = "113456".Permutations().ToList();
+        var actual = "113456".Permutations().ToArray();
 
-        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Length);
     }
 
     [Fact]
     public void PermutationsDistinctString()
     {
         var expected = 360;
-        var actual = "113456".PermutationsDistinct().ToList();
+        var actual = "113456".PermutationsDistinct().ToArray();
 
-        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Length);
     }
 
     [Fact]
     public void PermutationsStringK()
     {
         var expected = 720;
-        var actual = "113456".Permutations(6).ToList();
+        var actual = "113456".Permutations(6).ToArray();
 
-        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Length);
     }
 
     [Fact]
     public void PermutationsDistinctEnumerable()
     {
         var expected = 360;
-        var actual = new[] { 1, 1, 3, 4, 5, 6 }.PermutationsDistinct().ToList();
+        var actual = new[] { 1, 1, 3, 4, 5, 6 }.PermutationsDistinct().ToArray();
 
-        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Length);
     }
 
     [Fact]
     public void PermutationsEnumerableK()
     {
         var expected = 720;
-        var actual = new[] { 1, 1, 3, 4, 5, 6 }.Permutations(6).ToList();
+        var actual = new[] { 1, 1, 3, 4, 5, 6 }.Permutations(6).ToArray();
 
-        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Length);
         Assert.Equal(expected, actual.Distinct().Count());
     }
 }

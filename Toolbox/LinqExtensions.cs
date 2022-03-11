@@ -49,22 +49,12 @@ public static class LinqExtensions
     {
         for (var i = (end - start - 1) / 2; i >= 0; i--)
         {
-            list.Swap(start + i, end - i - 1);
+            var a = start + i;
+            var b = end - i - 1;
+
+            (list[a], list[b]) = (list[b], list[a]);
         }
 
-        return list;
-    }
-
-    /// <summary>
-    /// Swaps the values of a and b.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="list"></param>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    public static IList<T> Swap<T>(this IList<T> list, int a, int b)
-    {
-        (list[b], list[a]) = (list[a], list[b]);
         return list;
     }
 
@@ -124,7 +114,10 @@ public static class LinqExtensions
         while (n > 1)
         {
             n--;
-            list.Swap(rand.Next(n + 1), n);
+
+            var a = rand.Next(n + 1);
+
+            (list[a], list[n]) = (list[n], list[a]);
         }
 
         return list;

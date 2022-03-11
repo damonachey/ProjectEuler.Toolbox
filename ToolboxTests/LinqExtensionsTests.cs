@@ -62,18 +62,8 @@ public class LinqExtensionsTests
     public void ReverseRange()
     {
         var expected = new int[] { 0, 1, 2, 3, 4, 5, 9, 8, 7, 6 };
-        var actual = Enumerable.Range(0, 10).ToList();
+        var actual = Enumerable.Range(0, 10).ToArray();
         actual.ReverseRange(6, 10);
-
-        Assert.True(expected.SequenceEqual(actual));
-    }
-
-    [Fact]
-    public void Swap()
-    {
-        var expected = new int[] { 1, 3, 2, 4 };
-        var actual = Enumerable.Range(1, 4).ToList();
-        actual.Swap(1, 2);
 
         Assert.True(expected.SequenceEqual(actual));
     }
@@ -81,20 +71,20 @@ public class LinqExtensionsTests
     [Fact]
     public void RandomSampleSubset()
     {
-        var expected = Enumerable.Range(1, 5).ToList();
-        var actual = Enumerable.Range(1, 10).RandomSample(5).ToList();
+        var expected = Enumerable.Range(1, 5).ToArray();
+        var actual = Enumerable.Range(1, 10).RandomSample(5).ToArray();
 
-        Assert.Equal(expected.Count, actual.Count);
+        Assert.Equal(expected.Length, actual.Length);
         Assert.False(expected.SequenceEqual(actual));
     }
 
     [Fact]
     public void RandomSampleWholeSet()
     {
-        var expected = Enumerable.Range(1, 10).ToList();
-        var actual = Enumerable.Range(1, 10).RandomSample(15).ToList();
+        var expected = Enumerable.Range(1, 10).ToArray();
+        var actual = Enumerable.Range(1, 10).RandomSample(15).ToArray();
 
-        Assert.Equal(expected.Count, actual.Count);
+        Assert.Equal(expected.Length, actual.Length);
         Assert.True(expected.SequenceEqual(actual));
     }
 
@@ -102,7 +92,7 @@ public class LinqExtensionsTests
     public void Shuffle()
     {
         var expected = Enumerable.Range(1, 10);
-        var actual = Enumerable.Range(1, 10).ToList();
+        var actual = Enumerable.Range(1, 10).ToArray();
         actual.Shuffle();
 
         Assert.False(expected.SequenceEqual(actual));
@@ -138,7 +128,7 @@ public class LinqExtensionsTests
     [Fact]
     public void ForAll()
     {
-        var expected = Enumerable.Range(1, 10).ToList();
+        var expected = Enumerable.Range(1, 10).ToArray();
         var actual = new List<int>();
 
         Enumerable.Range(0, 10).ForAll(i => actual.Add(i + 1));

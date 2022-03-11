@@ -46,8 +46,8 @@ public static class Parsers
         return ParseStringList(str)
             .Select(s => (IList<string>)s.Split(", \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                 .Select(s2 => s2)
-                .ToList())
-            .ToList();
+                .ToArray())
+            .ToArray();
     }
 
     /// <summary>
@@ -58,8 +58,8 @@ public static class Parsers
     public static IList<IList<long>> ParseLongLists(string str)
     {
         return ParseStringLists(str)
-            .Select(sl => (IList<long>)sl.Select(long.Parse).ToList())
-            .ToList();
+            .Select(sl => (IList<long>)sl.Select(long.Parse).ToArray())
+            .ToArray();
     }
 
     /// <summary>

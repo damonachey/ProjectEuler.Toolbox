@@ -28,7 +28,7 @@ public class PolynomialTests
         var actual = Polynomial
             .Lagrange(input, 1, 1)
             .Take(6)
-            .ToList();
+            .ToArray();
 
         Assert.True(expected.SequenceEqual(actual));
     }
@@ -53,7 +53,7 @@ public class PolynomialTests
         var actual = Polynomial
             .Lagrange(input, 1, 0.5)
             .Take(5)
-            .ToList();
+            .ToArray();
 
         Assert.True(expected.SequenceEqual(actual));
     }

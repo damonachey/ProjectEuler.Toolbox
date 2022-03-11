@@ -81,10 +81,10 @@ public class PrimeHelperTests
     [Fact]
     public void PrimesRepeatability()
     {
-        var primes = PrimeHelper.Primes().Take(20).ToList();
-        var p2 = PrimeHelper.Primes().Take(20).ToList();
+        var primes = PrimeHelper.Primes().Take(20).ToArray();
+        var p2 = PrimeHelper.Primes().Take(20).ToArray();
 
-        for (var i = 0; i < p2.Count(); i++)
+        for (var i = 0; i < p2.Length; i++)
             Assert.Equal(primes[i], p2[i]);
     }
 

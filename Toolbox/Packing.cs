@@ -30,16 +30,16 @@ public static class Packing
     /// <param name="items"></param>
     /// <param name="chosenItems"></param>
     /// <returns></returns>
-    public static BigInteger Knapsack01(BigInteger goal, List<BigInteger> items, out List<BigInteger> chosenItems)
+    public static BigInteger Knapsack01(BigInteger goal, ReadOnlySpan<BigInteger> items, out List<BigInteger> chosenItems)
     {
         chosenItems = new List<BigInteger>();
 
-        if (items.Count == 0)
+        if (items.Length == 0)
         {
             return 0;
         }
 
-        if (items.Count == 1)
+        if (items.Length == 1)
         {
             if (items[0] <= goal)
             {
@@ -51,7 +51,7 @@ public static class Packing
         }
 
         // without the first item
-        var remainItems = items.GetRange(1, items.Count - 1).ToList();
+        var remainItems = items[1..];
         var withoutFirstItemResult = Knapsack01(goal, remainItems, out List<BigInteger> chosenItemsInRemainItems);
 
         // with all the items

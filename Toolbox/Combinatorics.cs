@@ -279,8 +279,7 @@ public static class Combinatorics
     {
         var digitCounts = str
             .GroupBy(i => i)
-            .Select(kvp => kvp.Count())
-            .ToList();
+            .Select(kvp => kvp.Count());
 
         var num = MathLibrary.Factorial(str.Length);
         var den = BigInteger.One;
@@ -338,10 +337,12 @@ public static class Combinatorics
                 bool check = shouldSwap(chrs1, index, i);
                 if (check)
                 {
-                    chrs1.Swap(index, i);
+                    (chrs1[i], chrs1[index]) = (chrs1[index], chrs1[i]);
+
                     foreach (var r in PermutationsDistinct(chrs1, index + 1, n))
                         yield return r;
-                    chrs1.Swap(index, i);
+                    
+                    (chrs1[i], chrs1[index]) = (chrs1[index], chrs1[i]);
                 }
             }
 
@@ -411,7 +412,8 @@ public static class Combinatorics
                     j--;
                 }
 
-                sa.Swap(i, j);
+                (sa[i], sa[j]) = (sa[j], sa[i]);
+                
                 sa.ReverseRange(ii, sa.Length);
                 yield return sa.ToArray();
                 i = sa.Length - 1;

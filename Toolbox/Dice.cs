@@ -36,7 +36,7 @@ public static class Dice
     /// <returns></returns>
     public static IEnumerable<int[]> MeteredRolls(int dice, int sides)
     {
-        var possibleRolls = PossibleRolls(dice, sides).ToList();
+        var possibleRolls = PossibleRolls(dice, sides).ToArray();
 
         possibleRolls.Shuffle();
 
@@ -44,9 +44,9 @@ public static class Dice
 
         while (true)
         {
-            if (queue.Count < possibleRolls.Count)
+            if (queue.Count < possibleRolls.Length)
             {
-                var list = queue.Concat(possibleRolls).ToList();
+                var list = queue.Concat(possibleRolls).ToArray();
 
                 list.Shuffle();
 
@@ -66,12 +66,12 @@ public static class Dice
     /// <returns></returns>
     public static IEnumerable<int[]> RandomRolls(int dice, int sides)
     {
-        var possibleRolls = PossibleRolls(dice, sides).ToList();
+        var possibleRolls = PossibleRolls(dice, sides).ToArray();
         var rand = new Random(Guid.NewGuid().GetHashCode());
 
         while (true)
         {
-            yield return possibleRolls[rand.Next(0, possibleRolls.Count)];
+            yield return possibleRolls[rand.Next(0, possibleRolls.Length)];
         }
     }
 }

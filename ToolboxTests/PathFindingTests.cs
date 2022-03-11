@@ -165,7 +165,7 @@ public class PathFindingTests
 
         var actual = grid
             .Astar(grid.UpperLeft(), grid.LowerRight())
-            .ToList();
+            .ToArray();
 
         Assert.True(expected.SequenceEqual(actual), actual.EnumerableToString());
     }
@@ -194,7 +194,7 @@ public class PathFindingTests
 
         var actual = grid
             .Astar(grid.UpperLeft(), grid.LowerRight(), PathFinding.NeighborsRightAndDown)
-            .ToList();
+            .ToArray();
 
         Assert.True(expected.SequenceEqual(actual), actual.EnumerableToString());
     }

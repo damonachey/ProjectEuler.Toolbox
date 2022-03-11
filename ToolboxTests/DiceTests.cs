@@ -10,7 +10,7 @@ public class DiceTests
     [Fact]
     public void DiceRandomRollsSingleDie()
     {
-        var actual = Dice.RandomRolls(1, 6).Take(100000).ToList();
+        var actual = Dice.RandomRolls(1, 6).Take(100000).ToArray();
         var counts = actual.GroupBy(d => d[0]);
         var average = counts.Select(g => g.Count()).Average();
 
@@ -24,7 +24,7 @@ public class DiceTests
     [Fact]
     public void DiceRandomRollsMultipleDice()
     {
-        var actual = Dice.RandomRolls(2, 6).Take(100000).ToList();
+        var actual = Dice.RandomRolls(2, 6).Take(100000).ToArray();
         var counts = actual.GroupBy(d => d[0] + d[1]);
 
         // make sure the distribution is no more than 0.02% from expected
@@ -39,16 +39,16 @@ public class DiceTests
     public void DicePossibleRolls()
     {
         var expected = 36;
-        var actual = Dice.PossibleRolls(2, 6).ToList();
+        var actual = Dice.PossibleRolls(2, 6).ToArray();
 
-        Assert.Equal(expected, actual.Count);
+        Assert.Equal(expected, actual.Length);
         Assert.Equal(expected, actual.Distinct().Count());
     }
 
     [Fact]
     public void MeteredRollsOneDie()
     {
-        var actual = Dice.MeteredRolls(1, 6).Take(100000).ToList();
+        var actual = Dice.MeteredRolls(1, 6).Take(100000).ToArray();
         var counts = actual.GroupBy(d => d[0]);
         var average = counts.Select(g => g.Count()).Average();
 
@@ -62,7 +62,7 @@ public class DiceTests
     [Fact]
     public void MeteredRollsMultipleDice()
     {
-        var actual = Dice.MeteredRolls(2, 6).Take(100000).ToList();
+        var actual = Dice.MeteredRolls(2, 6).Take(100000).ToArray();
         var counts = actual.GroupBy(d => d[0] + d[1]);
 
         // make sure the distribution is no more than 0.02% from expected

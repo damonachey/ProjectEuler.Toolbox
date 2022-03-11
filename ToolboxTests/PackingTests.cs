@@ -1,4 +1,6 @@
 ﻿using ProjectEuler.Toolbox;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -22,7 +24,7 @@ public class PackingTests
     {
         var items = Enumerable.Range(1, 45)
             .Select(i => new BigInteger(i))
-            .ToList();
+            .ToArray();
 
         var expected = new BigInteger(15);
         var actual = Packing.Knapsack01(15, items, out List<BigInteger> bag);
@@ -33,7 +35,7 @@ public class PackingTests
     [Fact]
     public void Knapsack01ZeroItems()
     {
-        var items = new List<BigInteger>();
+        var items = Array.Empty<BigInteger>();
 
         var expected = new BigInteger(0);
         var actual = Packing.Knapsack01(15, items, out _);
@@ -46,7 +48,7 @@ public class PackingTests
     {
         var items = Enumerable.Range(1, 1)
             .Select(i => new BigInteger(i))
-            .ToList();
+            .ToArray();
 
         var expected = new BigInteger(1);
         var actual = Packing.Knapsack01(15, items, out List<BigInteger> bag);

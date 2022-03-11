@@ -17,9 +17,9 @@ public static class Polynomial
         {
             var l = Enumerable
                 .Repeat(1.0, points.Count)
-                .ToList();
+                .ToArray();
 
-            for (var j = 0; j < l.Count; j++)
+            for (var j = 0; j < l.Length; j++)
             {
                 for (var k = 0; k < points.Count; k++)
                 {

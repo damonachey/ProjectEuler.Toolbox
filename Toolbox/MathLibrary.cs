@@ -221,7 +221,7 @@ public static class MathLibrary
         {
             yield return row;
 
-            var previous = row.ToList();
+            var previous = row.ToArray();
 
             for (var i = 1; i < row.Count; i++)
             {
