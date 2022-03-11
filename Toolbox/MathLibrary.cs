@@ -312,7 +312,9 @@ public static class MathLibrary
             x -= f(x) / fprime(x);
 
             if (Math.Abs(x - xlast) < epsilon)
+            {
                 return x;
+            }
 
             xlast = x;
 

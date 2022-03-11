@@ -43,17 +43,25 @@ static class QuickLZ
     public static int sizeDecompressed(byte[] source)
     {
         if (headerLen(source) == 9)
+        {
             return source[5] | (source[6] << 8) | (source[7] << 16) | (source[8] << 24);
+        }
         else
+        {
             return source[2];
+        }
     }
 
     public static int sizeCompressed(byte[] source)
     {
         if (headerLen(source) == 9)
+        {
             return source[1] | (source[2] << 8) | (source[3] << 16) | (source[4] << 24);
+        }
         else
+        {
             return source[1];
+        }
     }
 
     private static void write_header(byte[] dst, int level, bool compressible, int size_compressed, int size_decompressed)
@@ -82,18 +90,28 @@ static class QuickLZ
         int lits = 0;
 
         if (level != 1 && level != 3)
+        {
             throw new ArgumentException("C# version only supports level 1 and 3");
+        }
 
         if (level == 1)
+        {
             hashtable = new int[HASH_VALUES, QLZ_POINTERS_1];
+        }
         else
+        {
             hashtable = new int[HASH_VALUES, QLZ_POINTERS_3];
+        }
 
         if (source.Length == 0)
+        {
             return Array.Empty<byte>();
+        }
 
         if (src <= last_matchstart)
+        {
             fetch = source[src] | (source[src + 1] << 8) | (source[src + 2] << 16);
+        }
 
         while (src <= last_matchstart)
         {
@@ -145,7 +163,9 @@ static class QuickLZ
                             {
                                 src++;
                                 while (source[o + (src - old_src)] == source[src] && (src - old_src) < remaining)
+                                {
                                     src++;
+                                }
                             }
                         }
 
@@ -200,7 +220,10 @@ static class QuickLZ
                     {
                         m = 3;
                         while (source[o + m] == source[src + m] && m < remaining)
+                        {
                             m++;
+                        }
+
                         if ((m > matchlen) || (m == matchlen && o > offset2))
                         {
                             offset2 = o;
@@ -294,7 +317,9 @@ static class QuickLZ
     private static void fast_write(byte[] a, int i, int value, int numbytes)
     {
         for (int j = 0; j < numbytes; j++)
+        {
             a[i + j] = (byte)(value >> (j * 8));
+        }
     }
 
     public static byte[] decompress(byte[] source)
@@ -315,7 +340,9 @@ static class QuickLZ
         level = (source[0] >> 2) & 0x3;
 
         if (level != 1 && level != 3)
+        {
             throw new ArgumentException("C# version only supports level 1 and 3");
+        }
 
         if ((source[0] & 1) != 1)
         {
@@ -333,9 +360,13 @@ static class QuickLZ
                 if (dst <= last_matchstart)
                 {
                     if (level == 1)
+                    {
                         fetch = (uint)(source[src] | (source[src + 1] << 8) | (source[src + 2] << 16));
+                    }
                     else
+                    {
                         fetch = (uint)(source[src] | (source[src + 1] << 8) | (source[src + 2] << 16) | (source[src + 3] << 24));
+                    }
                 }
             }
 

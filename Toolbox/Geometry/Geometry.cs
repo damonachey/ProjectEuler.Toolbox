@@ -159,8 +159,15 @@ public static class Geometry
 
     public static Point2double TriangleThirdPoint(Point2double B, double ba, Point2double C, double ca)
     {
-        if (B != default) throw new Exception();
-        if (C.Y != 0) throw new Exception();
+        if (B != default)
+        {
+            throw new Exception();
+        }
+
+        if (C.Y != 0)
+        {
+            throw new Exception();
+        }
 
         var x = (ba * ba - ca * ca + C.X * C.X) / (2 * C.X);
         var y = Math.Sqrt(ba * ba - x * x);

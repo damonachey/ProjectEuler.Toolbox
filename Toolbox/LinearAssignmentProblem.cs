@@ -348,7 +348,9 @@ public static class LinearAssignmentProblem
 
 
         for (i = 0; i < dim; i++)
+        {
             matches[i] = 0;
+        }
 
         //column reduction
         for (j = dim - 1; j >= 0; j--)//reverse order gives better results
@@ -356,11 +358,14 @@ public static class LinearAssignmentProblem
             min = assigncost[0][j];
             imin = 0;
             for (i = 1; i < dim; i++)
+            {
                 if (assigncost[i][j] < min)
                 {
                     min = assigncost[i][j];
                     imin = i;
                 }
+            }
+
             v[j] = min;
 
             if (++matches[imin] == 1)
@@ -369,24 +374,37 @@ public static class LinearAssignmentProblem
                 colsol[j] = imin;
             }
             else
+            {
                 colsol[j] = -1;
+            }
         }
 
         //REDUCTION TRANSFER
         for (i = 0; i < dim; i++)
+        {
             if (matches[i] == 0)
+            {
                 free[numfree++] = i;
+            }
             else
                 if (matches[i] == 1)
                 {
                     j1 = rowsol[i];
                     min = int.MaxValue;
                     for (j = 0; j < dim; j++)
-                        if (j != j1)
-                            if (assigncost[i][j] - v[j] < min)
-                                min = assigncost[i][j] - v[j];
-                    v[j1] = v[j1] - min;
+                {
+                    if (j != j1)
+                    {
+                        if (assigncost[i][j] - v[j] < min)
+                        {
+                            min = assigncost[i][j] - v[j];
+                        }
+                    }
                 }
+
+                v[j1] = v[j1] - min;
+                }
+        }
 
         //AUGMENGING ROW REDUCTION
         int loopcnt = 0;
@@ -409,6 +427,7 @@ public static class LinearAssignmentProblem
                 {
                     h = assigncost[i][j] - v[j];
                     if (h < usubmin)
+                    {
                         if (h >= umin)
                         {
                             usubmin = h;
@@ -421,13 +440,16 @@ public static class LinearAssignmentProblem
                             j2 = j1;
                             j1 = j;
                         }
+                    }
                 }
 
                 i0 = colsol[j1];
                 if (umin < usubmin)
+                {
                     //change the reduction of the min col to increase the min
                     //reduced cost in the row to the subminimum
                     v[j1] = v[j1] - (usubmin - umin);
+                }
                 else
                     if (i0 >= 0)
                     {
@@ -440,14 +462,20 @@ public static class LinearAssignmentProblem
                 colsol[j1] = i;
 
                 if (i0 >= 0)
+                {
                     if (umin < usubmin)
+                    {
                         //put in current k, and go back to that k
                         //continue augmenting path i - j1 with i0
                         free[--k] = i0;
+                    }
                     else
+                    {
                         //no further augmenting reduction possible
                         //store i0 in list of free rows for next phase
                         free[numfree++] = i0;
+                    }
+                }
             }
         }
         while (loopcnt < 2);
@@ -499,12 +527,14 @@ public static class LinearAssignmentProblem
                     //check if any of the min cols happen to be unassigned
                     //if so, we have augmenting path
                     for (k = low; k < up; k++)
+                    {
                         if (colsol[collist[k]] < 0)
                         {
                             endofpath = collist[k];
                             unassignedfound = true;
                             break;
                         }
+                    }
                 }
 
                 if (!unassignedfound)
@@ -523,6 +553,7 @@ public static class LinearAssignmentProblem
                         {
                             pred[j] = i;
                             if (v2 == min)
+                            {
                                 if (colsol[j] < 0)
                                 {
                                     endofpath = j;
@@ -534,6 +565,8 @@ public static class LinearAssignmentProblem
                                     collist[k] = collist[up];
                                     collist[up++] = j;
                                 }
+                            }
+
                             d[j] = v2;
                         }
                     }

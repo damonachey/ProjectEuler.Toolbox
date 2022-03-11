@@ -285,7 +285,9 @@ public static class Combinatorics
         var den = BigInteger.One;
 
         foreach (var count in digitCounts)
+        {
             den *= MathLibrary.Factorial(count);
+        }
 
         return num / den;
     }
@@ -322,7 +324,9 @@ public static class Combinatorics
     public static IEnumerable<string> PermutationsDistinct(this string str)
     {
         foreach (var p in PermutationsDistinct(str.ToCharArray(), 0, str.Length))
+        {
             yield return string.Join("", p);
+        }
 
         static IEnumerable<T[]> PermutationsDistinct<T>(T[] chrs1, int index, int n) where T : notnull
         {
@@ -340,8 +344,10 @@ public static class Combinatorics
                     (chrs1[i], chrs1[index]) = (chrs1[index], chrs1[i]);
 
                     foreach (var r in PermutationsDistinct(chrs1, index + 1, n))
+                    {
                         yield return r;
-                    
+                    }
+
                     (chrs1[i], chrs1[index]) = (chrs1[index], chrs1[i]);
                 }
             }

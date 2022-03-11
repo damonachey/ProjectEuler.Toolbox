@@ -19,8 +19,15 @@ public static class Similarity
         // would be required.
         var n = first.Count;
         var m = second.Count;
-        if (n == 0) return m;
-        if (m == 0) return n;
+        if (n == 0)
+        {
+            return m;
+        }
+
+        if (m == 0)
+        {
+            return n;
+        }
 
         // Rather than maintain an entire matrix (which would require O(n*m) space),
         // just store the current row and the next row, each of which has a length m+1,
@@ -76,8 +83,15 @@ public static class Similarity
         var d = new int[n + 1, m + 1];
 
         // Step 1
-        if (n == 0) return m;
-        if (m == 0) return n;
+        if (n == 0)
+        {
+            return m;
+        }
+
+        if (m == 0)
+        {
+            return n;
+        }
 
         // Step 2
         for (var i = 0; i <= n; d[i, 0] = i++) { }

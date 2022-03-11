@@ -35,10 +35,12 @@ public class Totient
                     if (_smallestFactors[i / 2] == 1)
                     {
                         for (int k = i + i; k < max; k += i)
+                        {
                             if (k % 2 == 1 && _smallestFactors[k / 2] == 1)
                             {
                                 _smallestFactors[k / 2] = i;
                             }
+                        }
                     }
                 }
 
@@ -94,7 +96,9 @@ public class Totient
         while (x > 1)
         {
             if ((y = ((x + (a / x)) >> 1)) >= x)
+            {
                 return x;
+            }
 
             x = y;
         }
@@ -120,14 +124,19 @@ public class Totient
             if ((n % d) == 0)
             {
                 for (n /= d, p = 1; n % d == 0; n /= d, p++)
+                {
                     r *= d;
+                }
+
                 r *= d - 1;
                 m = Isqrt(n) + 1;
             }
         }
 
         if (n > 1)
+        {
             r *= (n - 1);
+        }
 
         return r;
     }
@@ -139,7 +148,9 @@ public class Totient
         foreach (var prime in PrimeHelper.Primes())
         {
             if (product * prime > n)
+            {
                 return product;
+            }
 
             product *= prime;
         }
@@ -154,9 +165,15 @@ public class Totient
         var primes = PrimeHelper.Primes().TakeWhile(p => p < Math.Sqrt(n)).ToArray();
 
         for (var i = 0; i < primes.Length; i++)
+        {
             for (var j = i; j < primes.Length; j++)
+            {
                 if (primes[i] * primes[j] < n && n - primes[i] * primes[j] < n - best)
+                {
                     best = primes[i] * primes[j];
+                }
+            }
+        }
 
         return best;
     }

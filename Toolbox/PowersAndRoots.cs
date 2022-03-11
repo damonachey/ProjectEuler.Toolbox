@@ -13,7 +13,10 @@ public static class PowersAndRoots
     {
         var h = (int)(n & 0xF); // last hexadecimal "digit"
 
-        if (h > 9) return false; // return immediately in 6 cases out of 16.
+        if (h > 9)
+        {
+            return false; // return immediately in 6 cases out of 16.
+        }
 
         // Take advantage of Boolean short-circuit evaluation
         if (h != 2 && h != 3 && h != 5 && h != 6 && h != 7 && h != 8)
@@ -53,7 +56,11 @@ public static class PowersAndRoots
 
     public static BigInteger SqrtFloor(this BigInteger n)
     {
-        if (n == 0) return 0;
+        if (n == 0)
+        {
+            return 0;
+        }
+
         if (n > 0)
         {
             int bitLength = Convert.ToInt32(Math.Ceiling(BigInteger.Log(n, 2)));
