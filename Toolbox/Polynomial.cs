@@ -32,7 +32,7 @@ public static class Polynomial
 
             var y = points.Select((t, i) => l[i] * t.Y).Sum();
 
-            yield return new Point2double(x, y);
+            yield return new(x, y);
 
             x += dx;
         }

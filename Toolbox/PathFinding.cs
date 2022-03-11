@@ -239,42 +239,42 @@ public static class PathFinding
     {
         if (square.Row > 0)
         {
-            yield return new Coordinate(square.Row - 1, square.Col); // left
+            yield return new(square.Row - 1, square.Col); // left
 
             if (square.Col > 0)
             {
-                yield return new Coordinate(square.Row - 1, square.Col - 1); // up left
+                yield return new(square.Row - 1, square.Col - 1); // up left
             }
 
             if (square.Col < grid.GetLength(1) - 1)
             {
-                yield return new Coordinate(square.Row - 1, square.Col + 1); // down left
+                yield return new(square.Row - 1, square.Col + 1); // down left
             }
         }
 
         if (square.Row < grid.GetLength(0) - 1)
         {
-            yield return new Coordinate(square.Row + 1, square.Col); // right
+            yield return new(square.Row + 1, square.Col); // right
 
             if (square.Col > 0)
             {
-                yield return new Coordinate(square.Row + 1, square.Col - 1); // up right
+                yield return new(square.Row + 1, square.Col - 1); // up right
             }
 
             if (square.Col < grid.GetLength(1) - 1)
             {
-                yield return new Coordinate(square.Row + 1, square.Col + 1); // down right
+                yield return new(square.Row + 1, square.Col + 1); // down right
             }
         }
 
         if (square.Col > 0)
         {
-            yield return new Coordinate(square.Row, square.Col - 1); // up
+            yield return new(square.Row, square.Col - 1); // up
         }
 
         if (square.Col < grid.GetLength(1) - 1)
         {
-            yield return new Coordinate(square.Row, square.Col + 1); // down
+            yield return new(square.Row, square.Col + 1); // down
         }
     }
 
@@ -288,12 +288,12 @@ public static class PathFinding
     {
         if (square.Row < grid.GetLength(0) - 1)
         {
-            yield return new Coordinate(square.Row + 1, square.Col); // right
+            yield return new(square.Row + 1, square.Col); // right
         }
 
         if (square.Col < grid.GetLength(1) - 1)
         {
-            yield return new Coordinate(square.Row, square.Col + 1); // down
+            yield return new(square.Row, square.Col + 1); // down
         }
     }
 

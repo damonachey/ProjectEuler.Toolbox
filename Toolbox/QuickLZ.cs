@@ -90,7 +90,7 @@ static class QuickLZ
             hashtable = new int[HASH_VALUES, QLZ_POINTERS_3];
 
         if (source.Length == 0)
-            return new byte[0];
+            return Array.Empty<byte>();
 
         if (src <= last_matchstart)
             fetch = source[src] | (source[src + 1] << 8) | (source[src + 2] << 16);
