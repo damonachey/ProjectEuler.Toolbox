@@ -45,8 +45,8 @@ public class GeometryTests
     {
         var expected = new[]
             {
-                (6, 8, 10),
                 (3, 4, 5),
+                (6, 8, 10),
                 (9, 12, 15),
                 (8, 15, 17),
                 (5, 12, 13),
