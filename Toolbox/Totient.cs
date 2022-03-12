@@ -90,12 +90,13 @@ public class Totient
 
     static long Isqrt(long a)
     {
-        var y = default(long);
         var x = a;
 
         while (x > 1)
         {
-            if ((y = ((x + (a / x)) >> 1)) >= x)
+            var y = (x + (a / x)) >> 1;
+
+            if (y >= x)
             {
                 return x;
             }
