@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using System;
 
 namespace ProjectEuler.Toolbox;
 

@@ -226,7 +226,7 @@ public static class LinqExtensions
 
         foreach (var item in items)
         {
-            if (current != null)
+            if (current is not null)
             {
                 secondLast = current;
             }

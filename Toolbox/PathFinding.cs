@@ -85,7 +85,7 @@ public static class PathFinding
             }
 
             // we are at the final square
-            if (goal != null && u.Equals(goal))
+            if (goal is not null && u.Equals(goal))
             {
                 break;
             }
@@ -360,7 +360,7 @@ public static class PathFinding
 
         public bool Equals(Coordinate? c)
         {
-            if (c == null)
+            if (c is null)
             {
                 return false;
             }

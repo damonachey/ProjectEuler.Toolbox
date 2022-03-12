@@ -209,7 +209,7 @@ public static class Sudoku
 
             var tempSolution = Solve(tempGrid);
 
-            if (tempSolution != null)
+            if (tempSolution is not null)
             {
                 return tempSolution;
             }
