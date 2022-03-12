@@ -36,7 +36,7 @@ public class Line2doubleTests
         var p2 = new Point2double(0, 1.5);
         var slope = 0.5;
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => new Line2double(p1, slope));
+        Assert.Throws<ArithmeticException>(() => new Line2double(p1, slope));
     }
 
     [Fact]

@@ -20,7 +20,7 @@ public struct Line2double : IEquatable<Line2double>
 
         if (P1 == P2)
         {
-            throw new ArgumentOutOfRangeException("Point is Y intercept");
+            throw new ArithmeticException("Point is Y intercept");
         }
     }
 

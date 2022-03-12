@@ -35,14 +35,14 @@ static class QuickLZ
     private const int QLZ_POINTERS_1 = 1;
     private const int QLZ_POINTERS_3 = 16;
 
-    private static int headerLen(byte[] source)
+    private static int HeaderLen(byte[] source)
     {
         return ((source[0] & 2) == 2) ? 9 : 3;
     }
 
-    public static int sizeDecompressed(byte[] source)
+    public static int SizeDecompressed(byte[] source)
     {
-        if (headerLen(source) == 9)
+        if (HeaderLen(source) == 9)
         {
             return source[5] | (source[6] << 8) | (source[7] << 16) | (source[8] << 24);
         }
@@ -52,9 +52,9 @@ static class QuickLZ
         }
     }
 
-    public static int sizeCompressed(byte[] source)
+    public static int SizeCompressed(byte[] source)
     {
-        if (headerLen(source) == 9)
+        if (HeaderLen(source) == 9)
         {
             return source[1] | (source[2] << 8) | (source[3] << 16) | (source[4] << 24);
         }
@@ -64,17 +64,17 @@ static class QuickLZ
         }
     }
 
-    private static void write_header(byte[] dst, int level, bool compressible, int size_compressed, int size_decompressed)
+    private static void WriteHeader(byte[] dst, int level, bool compressible, int size_compressed, int size_decompressed)
     {
         dst[0] = (byte)(2 | (compressible ? 1 : 0));
         dst[0] |= (byte)(level << 2);
         dst[0] |= (1 << 6);
         dst[0] |= (0 << 4);
-        fast_write(dst, 1, size_decompressed, 4);
-        fast_write(dst, 5, size_compressed, 4);
+        FastWrite(dst, 1, size_decompressed, 4);
+        FastWrite(dst, 5, size_compressed, 4);
     }
 
-    public static byte[] compress(byte[] source, int level)
+    public static byte[] Compress(byte[] source, int level)
     {
         int src = 0;
         int dst = DEFAULT_HEADERLEN + CWORD_LEN;
@@ -120,12 +120,12 @@ static class QuickLZ
                 if (src > source.Length >> 1 && dst > src - (src >> 5))
                 {
                     d2 = new byte[source.Length + DEFAULT_HEADERLEN];
-                    write_header(d2, level, false, source.Length, source.Length + DEFAULT_HEADERLEN);
+                    WriteHeader(d2, level, false, source.Length, source.Length + DEFAULT_HEADERLEN);
                     System.Array.Copy(source, 0, d2, DEFAULT_HEADERLEN, source.Length);
                     return d2;
                 }
 
-                fast_write(destination, cword_ptr, (int)((cword_val >> 1) | 0x80000000), 4);
+                FastWrite(destination, cword_ptr, (int)((cword_val >> 1) | 0x80000000), 4);
                 cword_ptr = dst;
                 dst += CWORD_LEN;
                 cword_val = 0x80000000;
@@ -181,7 +181,7 @@ static class QuickLZ
                         }
                         else
                         {
-                            fast_write(destination, dst, hash | (matchlen << 16), 3);
+                            FastWrite(destination, dst, hash | (matchlen << 16), 3);
                             dst += 3;
                         }
                     }
@@ -193,7 +193,7 @@ static class QuickLZ
                     lits++;
                     hash_counter[hash] = 1;
                     destination[dst] = source[src];
-                    cword_val = (cword_val >> 1);
+                    cword_val >>= 1;
                     src++;
                     dst++;
                     fetch = ((fetch >> 8) & 0xffff) | (source[src + 2] << 16);
@@ -253,27 +253,27 @@ static class QuickLZ
 
                     if (matchlen == 3 && offset <= 63)
                     {
-                        fast_write(destination, dst, offset << 2, 1);
+                        FastWrite(destination, dst, offset << 2, 1);
                         dst++;
                     }
                     else if (matchlen == 3 && offset <= 16383)
                     {
-                        fast_write(destination, dst, (offset << 2) | 1, 2);
+                        FastWrite(destination, dst, (offset << 2) | 1, 2);
                         dst += 2;
                     }
                     else if (matchlen <= 18 && offset <= 1023)
                     {
-                        fast_write(destination, dst, ((matchlen - 3) << 2) | (offset << 6) | 2, 2);
+                        FastWrite(destination, dst, ((matchlen - 3) << 2) | (offset << 6) | 2, 2);
                         dst += 2;
                     }
                     else if (matchlen <= 33)
                     {
-                        fast_write(destination, dst, ((matchlen - 2) << 2) | (offset << 7) | 3, 3);
+                        FastWrite(destination, dst, ((matchlen - 2) << 2) | (offset << 7) | 3, 3);
                         dst += 3;
                     }
                     else
                     {
-                        fast_write(destination, dst, ((matchlen - 3) << 7) | (offset << 15) | 3, 4);
+                        FastWrite(destination, dst, ((matchlen - 3) << 7) | (offset << 15) | 3, 4);
                         dst += 4;
                     }
                     lits = 0;
@@ -281,7 +281,7 @@ static class QuickLZ
                 else
                 {
                     destination[dst] = source[src];
-                    cword_val = (cword_val >> 1);
+                    cword_val >>= 1;
                     src++;
                     dst++;
                 }
@@ -291,7 +291,7 @@ static class QuickLZ
         {
             if ((cword_val & 1) == 1)
             {
-                fast_write(destination, cword_ptr, (int)((cword_val >> 1) | 0x80000000), 4);
+                FastWrite(destination, cword_ptr, (int)((cword_val >> 1) | 0x80000000), 4);
                 cword_ptr = dst;
                 dst += CWORD_LEN;
                 cword_val = 0x80000000;
@@ -300,21 +300,21 @@ static class QuickLZ
             destination[dst] = source[src];
             src++;
             dst++;
-            cword_val = (cword_val >> 1);
+            cword_val >>= 1;
         }
         while ((cword_val & 1) != 1)
         {
-            cword_val = (cword_val >> 1);
+            cword_val >>= 1;
         }
-        fast_write(destination, cword_ptr, (int)((cword_val >> 1) | 0x80000000), CWORD_LEN);
-        write_header(destination, level, true, source.Length, dst);
+        FastWrite(destination, cword_ptr, (int)((cword_val >> 1) | 0x80000000), CWORD_LEN);
+        WriteHeader(destination, level, true, source.Length, dst);
         d2 = new byte[dst];
         System.Array.Copy(destination, d2, dst);
         return d2;
     }
 
 
-    private static void fast_write(byte[] a, int i, int value, int numbytes)
+    private static void FastWrite(byte[] a, int i, int value, int numbytes)
     {
         for (int j = 0; j < numbytes; j++)
         {
@@ -322,11 +322,11 @@ static class QuickLZ
         }
     }
 
-    public static byte[] decompress(byte[] source)
+    public static byte[] Decompress(byte[] source)
     {
         int level;
-        int size = sizeDecompressed(source);
-        int src = headerLen(source);
+        int size = SizeDecompressed(source);
+        int src = HeaderLen(source);
         int dst = 0;
         uint cword_val = 1;
         byte[] destination = new byte[size];
@@ -347,7 +347,7 @@ static class QuickLZ
         if ((source[0] & 1) != 1)
         {
             byte[] d2 = new byte[size];
-            System.Array.Copy(source, headerLen(source), d2, 0, size);
+            System.Array.Copy(source, HeaderLen(source), d2, 0, size);
             return d2;
         }
 
@@ -375,7 +375,7 @@ static class QuickLZ
                 uint matchlen;
                 uint offset2;
 
-                cword_val = cword_val >> 1;
+                cword_val >>= 1;
 
                 if (level == 1)
                 {
@@ -466,7 +466,7 @@ static class QuickLZ
                     destination[dst] = source[src];
                     dst += 1;
                     src += 1;
-                    cword_val = cword_val >> 1;
+                    cword_val >>= 1;
 
                     if (level == 1)
                     {
@@ -498,7 +498,7 @@ static class QuickLZ
                         destination[dst] = source[src];
                         dst++;
                         src++;
-                        cword_val = cword_val >> 1;
+                        cword_val >>= 1;
                     }
                     return destination;
                 }

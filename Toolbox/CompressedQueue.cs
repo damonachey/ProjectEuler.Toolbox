@@ -26,7 +26,7 @@ public class CompressedQueue
                 return writeQueue.Dequeue();
             }
 
-            var bytes = QuickLZ.decompress(bufferQueue.Dequeue());
+            var bytes = QuickLZ.Decompress(bufferQueue.Dequeue());
 
             for (var offset = 0; offset < bytes.Length; offset += sizeof(long))
             {
@@ -50,7 +50,7 @@ public class CompressedQueue
                     .SelectMany(i => BitConverter.GetBytes(writeQueue.Dequeue()))
                     .ToArray();
 
-            bufferQueue.Enqueue(QuickLZ.compress(bytes, 1));
+            bufferQueue.Enqueue(QuickLZ.Compress(bytes, 1));
         }
     }
 }

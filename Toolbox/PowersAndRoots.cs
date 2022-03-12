@@ -88,12 +88,14 @@ public static class PowersAndRoots
         return n >= lowerBound && n < upperBound;
     }
 
+
     /// <summary>
     /// SQRTs the specified n.
     /// </summary>
     /// <param name="n">The n.</param>
     /// <returns></returns>
     /// <exception cref="System.OverflowException"></exception>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
     public static decimal Sqrt(decimal n)
     {
         if (n < 0)

@@ -87,6 +87,7 @@ public static class LinearAssignmentProblem
             return agentsTasks;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         private static int RunStep1(int[,] costs, byte[,] masks, bool[] rowsCovered, bool[] colsCovered, int w, int h)
         {
             for (var i = 0; i < h; i++)
@@ -148,10 +149,12 @@ public static class LinearAssignmentProblem
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         private static int RunStep3(int[,] costs, byte[,] masks, bool[] rowsCovered, bool[] colsCovered, int w, int h, Location[] path, Location pathStart)
         {
             var pathIndex = 0;
             path[0] = pathStart;
+
             while (true)
             {
                 var row = FindStarInColumn(masks, h, path[pathIndex].Column);
@@ -166,15 +169,19 @@ public static class LinearAssignmentProblem
                 pathIndex++;
                 path[pathIndex] = new(path[pathIndex - 1].Row, col);
             }
+
             ConvertPath(masks, path, pathIndex + 1);
             ClearCovers(rowsCovered, colsCovered, w, h);
             ClearPrimes(masks, w, h);
+
             return 1;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         private static int RunStep4(int[,] costs, byte[,] masks, bool[] rowsCovered, bool[] colsCovered, int w, int h)
         {
             var minValue = FindMinimum(costs, rowsCovered, colsCovered, w, h);
+
             for (var i = 0; i < h; i++)
             {
                 for (var j = 0; j < w; j++)
@@ -190,6 +197,7 @@ public static class LinearAssignmentProblem
                     }
                 }
             }
+
             return 2;
         }
 
@@ -208,6 +216,7 @@ public static class LinearAssignmentProblem
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         private static Location FindZero(int[,] costs, byte[,] masks, bool[] rowsCovered, bool[] colsCovered, int w, int h)
         {
             for (var i = 0; i < h; i++)
@@ -220,6 +229,7 @@ public static class LinearAssignmentProblem
                     }
                 }
             }
+
             return new(-1, -1);
         }
 
@@ -236,6 +246,7 @@ public static class LinearAssignmentProblem
                     }
                 }
             }
+
             return minValue;
         }
 
@@ -248,6 +259,7 @@ public static class LinearAssignmentProblem
                     return j;
                 }
             }
+
             return -1;
         }
 
@@ -260,6 +272,7 @@ public static class LinearAssignmentProblem
                     return i;
                 }
             }
+
             return -1;
         }
 
@@ -272,6 +285,7 @@ public static class LinearAssignmentProblem
                     return j;
                 }
             }
+
             return -1;
         }
 
@@ -315,6 +329,7 @@ public static class LinearAssignmentProblem
         }
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
     public static int LapJV(int dim, int[][] assigncost, int[] rowsol, int[] colsol, int[] u, int[] v)
     {
         if (dim != assigncost.GetLength(0) ||
@@ -325,7 +340,7 @@ public static class LinearAssignmentProblem
             dim != v.Length
             )
         {
-            throw new ArgumentException(nameof(dim));
+            throw new ArgumentException(null, nameof(dim));
         }
 
         bool unassignedfound;
@@ -379,12 +394,11 @@ public static class LinearAssignmentProblem
             {
                 free[numfree++] = i;
             }
-            else
-                if (matches[i] == 1)
-                {
-                    j1 = rowsol[i];
-                    min = int.MaxValue;
-                    for (j = 0; j < dim; j++)
+            else if (matches[i] == 1)
+            {
+                j1 = rowsol[i];
+                min = int.MaxValue;
+                for (j = 0; j < dim; j++)
                 {
                     if (j != j1)
                     {
@@ -396,17 +410,19 @@ public static class LinearAssignmentProblem
                 }
 
                 v[j1] = v[j1] - min;
-                }
+            }
         }
 
         //AUGMENGING ROW REDUCTION
         int loopcnt = 0;
+
         do
         {
             loopcnt++;
             k = 0;
             prvnumfree = numfree;
             numfree = 0;
+
             while (k < prvnumfree)
             {
                 i = free[k];
@@ -437,18 +453,18 @@ public static class LinearAssignmentProblem
                 }
 
                 i0 = colsol[j1];
+
                 if (umin < usubmin)
                 {
                     //change the reduction of the min col to increase the min
                     //reduced cost in the row to the subminimum
                     v[j1] = v[j1] - (usubmin - umin);
                 }
-                else
-                    if (i0 >= 0)
-                    {
-                        j1 = j2;
-                        i0 = colsol[j2];
-                    }
+                else if (i0 >= 0)
+                {
+                    j1 = j2;
+                    i0 = colsol[j2];
+                }
 
                 //(re)assign i to j1, possibly un-assigning an i0
                 rowsol[i] = j1;
@@ -501,10 +517,12 @@ public static class LinearAssignmentProblem
                     //scan cols for up...dim-1 to find indices for which new min occurs
                     //store these indices between low...up-1 (increasing)
                     min = d[collist[up++]];
+
                     for (k = up; k < dim; k++)
                     {
                         j = collist[k];
                         h = d[j];
+                        
                         if (h <= min)
                         {
                             if (h < min)//new min
@@ -512,6 +530,7 @@ public static class LinearAssignmentProblem
                                 up = low;//restart list at index low
                                 min = h;
                             }
+                        
                             //new index with same min, put on index up, and extend list
                             collist[k] = collist[up];
                             collist[up++] = j;
@@ -542,9 +561,11 @@ public static class LinearAssignmentProblem
                     {
                         j = collist[k];
                         v2 = assigncost[i][j] - v[j] - h;
+
                         if (v2 < d[j])
                         {
                             pred[j] = i;
+
                             if (v2 == min)
                             {
                                 if (colsol[j] < 0)
@@ -588,6 +609,7 @@ public static class LinearAssignmentProblem
 
         //calculate optimal cost
         int lapcost = 0;
+
         for (i = 0; i < dim; i++)
         {
             j = rowsol[i];
