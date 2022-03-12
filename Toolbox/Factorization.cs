@@ -342,7 +342,7 @@ public static class Factorization
     {
         if (a == 0)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(a));
         }
 
         a = Math.Abs(a);
@@ -361,7 +361,7 @@ public static class Factorization
     {
         if (a == 0)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(a));
         }
 
         a = Math.Abs(a);
@@ -380,7 +380,7 @@ public static class Factorization
     {
         if (a == 0)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(a));
         }
 
         a = BigInteger.Abs(a);
