@@ -11,21 +11,19 @@ public struct Circle2double : IEquatable<Circle2double>
         R = r;
     }
 
-    public override string ToString() => 
-        $"{C} R = {R}";
+    public double Area => Math.PI * R * R;
 
-    public override bool Equals(object? obj) =>
-        obj is Circle2double p && Equals(p);
+    public double Circumfrence => 2 * Math.PI * R;
 
-    public bool Equals(Circle2double other) =>
-        C == other.C && R == other.R;
+    public override string ToString() => $"{C} R = {R}";
 
-    public override int GetHashCode() =>
-        C.GetHashCode() ^ R.GetHashCode();
+    public override bool Equals(object? obj) => obj is Circle2double p && Equals(p);
 
-    public static bool operator ==(Circle2double c1, Circle2double c2) =>
-        c1.Equals(c2);
+    public bool Equals(Circle2double other) => C == other.C && R == other.R;
 
-    public static bool operator !=(Circle2double c1, Circle2double c2) =>
-        !c1.Equals(c2);
+    public override int GetHashCode() => C.GetHashCode() ^ R.GetHashCode();
+
+    public static bool operator ==(Circle2double c1, Circle2double c2) => c1.Equals(c2);
+
+    public static bool operator !=(Circle2double c1, Circle2double c2) => !c1.Equals(c2);
 }
