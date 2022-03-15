@@ -36,6 +36,7 @@ public struct Ellipse2double : IEquatable<Ellipse2double>
         1089 * h * h * h * h * h * h * h / 4194304 
         );
 
+    // Ramanujan approximation
     public double PerimeterFast => Math.PI * (A + B) * (1 + 3 * h / (10 + Math.Sqrt(4 - 3 * h)));
 
     public override string ToString() => $"{C} A = {A}, B = {B}";
