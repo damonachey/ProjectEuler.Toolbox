@@ -45,7 +45,7 @@ public static class LinqExtensions
     /// <param name="list"></param>
     /// <param name="start"></param>
     /// <param name="end"></param>
-    public static IList<T> ReverseRange<T>(this IList<T> list, int start, int end)
+    public static T[] ReverseRange<T>(this T[] list, int start, int end)
     {
         for (var i = (end - start - 1) / 2; i >= 0; i--)
         {
