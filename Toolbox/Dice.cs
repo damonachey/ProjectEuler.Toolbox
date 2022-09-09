@@ -20,7 +20,11 @@ public static class Dice
             {
                 foreach (var rolls in PossibleRolls(dice - 1, sides))
                 {
-                    yield return new[] { roll }.Concat(rolls).ToArray();
+                    var result = new int[rolls.Length + 1];
+                    rolls.CopyTo(result, 1);
+                    result[0] = roll;
+
+                    yield return result;
                 }
             }
         }

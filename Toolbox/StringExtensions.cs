@@ -59,8 +59,9 @@ public static class StringExtensions
     /// <returns></returns>
     public static string Replace(this string s, int p, char c)
     {
-        var chars = s.ToCharArray();
-        chars[p] = c;
-        return new string(chars);
+        Span<char> temp = stackalloc char[s.Length];
+        s.AsSpan().CopyTo(temp);
+        temp[p] = c;
+        return new string(temp);
     }
 }

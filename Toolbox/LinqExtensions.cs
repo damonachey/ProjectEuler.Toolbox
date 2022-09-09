@@ -68,37 +68,17 @@ public static class LinqExtensions
     public static IEnumerable<T> RandomSample<T>(this IEnumerable<T> rows, int nSamples)
     {
         var rand = new Random(Guid.NewGuid().GetHashCode());
-        var sample = new T[nSamples];
-        var nSamplesTaken = 0;
+        var count = rows.Count();
 
-        foreach (var item in rows)
+        for (int i = 0; i < count; i++)
         {
-            // As the amount of samples increases the probability
-            // of including a value gets less..due to the fact
-            // that it has a greater chance of surviving if it gets
-            // placed into the sample over earlier selections
-
-            if (nSamplesTaken < sample.Length)
+            if (rand.Next(count - i) < nSamples)
             {
-                sample[nSamplesTaken] = item;
+                yield return rows.ElementAt(i);
+                if (--nSamples == 0)
+                    yield break;
             }
-            else
-            {
-                if (rand.Next(nSamplesTaken) < nSamples)
-                {
-                    sample[rand.Next(nSamples)] = item;
-                }
-            }
-
-            nSamplesTaken++;
         }
-
-        if (nSamplesTaken >= nSamples)
-        {
-            return sample;
-        }
-
-        return sample.Take(nSamplesTaken);
     }
 
     /// <summary>

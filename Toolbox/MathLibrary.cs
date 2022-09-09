@@ -213,22 +213,23 @@ public static class MathLibrary
     /// Generate successive rows of Pascal's Triangle
     /// </summary>
     /// <returns></returns>
-    public static IEnumerable<List<long>> PascalsTriangle()
+    public static IEnumerable<long[]> PascalsTriangle()
     {
-        var row = new List<long> { 1 };
+        var row = new long[] { 1 };
 
         while (true)
         {
             yield return row;
 
-            var previous = row.ToArray();
+            var previous = row;
+            row = new long[row.Length + 1];
 
-            for (var i = 1; i < row.Count; i++)
+            for (var i = 1; i < previous.Length; i++)
             {
                 row[i] = previous[i - 1] + previous[i];
             }
 
-            row.Add(1);
+            row[row.Length - 1] = 1;
         }
     }
 

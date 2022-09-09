@@ -89,6 +89,32 @@ public class LinqExtensionsTests
     }
 
     [Fact]
+    public void RandomSampleDistribution()
+    {
+        var range = 50;
+        var l = Enumerable.Range(0, range).ToArray();
+        var d = new Dictionary<int, int>(l.Select(i => KeyValuePair.Create(i, 0)));
+
+        var iterations = 100_000;
+        var samples = 10;
+        for (var i = 0; i < iterations; i++)
+        {
+            foreach (var value in l.RandomSample(samples))
+            {
+                d[value]++;
+            }
+        }
+
+        var allowedDeltaPercentage = 0.02;
+        var expectedTotal = iterations * samples / range;
+        Assert.True(
+            d.All(total => Math.Abs(total.Value - expectedTotal) < allowedDeltaPercentage * expectedTotal), 
+            "Statistically occasional failures are expected\n" +
+            string.Join("\n", d.Select(kv => new { kv.Key, kv.Value, delta = Math.Abs(kv.Value - iterations * samples / range) }))
+            );
+    }
+
+    [Fact]
     public void Shuffle()
     {
         var expected = Enumerable.Range(1, 10);
