@@ -223,6 +223,7 @@ public static class MathLibrary
 
             var previous = row;
             row = new long[row.Length + 1];
+            row[0] = 1;
 
             for (var i = 1; i < previous.Length; i++)
             {
