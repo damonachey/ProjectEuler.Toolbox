@@ -446,7 +446,11 @@ public static class Combinatorics
 
             foreach (var e in sa)
             {
-                var s2 = sa.AllExcept(idx++);
+                // duplicate skipping element at index == idx
+                var s2 = new T[sa.Length - 1];
+                sa.AsSpan(0, idx).CopyTo(s2);
+                sa.AsSpan(idx + 1).CopyTo(s2.AsSpan(idx, s2.Length - idx));
+                idx++;
 
                 foreach (var perm in Permutations(s2, k - 1))
                 {

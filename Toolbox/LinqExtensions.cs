@@ -118,20 +118,6 @@ public static class LinqExtensions
     public static BigRational Sum(this IEnumerable<BigRational> list) => list.Aggregate(BigRational.Zero, (current, i) => current + i);
 
     /// <summary>
-    /// Enumerates over all items in the input, skipping over the item with the specified offset.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="input"></param>
-    /// <param name="indexToSkip"></param>
-    /// <returns></returns>
-    public static IEnumerable<T> AllExcept<T>(this IEnumerable<T> input, int indexToSkip)
-    {
-        var index = 0;
-
-        return input.Where(item => index++ != indexToSkip);
-    }
-
-    /// <summary>
     /// Merges the specified first.
     /// </summary>
     /// <typeparam name="T1">The type of the 1.</typeparam>

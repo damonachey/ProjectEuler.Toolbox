@@ -143,15 +143,6 @@ public class LinqExtensionsTests
     }
 
     [Fact]
-    public void AllExcept()
-    {
-        var expected = new int[] { 1, 2, 3, 5, 6, 7 };
-        var actual = Enumerable.Range(1, 7).AllExcept(3);
-
-        Assert.True(expected.SequenceEqual(actual));
-    }
-
-    [Fact]
     public void ForAll()
     {
         var expected = Enumerable.Range(1, 10).ToArray();
