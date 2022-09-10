@@ -455,7 +455,7 @@ public static class Combinatorics
                 foreach (var perm in Permutations(s2, k - 1))
                 {
                     var result = new T[perm.Length + 1];
-                    perm.CopyTo(result, 1);
+                    perm.AsSpan().CopyTo(result.AsSpan(1));
                     result[0] = e;
 
                     yield return result;

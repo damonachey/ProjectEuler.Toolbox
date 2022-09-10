@@ -21,7 +21,7 @@ public static class Dice
                 foreach (var rolls in PossibleRolls(dice - 1, sides))
                 {
                     var result = new int[rolls.Length + 1];
-                    rolls.CopyTo(result, 1);
+                    rolls.AsSpan().CopyTo(result.AsSpan(1));
                     result[0] = roll;
 
                     yield return result;

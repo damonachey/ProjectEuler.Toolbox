@@ -60,7 +60,7 @@ public static class StringExtensions
     public static string Replace(this string s, int p, char c)
     {
         Span<char> temp = stackalloc char[s.Length];
-        s.CopyTo(temp);
+        s.AsSpan().CopyTo(temp);
         temp[p] = c;
 
         return new string(temp);
