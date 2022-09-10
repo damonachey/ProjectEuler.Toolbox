@@ -93,7 +93,8 @@ public class Line2ExtensionsTests
         var p3 = new Point2double(1, 1);
         var actual = new Line2double(p1, p2).ReflectPoint(p3);
 
-        Assert.Equal(expected, actual);
+        Assert.Equal(expected.X, actual.X, 15);
+        Assert.Equal(expected.Y, actual.Y);
     }
 
     [Fact]

@@ -1,6 +1,6 @@
 ﻿namespace ProjectEuler.Toolbox;
 
-public struct Point3double : IEquatable<Point3double>
+public record struct Point3double
 {
     public double X { get; }
     public double Y { get; }
@@ -19,19 +19,4 @@ public struct Point3double : IEquatable<Point3double>
 
     public override string ToString() =>
         $"({X}, {Y}, {Z})";
-
-    public override bool Equals(object? obj) =>
-        obj is Point3double other && Equals(other);
-
-    public bool Equals(Point3double p) =>
-        X.Equals(p.X) && Y.Equals(p.Y) && Z.Equals(p.Z);
-
-    public override int GetHashCode() =>
-        X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
-
-    public static bool operator ==(Point3double left, Point3double right) =>
-        left.Equals(right);
-
-    public static bool operator !=(Point3double left, Point3double right) =>
-        !left.Equals(right);
 }

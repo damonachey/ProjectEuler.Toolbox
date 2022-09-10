@@ -24,49 +24,4 @@ public class Point3doubleTests
 
         Assert.Equal(expected, actual);
     }
-
-    [Fact]
-    public void EqualsTest()
-    {
-        var p = new Point3double(1, 2, 3);
-
-        Assert.False(p.Equals(1));
-    }
-
-    [Fact]
-    public void Equals2()
-    {
-        var p1 = new Point3double(1, 2, 3);
-        var p2 = new Point3double(1, 2, 3);
-
-        Assert.Equal(p1, p2);
-    }
-
-    [Fact]
-    public void GetHashCodeTest()
-    {
-        var expected = 1073217536;
-        var p = new Point3double(1, 2, 3);
-        var actual = p.GetHashCode();
-
-        Assert.Equal(expected, actual);
-    }
-
-    [Fact]
-    public void Op_Equals()
-    {
-        var p1 = new Point3double(1, 2, 3);
-        var p2 = new Point3double(1, 2, 3);
-
-        Assert.True(p1 == p2);
-    }
-
-    [Fact]
-    public void Op_NotEquals()
-    {
-        var p1 = new Point3double(1, 2, 3);
-        var p2 = new Point3double(1, 2, 4);
-
-        Assert.True(p1 != p2);
-    }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ProjectEuler.Toolbox;
 
-public struct Ellipse2double : IEquatable<Ellipse2double>
+public record struct Ellipse2double
 {
     public Point2double C { get; }
     public double A { get; }
@@ -40,14 +40,4 @@ public struct Ellipse2double : IEquatable<Ellipse2double>
     public double PerimeterFast => Math.PI * (A + B) * (1 + 3 * h / (10 + Math.Sqrt(4 - 3 * h)));
 
     public override string ToString() => $"{C} A = {A}, B = {B}";
-
-    public override bool Equals(object? obj) => obj is Ellipse2double p && Equals(p);
-
-    public bool Equals(Ellipse2double other) => C == other.C && A == other.A && B == other.B;
-
-    public override int GetHashCode() => C.GetHashCode() ^ A.GetHashCode() ^ B.GetHashCode();
-
-    public static bool operator ==(Ellipse2double e1, Ellipse2double e2) => e1.Equals(e2);
-
-    public static bool operator !=(Ellipse2double e1, Ellipse2double e2) => !e1.Equals(e2);
 }

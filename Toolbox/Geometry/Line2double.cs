@@ -1,6 +1,6 @@
 ﻿namespace ProjectEuler.Toolbox;
 
-public struct Line2double : IEquatable<Line2double>
+public record struct Line2double
 {
     public Point2double P1 { get; }
     public Point2double P2 { get; }
@@ -26,19 +26,4 @@ public struct Line2double : IEquatable<Line2double>
 
     public override string ToString() =>
         $"({P1}, {P2})";
-
-    public override bool Equals(object? obj) =>
-        obj is Line2double p && Equals(p);
-
-    public bool Equals(Line2double l) =>
-        P1 == l.P1 && P2 == l.P2;
-
-    public override int GetHashCode() =>
-        P1.GetHashCode() ^ P2.GetHashCode();
-
-    public static bool operator ==(Line2double l1, Line2double l2) =>
-        l1.Equals(l2);
-
-    public static bool operator !=(Line2double l1, Line2double l2) =>
-        !l1.Equals(l2);
 }

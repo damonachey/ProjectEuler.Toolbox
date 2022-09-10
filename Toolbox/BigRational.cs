@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProjectEuler.Toolbox;
 
-public struct BigRational : IFormattable, IComparable, IComparable<BigRational>, IEquatable<BigRational>
+public record struct BigRational : IFormattable, IComparable, IComparable<BigRational>
 {
     public BigInteger Numerator { get; }
     public BigInteger Denominator { get; }
@@ -56,8 +56,6 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
 
     public static BigRational operator -(BigRational left, BigRational right) => new(left.Numerator * right.Denominator - right.Numerator * left.Denominator, left.Denominator * right.Denominator);
 
-    public static bool operator !=(BigRational left, BigRational right) => left.Numerator * right.Denominator != right.Numerator * left.Denominator;
-
     public static BigRational operator %(BigRational dividend, BigRational divisor) => new((dividend.Numerator * divisor.Denominator) % (dividend.Denominator * divisor.Numerator), dividend.Denominator * divisor.Denominator);
 
     public static BigRational operator *(BigRational left, BigRational right) => new(left.Numerator * right.Numerator, left.Denominator * right.Denominator);
@@ -69,8 +67,6 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
     public static bool operator <(BigRational left, BigRational right) => left.Numerator * right.Denominator < right.Numerator * left.Denominator;
 
     public static bool operator <=(BigRational left, BigRational right) => left.Numerator * right.Denominator <= right.Numerator * left.Denominator;
-
-    public static bool operator ==(BigRational left, BigRational right) => left.Numerator * right.Denominator == right.Numerator * left.Denominator;
 
     public static bool operator >(BigRational left, BigRational right) => left.Numerator * right.Denominator > right.Numerator * left.Denominator;
 
@@ -320,20 +316,6 @@ public struct BigRational : IFormattable, IComparable, IComparable<BigRational>,
     }
 
     public int CompareTo(BigRational other) => (this - other).Numerator.Sign;
-
-    public override bool Equals(object? obj) => obj is BigRational other && Equals(other);
-
-    public bool Equals(BigRational f)
-    {
-        if (Denominator == f.Denominator)
-        {
-            return Numerator == f.Numerator;
-        }
-
-        return Numerator * f.Denominator == f.Numerator * Denominator;
-    }
-
-    public override int GetHashCode() => Numerator.GetHashCode() ^ Denominator.GetHashCode();
 
     public override string ToString()
     {

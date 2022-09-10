@@ -1,6 +1,6 @@
 ﻿namespace ProjectEuler.Toolbox;
 
-public struct Triangle2double : IEquatable<Triangle2double>
+public record struct Triangle2double
 {
     public Point2double P1 { get; }
     public Point2double P2 { get; }
@@ -16,19 +16,4 @@ public struct Triangle2double : IEquatable<Triangle2double>
 
     public override string ToString() => 
         $"({P1}, {P2}, {P3})";
-
-    public override bool Equals(object? obj) =>
-        obj is Triangle2double t && Equals(t);
-
-    public bool Equals(Triangle2double t) =>
-        P1 == t.P1 && P2 == t.P2 && P3 == t.P3;
-
-    public override int GetHashCode() =>
-        P1.GetHashCode() ^ P2.GetHashCode() ^ P3.GetHashCode();
-
-    public static bool operator ==(Triangle2double t1, Triangle2double t2) =>
-        t1.Equals(t2);
-
-    public static bool operator !=(Triangle2double t1, Triangle2double t2) =>
-        !t1.Equals(t2);
 }

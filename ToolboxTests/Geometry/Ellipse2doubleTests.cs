@@ -1,6 +1,7 @@
 ﻿using ProjectEuler.Toolbox;
 
 using System;
+using System.Diagnostics;
 
 using Xunit;
 
@@ -59,18 +60,6 @@ public class Ellipse2doubleTests
     }
 
     [Fact]
-    public void PerimeterFast()
-    {
-        var expected = 9.688448216130086;
-        var c = new Point2double(1, 1);
-        var a = 2;
-        var b = 1;
-        var actual = new Ellipse2double(c, a, b).PerimeterFast;
-
-        Assert.Equal(expected, actual);
-    }
-
-    [Fact]
     public void Perimeter()
     {
         var expected = 9.688448220506999;
@@ -92,95 +81,5 @@ public class Ellipse2doubleTests
         var actual = new Ellipse2double(c, a, b).ToString();
 
         Assert.Equal(expected, actual);
-    }
-
-    [Fact]
-    public void EqualsObjectFalse()
-    {
-        var c = new Point2double(1, 1);
-        var e1 = new Ellipse2double(c, 2, 1);
-        var e2 = new Ellipse2double(c, 2, 2);
-
-        Assert.False(e1.Equals((object)e2));
-    }
-
-    [Fact]
-    public void EqualsObjectTrue()
-    {
-        var c = new Point2double(1, 1);
-        var e1 = new Ellipse2double(c, 2, 1);
-        var e2 = new Ellipse2double(c, 2, 1);
-
-        Assert.True(e1.Equals((object)e2));
-    }
-
-    [Fact]
-    public void EqualsEllipse2doubleFalse()
-    {
-        var c = new Point2double(1, 1);
-        var e1 = new Ellipse2double(c, 2, 1);
-        var e2 = new Ellipse2double(c, 2, 2);
-
-        Assert.False(e1.Equals(e2));
-    }
-
-    [Fact]
-    public void EqualsEllipse2doubleTrue()
-    {
-        var c = new Point2double(1, 1);
-        var e1 = new Ellipse2double(c, 2, 1);
-        var e2 = new Ellipse2double(c, 2, 1);
-
-        Assert.True(e1.Equals(e2));
-    }
-
-    [Fact]
-    public void GetHashCodeTest()
-    {
-        var expected = 2146435072;
-        var c = new Point2double(1, 1);
-        var actual = new Ellipse2double(c, 2, 1).GetHashCode();
-
-        Assert.Equal(expected, actual);
-    }
-
-    [Fact]
-    public void OperatorEqualsFalse()
-    {
-        var c = new Point2double(1, 1);
-        var e1 = new Ellipse2double(c, 2, 1);
-        var e2 = new Ellipse2double(c, 2, 2);
-
-        Assert.False(e1 == e2);
-    }
-
-    [Fact]
-    public void OperatorEqualsTrue()
-    {
-        var c = new Point2double(1, 1);
-        var e1 = new Ellipse2double(c, 2, 1);
-        var e2 = new Ellipse2double(c, 2, 1);
-
-        Assert.True(e1 == e2);
-    }
-
-    [Fact]
-    public void OperatorNotEqualsFalse()
-    {
-        var c = new Point2double(1, 1);
-        var e1 = new Ellipse2double(c, 2, 1);
-        var e2 = new Ellipse2double(c, 2, 1);
-
-        Assert.False(e1 != e2);
-    }
-
-    [Fact]
-    public void OperatorNotEqualsTrue()
-    {
-        var c = new Point2double(1, 1);
-        var e1 = new Ellipse2double(c, 2, 1);
-        var e2 = new Ellipse2double(c, 2, 2);
-
-        Assert.True(e1 != e2);
     }
 }
