@@ -316,17 +316,7 @@ public static class LinearAssignmentProblem
             }
         }
 
-        private struct Location
-        {
-            public int Row;
-            public int Column;
-
-            public Location(int row, int col)
-            {
-                Row = row;
-                Column = col;
-            }
-        }
+        private readonly record struct Location(int Row, int Column);
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]

@@ -6,15 +6,6 @@ namespace ProjectEuler.ToolboxTests;
 public class Point2doubleTests
 {
     [Fact]
-    public void Point2double()
-    {
-        var p = new Point2double(1, 2);
-
-        Assert.Equal(1, p.X);
-        Assert.Equal(2, p.Y);
-    }
-
-    [Fact]
     public void ToStringTest()
     {
         var expected = "(1, 2)";

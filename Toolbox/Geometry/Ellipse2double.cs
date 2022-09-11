@@ -1,10 +1,10 @@
 ﻿namespace ProjectEuler.Toolbox;
 
-public record struct Ellipse2double
+public readonly record struct Ellipse2double
 {
-    public Point2double C { get; }
-    public double A { get; }
-    public double B { get; }
+    public readonly Point2double C;
+    public readonly double A;
+    public readonly double B;
 
     public Ellipse2double(Point2double c, double a, double b)
     {

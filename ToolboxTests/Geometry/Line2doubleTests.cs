@@ -7,17 +7,6 @@ namespace ProjectEuler.ToolboxTests;
 public class Line2doubleTests
 {
     [Fact]
-    public void Line2doubleConstructorPointPoint()
-    {
-        var p1 = new Point2double(1, 2);
-        var p2 = new Point2double(3, 4);
-        var actual = new Line2double(p1, p2);
-
-        Assert.Equal(p1, actual.P1);
-        Assert.Equal(p2, actual.P2);
-    }
-
-    [Fact]
     public void Line2doubleConstructorPointSlope()
     {
         var p1 = new Point2double(1, 2);

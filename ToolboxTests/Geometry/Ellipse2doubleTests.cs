@@ -1,7 +1,6 @@
 ﻿using ProjectEuler.Toolbox;
 
 using System;
-using System.Diagnostics;
 
 using Xunit;
 
@@ -9,19 +8,6 @@ namespace ProjectEuler.ToolboxTests;
 
 public class Ellipse2doubleTests
 {
-    [Fact]
-    public void Ellipse2doubleConstructor()
-    {
-        var c = new Point2double(1, 1);
-        var a = 2;
-        var b = 1;
-        var actual = new Ellipse2double(c, a, b);
-
-        Assert.Equal(c, actual.C);
-        Assert.Equal(a, actual.A);
-        Assert.Equal(b, actual.B);
-    }
-
     [Fact]
     public void Area()
     {
