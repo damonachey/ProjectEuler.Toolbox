@@ -1,6 +1,6 @@
 ﻿namespace ProjectEuler.Toolbox;
 
-public class Totient
+public sealed class Totient
 {
     private int[] _smallestFactors = default!;
     private int _lastSmallestFactor;

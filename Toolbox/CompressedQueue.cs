@@ -6,7 +6,7 @@ namespace ProjectEuler.Toolbox;
 /// Queue of longs that is compressed to allow for much larger storage than would normally fit in memory.
 /// </summary>
 [DebuggerDisplay("Count = {Count}")]
-public class CompressedQueue
+public sealed class CompressedQueue
 {
     public static int CompressThreshold { get; } = 1000000; 
     private readonly Queue<long> readQueue = new();
