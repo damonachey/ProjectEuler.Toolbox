@@ -196,6 +196,9 @@ public static class MathLibrary
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
+    /// NOTE: The string version is faster than int or long versions in many
+    /// cases because of the short circuit without having to reveres the entire
+    /// number first.
     public static bool IsPalindrome(string s)
     {
         for (var i = s.Length / 2; i >= 0; i--)
