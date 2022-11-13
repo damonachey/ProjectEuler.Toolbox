@@ -233,7 +233,7 @@ public static class MathLibrary
                 row[i] = previous[i - 1] + previous[i];
             }
 
-            row[row.Length - 1] = 1;
+            row[^1] = 1;
         }
     }
 
