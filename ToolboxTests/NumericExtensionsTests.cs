@@ -57,7 +57,7 @@ public class NumericExtensionsTests
     [Fact]
     public void ToDigitsLong()
     {
-        var expected = new int[] { 4, 3, 2, 1 };
+        var expected = new long[] { 4, 3, 2, 1 };
         var actual = 1234L.ToDigits();
 
         Assert.True(expected.SequenceEqual(actual));
@@ -66,7 +66,7 @@ public class NumericExtensionsTests
     [Fact]
     public void ToDigitsBigInteger()
     {
-        var expected = new int[] { 4, 3, 2, 1 };
+        var expected = new BigInteger[] { 4, 3, 2, 1 };
         var actual = new BigInteger(1234).ToDigits();
 
         Assert.True(expected.SequenceEqual(actual));

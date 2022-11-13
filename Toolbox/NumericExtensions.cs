@@ -28,50 +28,14 @@ public static class NumericExtensions
     /// </summary>
     /// <param name="n"></param>
     /// <returns></returns>
-    public static int ReverseDigits(this int n)
+    public static T ReverseDigits<T>(this T n) where T : INumber<T>
     {
-        var r = 0;
+        var r = T.Zero;
 
-        while (n != 0)
+        while (n != T.Zero)
         {
-            r = r * 10 + n % 10;
-            n /= 10;
-        }
-
-        return r;
-    }
-
-    /// <summary>
-    /// Reverses the digits.
-    /// </summary>
-    /// <param name="n"></param>
-    /// <returns></returns>
-    public static long ReverseDigits(this long n)
-    {
-        var r = 0L;
-
-        while (n != 0)
-        {
-            r = r * 10 + n % 10;
-            n /= 10;
-        }
-
-        return r;
-    }
-
-    /// <summary>
-    /// Reverses the digits.
-    /// </summary>
-    /// <param name="n"></param>
-    /// <returns></returns>
-    public static BigInteger ReverseDigits(this BigInteger n)
-    {
-        var r = BigInteger.Zero;
-
-        while (n != 0)
-        {
-            r = r * 10 + n % 10;
-            n /= 10;
+            r = r * T.CreateChecked(10) + n % T.CreateChecked(10);
+            n /= T.CreateChecked(10);
         }
 
         return r;
@@ -82,40 +46,12 @@ public static class NumericExtensions
     /// </summary>
     /// <param name="n"></param>
     /// <returns></returns>
-    public static IEnumerable<int> ToDigits(this int n)
+    public static IEnumerable<T> ToDigits<T>(this T n) where T : INumber<T>
     {
-        while (n != 0)
+        while (n != T.Zero)
         {
-            yield return n % 10;
-            n /= 10;
-        }
-    }
-
-    /// <summary>
-    /// Digits from right to left.
-    /// </summary>
-    /// <param name="n"></param>
-    /// <returns></returns>
-    public static IEnumerable<int> ToDigits(this long n)
-    {
-        while (n != 0)
-        {
-            yield return (int)(n % 10);
-            n /= 10;
-        }
-    }
-
-    /// <summary>
-    /// Digits from right to left.
-    /// </summary>
-    /// <param name="n"></param>
-    /// <returns></returns>
-    public static IEnumerable<int> ToDigits(this BigInteger n)
-    {
-        while (n != 0)
-        {
-            yield return (int)(n % 10);
-            n /= 10;
+            yield return n % T.CreateChecked(10);
+            n /= T.CreateChecked(10);
         }
     }
 }
