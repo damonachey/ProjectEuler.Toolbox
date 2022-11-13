@@ -1,4 +1,6 @@
-﻿namespace ProjectEuler.Toolbox;
+﻿using System.Numerics;
+
+namespace ProjectEuler.Toolbox;
 
 public static class Polynomial
 {
@@ -11,13 +13,11 @@ public static class Polynomial
     /// <param name="x">Starting x interpolation range.</param>
     /// <param name="dx">Delta x for interpolations.</param>
     /// <returns></returns>
-    public static IEnumerable<Point2double> Lagrange(IList<Point2double> points, double x, double dx)
+    public static IEnumerable<Point2<T>> Lagrange<T>(IList<Point2<T>> points, T x, T dx) where T : INumber<T>
     {
         while (true)
         {
-            var l = Enumerable
-                .Repeat(1.0, points.Count)
-                .ToArray();
+            var l = Array.ConvertAll(new T[points.Count], v => T.One);
 
             for (var j = 0; j < l.Length; j++)
             {

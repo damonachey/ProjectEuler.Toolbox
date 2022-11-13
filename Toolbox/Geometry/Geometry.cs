@@ -1,4 +1,6 @@
-﻿namespace ProjectEuler.Toolbox;
+﻿using System.Numerics;
+
+namespace ProjectEuler.Toolbox;
 
 public static class Geometry
 {
@@ -61,7 +63,7 @@ public static class Geometry
     /// <param name="b"></param>
     /// <param name="c"></param>
     /// <returns></returns>
-    public static bool IsPointInTriangle(Point3double p, Point3double a, Point3double b, Point3double c) => 
+    public static bool IsPointInTriangle<T>(Point3<T> p, Point3<T> a, Point3<T> b, Point3<T> c) where T : INumber<T> => 
         SameSide(p, a, b, c) && SameSide(p, b, a, c) && SameSide(p, c, a, b);
 
     /// <summary>
@@ -117,15 +119,15 @@ public static class Geometry
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    private static bool SameSide(Point3double p1, Point3double p2, Point3double a, Point3double b)
+    private static bool SameSide<T>(Point3<T> p1, Point3<T> p2, Point3<T> a, Point3<T> b) where T : INumber<T>
     {
         var cp1 = (b - a).Cross(p1 - a);
         var cp2 = (b - a).Cross(p2 - a);
 
-        return cp1.Dot(cp2) >= 0;
+        return cp1.Dot(cp2) >= T.Zero;
     }
 
-    public static double Distance(Point2double p1, Point2double p2)
+    public static T Distance<T>(Point2<T> p1, Point2<T> p2) where T : INumber<T>, IRootFunctions<T>
     {
         var dx = p2.X - p1.X;
         var dy = p2.Y - p1.Y;
@@ -133,7 +135,7 @@ public static class Geometry
         var dx2 = dx * dx;
         var dy2 = dy * dy;
 
-        return Math.Sqrt(dx2 + dy2);
+        return T.Sqrt(dx2 + dy2);
     }
 
     public static BigRational Distance(Point2BigRational p1, Point2BigRational p2)
@@ -147,7 +149,7 @@ public static class Geometry
         return BigRational.Sqrt(dx2 + dy2, 6);
     }
 
-    public static double Side(Point2double p1, Point2double p2, Point2double p3) => 
+    public static T Side<T>(Point2<T> p1, Point2<T> p2, Point2<T> p3) where T : INumber<T> => 
         (p2.X - p1.X) * (p3.Y - p1.Y) - (p2.Y - p1.Y) * (p3.X - p1.X);
 
     public static double TriangleInscribedCirlceRadius(int a, int b, int c)
@@ -157,20 +159,20 @@ public static class Geometry
         return Math.Sqrt((s - a) * (s - b) * (s - c) / s);
     }
 
-    public static Point2double TriangleThirdPoint(Point2double B, double ba, Point2double C, double ca)
+    public static Point2<T> TriangleThirdPoint<T>(Point2<T> B, T ba, Point2<T> C, T ca) where T : INumber<T>, IRootFunctions<T>
     {
         if (B != default)
         {
             throw new Exception();
         }
 
-        if (C.Y != 0)
+        if (C.Y != T.Zero)
         {
             throw new Exception();
         }
 
-        var x = (ba * ba - ca * ca + C.X * C.X) / (2 * C.X);
-        var y = Math.Sqrt(ba * ba - x * x);
+        var x = (ba * ba - ca * ca + C.X * C.X) / (T.CreateChecked(2) * C.X);
+        var y = T.Sqrt(ba * ba - x * x);
 
         return new(x, y);
     }

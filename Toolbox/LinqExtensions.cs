@@ -118,6 +118,14 @@ public static class LinqExtensions
     public static BigRational Sum(this IEnumerable<BigRational> list) => list.Aggregate(BigRational.Zero, (current, i) => current + i);
 
     /// <summary>
+    /// Computes the sum of a sequence of T value.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public static T Sum<T>(this IEnumerable<T> list) where T : INumber<T> => list.Aggregate(T.Zero, (current, i) => current + i);
+
+    /// <summary>
     /// Merges the specified first.
     /// </summary>
     /// <typeparam name="T1">The type of the 1.</typeparam>

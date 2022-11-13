@@ -19,7 +19,7 @@ public class GeometryTests
     [Fact]
     public void PointInTriangleTrue()
     {
-        var actual = Geometry.IsPointInTriangle(
+        var actual = Geometry.IsPointInTriangle<double>(
             new(0, 0, 0),
             new(0, 1, 0),
             new(1, -1, 0),
@@ -31,7 +31,7 @@ public class GeometryTests
     [Fact]
     public void PointInTriangleFalse()
     {
-        var actual = Geometry.IsPointInTriangle(
+        var actual = Geometry.IsPointInTriangle<double>(
             new(2, 0, 0),
             new(0, 1, 0),
             new(1, -1, 0),
@@ -61,8 +61,8 @@ public class GeometryTests
     public void DistanceDouble()
     {
         var expected = 5;
-        var p1 = new Point2double(1, 2);
-        var p2 = new Point2double(4, 6);
+        var p1 = new Point2<double>(1, 2);
+        var p2 = new Point2<double>(4, 6);
         var actual = Geometry.Distance(p1, p2);
 
         Assert.Equal(expected, actual);
@@ -83,9 +83,9 @@ public class GeometryTests
     public void Side()
     {
         var expected = -5;
-        var p1 = new Point2double(1, 2);
-        var p2 = new Point2double(4, 6);
-        var p3 = new Point2double(3, 3);
+        var p1 = new Point2<double>(1, 2);
+        var p2 = new Point2<double>(4, 6);
+        var p3 = new Point2<double>(3, 3);
         var actual = Geometry.Side(p1, p2, p3);
 
         Assert.Equal(expected, actual);
