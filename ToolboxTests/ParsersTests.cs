@@ -48,7 +48,7 @@ public class ParsersTests
                 new List<long>{ 1, 2, 3, 4 },
                 new List<long>{ 5, 6, 7, 8 },
             };
-        var actual = Parsers.ParseLongLists(@"
+        var actual = Parsers.ParseLists<long>(@"
                     1 2 3 4
                     5 6 7 8
                     ");
@@ -60,7 +60,7 @@ public class ParsersTests
     public void ParseLongGrid()
     {
         var expected = new int[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };
-        var actual = Parsers.ParseIntGrid(@"
+        var actual = Parsers.ParseGrid<int>(@"
                     1 2 3 4
                     5 6 7 8
                     ");
@@ -78,7 +78,7 @@ public class ParsersTests
     public void ParseIntGrid()
     {
         var expected = new long[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };
-        var actual = Parsers.ParseLongGrid(@"
+        var actual = Parsers.ParseGrid<long>(@"
                     1 2 3 4
                     5 6 7 8
                     ");

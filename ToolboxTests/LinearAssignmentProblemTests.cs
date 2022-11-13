@@ -13,7 +13,7 @@ public class LinearAssignmentProblemTests
         var expected = new[] { 4, 1, 2, 3, 0 };
         var actual = LinearAssignmentProblem
             .HungarianAlgorithm
-            .FindAssignments(Parsers.ParseIntGrid(@"
+            .FindAssignments(Parsers.ParseGrid<int>(@"
                       -7  -53 -183 -439 -863
                     -497 -383 -563  -79 -973
                     -287  -63 -343 -169 -583

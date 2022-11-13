@@ -1,4 +1,6 @@
-﻿namespace ProjectEuler.Toolbox;
+﻿using System.Numerics;
+
+namespace ProjectEuler.Toolbox;
 
 public static class Parsers
 {
@@ -7,17 +9,17 @@ public static class Parsers
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    public static int[,] ParseIntGrid(string str)
+    public static T[,] ParseGrid<T>(string str) where T : INumber<T>
     {
-        var list = ParseLongLists(str);
-        var grid = new int[list[0].Count, list.Count];
+        var list = ParseLists<T>(str);
+        var grid = new T[list[0].Count, list.Count];
 
         // i and j swapped because rows are row/column while grid is x/y
         for (var i = 0; i < list.Count; i++)
         {
             for (var j = 0; j < list[0].Count; j++)
             {
-                grid[j, i] = (int)list[i][j];
+                grid[j, i] = list[i][j];
             }
         }
 
@@ -55,32 +57,10 @@ public static class Parsers
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    public static List<List<long>> ParseLongLists(string str)
+    public static List<List<T>> ParseLists<T>(string str) where T : INumber<T>, IParsable<T>
     {
         return ParseStringLists(str)
-            .Select(sl => sl.Select(long.Parse).ToList())
+            .Select(sl => sl.Select(l => T.Parse(l, null)).ToList())
             .ToList();
-    }
-
-    /// <summary>
-    /// Parses a newline => comma or whitespace delimited string into it's grid representation.
-    /// </summary>
-    /// <param name="str"></param>
-    /// <returns></returns>
-    public static long[,] ParseLongGrid(string str)
-    {
-        var list = ParseLongLists(str);
-        var grid = new long[list[0].Count, list.Count];
-
-        // i and j swapped because rows are row/column while grid is x/y
-        for (var i = 0; i < list.Count; i++)
-        {
-            for (var j = 0; j < list[0].Count; j++)
-            {
-                grid[j, i] = list[i][j];
-            }
-        }
-
-        return grid;
     }
 }
