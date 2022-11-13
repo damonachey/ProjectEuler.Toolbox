@@ -16,12 +16,12 @@ public static class Expression
     {
         while (expr.Contains('('))
         {
-            expr = Regex.Replace(expr, @"\(([^\(]*?)\)", m => Evaluate(m.Groups[1].Value).ToString());
+            expr = Regex.Replace(expr, @"\(([^\(]*?)\)", m => Evaluate(m.Groups[1].Value).ToString(), RegexOptions.NonBacktracking);
         }
 
         double result = 0;
 
-        foreach (var match in Regex.Matches("+" + expr, @"\D ?-?[\d.]+").Cast<Match>())
+        foreach (var match in Regex.Matches("+" + expr, @"\D ?-?[\d.]+", RegexOptions.NonBacktracking).Cast<Match>())
         {
             var oper = match.Value[0];
             var value = double.Parse(match.Value[1..]);
