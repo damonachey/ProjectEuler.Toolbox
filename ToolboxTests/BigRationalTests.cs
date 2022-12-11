@@ -1057,7 +1057,7 @@ public class BigRationalTests
     [Fact]
     public void ToDecimalStringWholeNumber()
     {
-        var expected = "3.0";
+        var expected = "3.00";
         var actual = new BigRational(3, 1).ToDecimalString(2);
 
         Assert.Equal(expected, actual);
@@ -1066,7 +1066,7 @@ public class BigRationalTests
     [Fact]
     public void ToDecimalStringNotPreciseEnough()
     {
-        var expected = "0.0";
+        var expected = "0.00";
         var actual = new BigRational(1, 300).ToDecimalString(2);
 
         Assert.Equal(expected, actual);
@@ -1075,8 +1075,17 @@ public class BigRationalTests
     [Fact]
     public void ToDecimalStringTrailingZeros()
     {
-        var expected = "0.5";
+        var expected = "0.50";
         var actual = new BigRational(1, 2).ToDecimalString(2);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void ToDecimalStringLeadingZeros()
+    {
+        var expected = "0.09";
+        var actual = new BigRational(1, 11).ToDecimalString(2);
 
         Assert.Equal(expected, actual);
     }
@@ -1084,7 +1093,7 @@ public class BigRationalTests
     [Fact]
     public void ToDecimalStringNegative()
     {
-        var expected = "-3.5";
+        var expected = "-3.50";
         var actual = new BigRational(-7, 2).ToDecimalString(2);
 
         Assert.Equal(expected, actual);
@@ -1093,7 +1102,7 @@ public class BigRationalTests
     [Fact]
     public void ToDecimalStringNegative2()
     {
-        var expected = "-3.5";
+        var expected = "-3.50";
         var actual = new BigRational(7, -2).ToDecimalString(2);
 
         Assert.Equal(expected, actual);

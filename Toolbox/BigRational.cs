@@ -339,46 +339,12 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
 
     public string ToDecimalString(int precision)
     {
-        if (Denominator == 1)
-        {
-            return Numerator + ".0";
-        }
+        var wholePart = GetWholePart().ToString();
+        var multiplier = BigInteger.Pow(10, precision);
+        var fractionalPart = Abs((GetFractionPart() * multiplier).GetWholePart())
+            .ToString()
+            .PadLeft(precision, '0');
 
-        var fraction = GetFractionPart();
-        var adjustedNumerator = (fraction.Numerator * BigInteger.Pow(10, precision));
-        var decimalPlaces = BigInteger.Abs(adjustedNumerator / fraction.Denominator);
-
-        // Case where precision wasn't large enough.
-        if (decimalPlaces == 0)
-        {
-            return "0.0";
-        }
-
-        var sb = new StringBuilder();
-
-        var noMoreTrailingZeros = false;
-        for (var i = precision; i > 0; i--)
-        {
-            if (!noMoreTrailingZeros)
-            {
-                if ((decimalPlaces % 10) == 0)
-                {
-                    decimalPlaces /= 10;
-                    continue;
-                }
-
-                noMoreTrailingZeros = true;
-            }
-
-            // Add the right most decimal to the string
-            sb.Insert(0, decimalPlaces % 10);
-            decimalPlaces /= 10;
-        }
-
-        // Insert the whole part and decimal
-        sb.Insert(0, ".");
-        sb.Insert(0, GetWholePart());
-
-        return sb.ToString();
+        return $"{wholePart}.{fractionalPart}";
     }
 }
