@@ -1064,6 +1064,15 @@ public class BigRationalTests
     }
 
     [Fact]
+    public void ToDecimalStringWholeNumberZero()
+    {
+        var expected = "3";
+        var actual = new BigRational(3, 1).ToDecimalString(0);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
     public void ToDecimalStringNotPreciseEnough()
     {
         var expected = "0.00";

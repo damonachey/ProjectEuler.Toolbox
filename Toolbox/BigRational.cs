@@ -339,9 +339,15 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
 
     public string ToDecimalString(int precision)
     {
-        var wholePart = GetWholePart().ToString();
+        var wholePart = GetWholePart();
+
+        if (precision == 0)
+        {
+            return wholePart.ToString();
+        }
+
         var multiplier = BigInteger.Pow(10, precision);
-        var fractionalPart = Abs((GetFractionPart() * multiplier).GetWholePart())
+        var fractionalPart = Abs(Numerator % Denominator * multiplier)
             .ToString()
             .PadLeft(precision, '0');
 
