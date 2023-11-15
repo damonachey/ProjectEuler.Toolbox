@@ -347,7 +347,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         }
 
         var multiplier = BigInteger.Pow(10, precision);
-        var fractionalPart = Abs(Numerator % Denominator * multiplier)
+        var fractionalPart = (Abs(Numerator % Denominator * multiplier).Numerator / Denominator)
             .ToString()
             .PadLeft(precision, '0');
 
