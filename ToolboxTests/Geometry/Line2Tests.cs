@@ -19,7 +19,7 @@ public class Line2Tests
     }
 
     [Fact]
-    public void Line2doubleConstructorSlopeInfinate()
+    public void Line2doubleConstructorSlopeInfinite()
     {
         var p1 = new Point2<double>(0, 2);
         var p2 = new Point2<double>(0, 1.5);

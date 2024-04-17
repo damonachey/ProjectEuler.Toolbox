@@ -1,4 +1,6 @@
-﻿using ProjectEuler.Toolbox;
+﻿// Ignore Spelling: Memoization Memoize
+
+using ProjectEuler.Toolbox;
 using System;
 using Xunit;
 

@@ -152,12 +152,6 @@ public class MathLibraryTests
         Assert.True(expected.SequenceEqual(actual));
     }
 
-    [Fact(Skip = "Not implemented yet")]
-    public void CountIncreasing()
-    {
-        MathLibrary.CountIncreasing();
-    }
-
     [Fact]
     public void NumberOfSetBits()
     {

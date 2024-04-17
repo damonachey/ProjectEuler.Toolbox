@@ -6,19 +6,20 @@ using Xunit;
 
 namespace ProjectEuler.ToolboxTests;
 
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
 public class CombinatoricsTests
 {
     [Fact]
     public void AnagramCount()
     {
         var expected = 60;
-        var actual = Combinatorics.AnagramCount(new[] { 1, 2, 3 });
+        var actual = Combinatorics.AnagramCount([1, 2, 3]);
 
         Assert.Equal(expected, actual);
     }
 
     [Fact]
-    public void CircularPermutationcount()
+    public void CircularPermutationCount()
     {
         var expected = 120;
         var actual = Combinatorics.CircularPermutationCount(6);
@@ -74,7 +75,7 @@ public class CombinatoricsTests
     public void PartitionCountUnits()
     {
         var expected = new BigInteger(292);
-        var actual = Combinatorics.PartitionCount(100, new int[] { 1, 5, 10, 25, 50 });
+        var actual = Combinatorics.PartitionCount(100, [1, 5, 10, 25, 50]);
 
         Assert.Equal(expected, actual);
     }
@@ -93,7 +94,7 @@ public class CombinatoricsTests
     public void PartitionsUnits()
     {
         var expected = 292;
-        var actual = Combinatorics.Partitions(100, new int[] { 1, 5, 10, 25, 50 }).ToArray();
+        var actual = Combinatorics.Partitions(100, [1, 5, 10, 25, 50]).ToArray();
 
         Assert.Equal(expected, actual.Length);
         Assert.Equal(expected, actual.Distinct().Count());

@@ -283,11 +283,6 @@ public static class MathLibrary
         }
     }
 
-    public static IEnumerable<long> CountIncreasing()
-    {
-        throw new NotImplementedException();
-    }
-
     /// <summary>
     /// Numbers the of set bits.
     /// </summary>

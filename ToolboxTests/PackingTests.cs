@@ -14,7 +14,7 @@ public class PackingTests
     public void Knapsack()
     {
         var expected = new long[] { 3, 2 };
-        var actual = Packing.Knapsack(new long[] { 1, 2, 3 }, 5);
+        var actual = Packing.Knapsack([1, 2, 3], 5);
 
         Assert.True(expected.SequenceEqual(actual));
     }

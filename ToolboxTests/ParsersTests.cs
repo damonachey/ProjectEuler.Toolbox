@@ -12,8 +12,8 @@ public class ParsersTests
     {
         var expected = new List<List<string>>
             {
-                new List<string>{ "1", "2", "3", "4" },
-                new List<string>{ "5", "6", "7", "8" },
+                new() { "1", "2", "3", "4" },
+                new() { "5", "6", "7", "8" },
             };
         var actual = Parsers.ParseStringLists(@"
                     1 2 3 4
@@ -45,8 +45,8 @@ public class ParsersTests
     {
         var expected = new List<List<long>>
             {
-                new List<long>{ 1, 2, 3, 4 },
-                new List<long>{ 5, 6, 7, 8 },
+                new() { 1, 2, 3, 4 },
+                new() { 5, 6, 7, 8 },
             };
         var actual = Parsers.ParseLists<long>(@"
                     1 2 3 4

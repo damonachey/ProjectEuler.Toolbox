@@ -12,6 +12,8 @@
 //
 // Version: 1.5.0 final
 
+// Ignore Spelling: QLZ
+
 #pragma warning disable CS0675 // Bitwise-or operator used on a sign-extended operand
 static class QuickLZ
 {
@@ -105,7 +107,7 @@ static class QuickLZ
 
         if (source.Length == 0)
         {
-            return Array.Empty<byte>();
+            return [];
         }
 
         if (src <= last_matchstart)
@@ -121,7 +123,7 @@ static class QuickLZ
                 {
                     d2 = new byte[source.Length + DEFAULT_HEADERLEN];
                     WriteHeader(d2, level, false, source.Length, source.Length + DEFAULT_HEADERLEN);
-                    System.Array.Copy(source, 0, d2, DEFAULT_HEADERLEN, source.Length);
+                    Array.Copy(source, 0, d2, DEFAULT_HEADERLEN, source.Length);
                     return d2;
                 }
 

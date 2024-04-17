@@ -145,7 +145,7 @@ public class PathFindingTests
     }
 
     [Fact]
-    public void AstarStartGoal()
+    public void AStarStartGoal()
     {
         var expected = new[]
         {
@@ -171,7 +171,7 @@ public class PathFindingTests
     }
 
     [Fact]
-    public void Astar()
+    public void AStar()
     {
         var expected = new[]
         {
