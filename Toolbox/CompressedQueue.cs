@@ -19,9 +19,9 @@ public sealed class CompressedQueue
     {
         Count--;
 
-        if (!readQueue.Any())
+        if (readQueue.Count == 0)
         {
-            if (!bufferQueue.Any())
+            if (bufferQueue.Count == 0)
             {
                 return writeQueue.Dequeue();
             }

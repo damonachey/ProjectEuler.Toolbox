@@ -18,15 +18,9 @@ public static class Combinatorics
     /// <returns></returns>
     public static BigInteger CombinationCount(int n, int k)
     {
-        if (n < 1)
-        {
-            throw new ArgumentOutOfRangeException(nameof(n));
-        }
-
-        if (k < 0 || k > n)
-        {
-            throw new ArgumentOutOfRangeException(nameof(k));
-        }
+        ArgumentOutOfRangeException.ThrowIfLessThan(n, 1);
+        ArgumentOutOfRangeException.ThrowIfLessThan(k, 0);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(k, n);
 
         return MathLibrary.Factorial(n) / (MathLibrary.Factorial(k) * MathLibrary.Factorial(n - k));
     }
@@ -256,10 +250,7 @@ public static class Combinatorics
     /// <returns></returns>
     public static BigInteger PermutationCount(int n, int k)
     {
-        if (n < 1)
-        {
-            throw new ArgumentOutOfRangeException(nameof(n));
-        }
+        ArgumentOutOfRangeException.ThrowIfLessThan(n, 1);
 
         if (k < 0 || k > n)
         {

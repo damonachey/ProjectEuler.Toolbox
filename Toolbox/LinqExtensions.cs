@@ -2,7 +2,7 @@
 
 namespace ProjectEuler.Toolbox;
 
-public static class LinqExtensions
+public static class LINQExtensions
 {
     /// <summary>
     /// Searches the entire assumed sorted results of Func(T, int) for an element and returns the zero-based index of the element.
@@ -67,12 +67,11 @@ public static class LinqExtensions
     /// <returns></returns>
     public static IEnumerable<T> RandomSample<T>(this IEnumerable<T> rows, int nSamples)
     {
-        var rand = new Random(Guid.NewGuid().GetHashCode());
         var count = rows.Count();
 
         for (int i = 0; i < count; i++)
         {
-            if (rand.Next(count - i) < nSamples)
+            if (Random.Shared.Next(count - i) < nSamples)
             {
                 yield return rows.ElementAt(i);
                 if (--nSamples == 0)
@@ -88,14 +87,13 @@ public static class LinqExtensions
     /// <param name="list"></param>
     public static IList<T> Shuffle<T>(this IList<T> list)
     {
-        var rand = new Random(Guid.NewGuid().GetHashCode());
         var n = list.Count;
 
         while (n > 1)
         {
             n--;
 
-            var a = rand.Next(n + 1);
+            var a = Random.Shared.Next(n + 1);
 
             (list[a], list[n]) = (list[n], list[a]);
         }
@@ -212,7 +210,7 @@ public static class LinqExtensions
             ?? throw new InvalidOperationException("Sequence contains fewer than two elements"); ;
     }
 
-    public static readonly List<object> Errors = new();
+    public static readonly List<object> Errors = [];
 
     public static IEnumerable<TResult?> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
     {

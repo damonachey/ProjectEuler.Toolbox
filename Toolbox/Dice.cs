@@ -71,11 +71,10 @@ public static class Dice
     public static IEnumerable<int[]> RandomRolls(int dice, int sides)
     {
         var possibleRolls = PossibleRolls(dice, sides).ToArray();
-        var rand = new Random(Guid.NewGuid().GetHashCode());
 
         while (true)
         {
-            yield return possibleRolls[rand.Next(0, possibleRolls.Length)];
+            yield return possibleRolls[Random.Shared.Next(0, possibleRolls.Length)];
         }
     }
 }

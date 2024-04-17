@@ -16,7 +16,7 @@ public static class Sudoku
             RemoveUsedRowColValuesFromPossibleCellValues(grid, possibleCellValues);
             RemoveUsedBoxValuesFromPossibleCellValues(grid, possibleCellValues);
 
-            if (!possibleCellValues.Any())
+            if (possibleCellValues.Count == 0)
             {
                 return CheckAllSums(grid) ? grid : null;
             }
@@ -104,7 +104,7 @@ public static class Sudoku
         {
             valueList.Remove(value);
 
-            if (!valueList.Any())
+            if (valueList.Count == 0)
             {
                 possibleCellValues.Remove(cell);
             }

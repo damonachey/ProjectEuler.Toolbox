@@ -286,7 +286,7 @@ public static class Factorization
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static int GCD(int a, int b)
+    public static int GreatestCommonDivisor(int a, int b)
     {
         a = Math.Abs(a);
         b = Math.Abs(b);
@@ -312,7 +312,7 @@ public static class Factorization
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static long GCD(long a, long b)
+    public static long GreatestCommonDivisor(long a, long b)
     {
         a = Math.Abs(a);
         b = Math.Abs(b);
@@ -338,17 +338,14 @@ public static class Factorization
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static int LCM(int a, int b)
+    public static int LeastCommonMultiple(int a, int b)
     {
-        if (a == 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(a));
-        }
+        ArgumentOutOfRangeException.ThrowIfZero(a);
 
         a = Math.Abs(a);
         b = Math.Abs(b);
 
-        return a * (b / GCD(a, b));
+        return a * (b / GreatestCommonDivisor(a, b));
     }
 
     /// <summary>
@@ -357,17 +354,14 @@ public static class Factorization
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static long LCM(long a, long b)
+    public static long LeastCommonMultiple(long a, long b)
     {
-        if (a == 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(a));
-        }
+        ArgumentOutOfRangeException.ThrowIfZero(a);
 
         a = Math.Abs(a);
         b = Math.Abs(b);
 
-        return a * (b / GCD(a, b));
+        return a * (b / GreatestCommonDivisor(a, b));
     }
 
     /// <summary>
@@ -376,12 +370,9 @@ public static class Factorization
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static BigInteger LCM(BigInteger a, BigInteger b)
+    public static BigInteger LeastCommonMultiple(BigInteger a, BigInteger b)
     {
-        if (a == 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(a));
-        }
+        ArgumentOutOfRangeException.ThrowIfZero(a);
 
         a = BigInteger.Abs(a);
         b = BigInteger.Abs(b);

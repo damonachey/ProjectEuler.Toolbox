@@ -19,16 +19,9 @@ public static class MathLibrary
     /// <returns></returns>
     public static BigInteger Binomial(int n, int k)
     {
-        if (n < 1)
-        {
-            throw new ArgumentOutOfRangeException(nameof(n));
-
-        }
-        
-        if(k < 0 || k > n)
-        {
-            throw new ArgumentOutOfRangeException(nameof(k));
-        }
+        ArgumentOutOfRangeException.ThrowIfLessThan(n, 1);
+        ArgumentOutOfRangeException.ThrowIfLessThan(k, 0);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(k, n);
 
         return Factorial(n) / (Factorial(k) * Factorial(n - k));
     }
@@ -307,14 +300,14 @@ public static class MathLibrary
         return (int)((((i + (i >> 4)) & 0xF0F0F0F0F0F0F0F) * 0x101010101010101) >> 56);
     }
 
-    public static double NewtonsMethod(Func<double, double> f, Func<double, double> fprime, double guess, double epsilon)
+    public static double NewtonsMethod(Func<double, double> f, Func<double, double> fPrime, double guess, double epsilon)
     {
         var x = guess;
         var xlast = x;
 
         while (true)
         {
-            x -= f(x) / fprime(x);
+            x -= f(x) / fPrime(x);
 
             if (Math.Abs(x - xlast) < epsilon)
             {

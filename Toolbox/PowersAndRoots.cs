@@ -98,10 +98,7 @@ public static class PowersAndRoots
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
     public static decimal Sqrt(decimal n)
     {
-        if (n < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(n));
-        }
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
 
         var epsilon = 0.0m;
         var current = (decimal)Math.Sqrt((double)n);

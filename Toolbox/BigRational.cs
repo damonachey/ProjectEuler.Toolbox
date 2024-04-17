@@ -29,10 +29,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     public BigRational(BigInteger numerator, BigInteger denominator)
         : this()
     {
-        if (denominator == 0)
-        {
-            throw new DivideByZeroException();
-        }
+        ArgumentOutOfRangeException.ThrowIfZero(denominator, nameof(denominator));
 
         var gcd = BigInteger.GreatestCommonDivisor(numerator, denominator);
 
@@ -83,7 +80,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         //var dstr = value.ToString("R");
         var dstr = ToLongString(value);
         var dlen = dstr.Length;
-        var dot = dstr.IndexOf(".", StringComparison.Ordinal);
+        var dot = dstr.IndexOf('.');
 
         dstr = dstr.Replace(".", "");
 
@@ -119,7 +116,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         // fix missing decimal point:
         if (decimalParts.Length == 1)
         {
-            decimalParts = new[] { exponentParts[0], "0" };
+            decimalParts = [exponentParts[0], "0"];
         }
 
         var exponentValue = int.Parse(exponentParts[1]);
@@ -150,7 +147,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     {
         var dstr = value.ToString("G");
         var dlen = dstr.Length;
-        var dot = dstr.IndexOf(".", StringComparison.Ordinal);
+        var dot = dstr.IndexOf('.');
 
         dstr = dstr.Replace(".", "");
 

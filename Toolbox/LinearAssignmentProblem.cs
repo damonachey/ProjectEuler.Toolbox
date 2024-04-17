@@ -1,4 +1,6 @@
-﻿namespace ProjectEuler.Toolbox;
+﻿// Ignore Spelling: assigncost rowsol colsol
+
+namespace ProjectEuler.Toolbox;
 
 public static class LinearAssignmentProblem
 {
