@@ -115,16 +115,6 @@ public class LinqExtensionsTests
     }
 
     [Fact]
-    public void Shuffle()
-    {
-        var expected = Enumerable.Range(1, 10);
-        var actual = Enumerable.Range(1, 10).ToArray();
-        actual.Shuffle();
-
-        Assert.False(expected.SequenceEqual(actual));
-    }
-
-    [Fact]
     public void SumBigInteger()
     {
         var expected = new BigInteger(6);

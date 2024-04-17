@@ -42,7 +42,7 @@ public static class Dice
     {
         var possibleRolls = PossibleRolls(dice, sides).ToArray();
 
-        possibleRolls.Shuffle();
+        Random.Shared.Shuffle(possibleRolls);
 
         var queue = new Queue<int[]>(possibleRolls);
 
@@ -52,7 +52,7 @@ public static class Dice
             {
                 var list = queue.Concat(possibleRolls).ToArray();
 
-                list.Shuffle();
+                Random.Shared.Shuffle(list);
 
                 queue = new(list);
             }

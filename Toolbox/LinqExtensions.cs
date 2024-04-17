@@ -81,27 +81,6 @@ public static class LINQExtensions
     }
 
     /// <summary>
-    /// In place Fisher-Yates shuffle a list.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="list"></param>
-    public static IList<T> Shuffle<T>(this IList<T> list)
-    {
-        var n = list.Count;
-
-        while (n > 1)
-        {
-            n--;
-
-            var a = Random.Shared.Next(n + 1);
-
-            (list[a], list[n]) = (list[n], list[a]);
-        }
-
-        return list;
-    }
-
-    /// <summary>
     /// Computes the sum of a sequence of BigInteger value.
     /// </summary>
     /// <param name="list"></param>
