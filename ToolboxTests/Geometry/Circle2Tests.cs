@@ -25,7 +25,7 @@ public class Circle2Tests
         var expected = Math.Tau;
         var c = new Point2<double>(1, 1);
         var r = 1;
-        var actual = new Circle2<double>(c, r).Circumfrence;
+        var actual = new Circle2<double>(c, r).Circumference;
 
         Assert.Equal(expected, actual);
     }
