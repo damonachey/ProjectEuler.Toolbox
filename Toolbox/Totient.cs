@@ -61,12 +61,7 @@ public sealed class Totient
             return 1;
         }
 
-        if (n >= _lastSmallestFactor)
-        {
-            //InitializeSmallestFactors(n);
-
-            throw new ArgumentOutOfRangeException(nameof(n));
-        }
+        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(n, _lastSmallestFactor);
 
         var f =
             n == 2 ? 1 :
@@ -142,7 +137,7 @@ public sealed class Totient
         return r;
     }
 
-    public static int MaxnOverPhin(int n)
+    public static int MaxNOverPhiN(int n)
     {
         var product = 1;
 
@@ -159,7 +154,7 @@ public sealed class Totient
         throw new Exception("Need more primes");
     }
 
-    public static int MinnOverPhin(int n)
+    public static int MinNOverPhiN(int n)
     {
         var best = 0;
 

@@ -70,7 +70,7 @@ public static class PathFinding
 
         dist[start.Row, start.Col] = grid[start.Row, start.Col];
 
-        while (q.Any())
+        while (q.Count != 0)
         {
             var min = long.MaxValue;
             var u = default(Coordinate)!;
@@ -115,8 +115,8 @@ public static class PathFinding
     /// <param name="start"></param>
     /// <param name="goal"></param>
     /// <returns></returns>
-    public static IEnumerable<Coordinate> Astar(this long[,] grid, Coordinate start, Coordinate goal) => 
-        grid.Astar(start, goal, (g, x) => g.Neighbors8(x));
+    public static IEnumerable<Coordinate> AStar(this long[,] grid, Coordinate start, Coordinate goal) => 
+        grid.AStar(start, goal, (g, x) => g.Neighbors8(x));
 
     // A*
     // http://en.wikipedia.org/wiki/A*_search_algorithm
@@ -129,7 +129,7 @@ public static class PathFinding
     /// <param name="goal"></param>
     /// <param name="neighbors"></param>
     /// <returns></returns>
-    public static IEnumerable<Coordinate> Astar(this long[,] grid, Coordinate start, Coordinate goal, Func<long[,], Coordinate, IEnumerable<Coordinate>> neighbors)
+    public static IEnumerable<Coordinate> AStar(this long[,] grid, Coordinate start, Coordinate goal, Func<long[,], Coordinate, IEnumerable<Coordinate>> neighbors)
     {
         var closedSet = new HashSet<Coordinate>();
         var openSet = new HashSet<Coordinate> { start };
@@ -143,7 +143,7 @@ public static class PathFinding
         hScore[start.Row, start.Col] = grid.DistanceEstimate(start, goal);
         fScore[start.Row, start.Col] = hScore[start.Row, start.Col];
 
-        while (openSet.Any())
+        while (openSet.Count != 0)
         {
             var min = openSet.Min(v => fScore[v.Row, v.Col]);
             var u = openSet.First(v => fScore[v.Row, v.Col] == min);
@@ -171,9 +171,8 @@ public static class PathFinding
                 var tentativeGScore = gScore[u.Row, u.Col] + grid.DistanceBetween(u, neighbor);
                 var tentativeIsBetter = false;
 
-                if (!openSet.Contains(neighbor))
+                if (openSet.Add(neighbor))
                 {
-                    openSet.Add(neighbor);
                     tentativeIsBetter = true;
                 }
                 else if (tentativeGScore < gScore[neighbor.Row, neighbor.Col])
@@ -342,16 +341,10 @@ public static class PathFinding
         yield return current;
     }
 
-    public class Coordinate : IEquatable<Coordinate>
+    public class Coordinate(int row, int col) : IEquatable<Coordinate>
     {
-        public int Row { get; }
-        public int Col { get; }
-
-        public Coordinate(int row, int col)
-        {
-            Row = row;
-            Col = col;
-        }
+        public int Row { get; } = row;
+        public int Col { get; } = col;
 
         public override bool Equals(object? obj)
         {

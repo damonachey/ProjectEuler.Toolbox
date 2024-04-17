@@ -32,7 +32,7 @@ public static class Packing
     /// <returns></returns>
     public static BigInteger Knapsack01(BigInteger goal, ReadOnlySpan<BigInteger> items, out List<BigInteger> chosenItems)
     {
-        chosenItems = new();
+        chosenItems = [];
 
         if (items.Length == 0)
         {

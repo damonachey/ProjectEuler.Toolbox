@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿// Ignore Spelling: Memoization Memoize
+
+using System.Collections.Concurrent;
 
 namespace ProjectEuler.Toolbox;
 

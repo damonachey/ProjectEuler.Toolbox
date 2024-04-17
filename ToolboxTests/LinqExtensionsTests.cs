@@ -7,7 +7,7 @@ using Xunit;
 
 namespace ProjectEuler.ToolboxTests;
 
-public class LinqExtensionsTests
+public class LINQExtensionsTests
 {
     [Fact]
     public void BinarySearchForMatchFound()
@@ -147,7 +147,7 @@ public class LinqExtensionsTests
     public void MergeFirstLonger()
     {
         var expected = new[] { 2, 4, 6, 4, 5 };
-        var actual = new[] { 1, 2, 3, 4, 5 }.Merge(new[] { 1, 2, 3 }, (a, b) => a + b, () => 0, () => 0);
+        var actual = new[] { 1, 2, 3, 4, 5 }.Merge([1, 2, 3], (a, b) => a + b, () => 0, () => 0);
 
         Assert.True(expected.SequenceEqual(actual));
     }
@@ -156,7 +156,7 @@ public class LinqExtensionsTests
     public void MergeSecondLonger()
     {
         var expected = new[] { 2, 4, 6, 4, 5 };
-        var actual = new[] { 1, 2, 3 }.Merge(new[] { 1, 2, 3, 4, 5 }, (a, b) => a + b, () => 0, () => 0);
+        var actual = new[] { 1, 2, 3 }.Merge([1, 2, 3, 4, 5], (a, b) => a + b, () => 0, () => 0);
 
         Assert.True(expected.SequenceEqual(actual));
     }
@@ -165,7 +165,7 @@ public class LinqExtensionsTests
     public void MergeRepeatLastFirstLonger()
     {
         var expected = new[] { 2, 4, 6, 7, 8 };
-        var actual = new[] { 1, 2, 3, 4, 5 }.MergeRepeatLast(new[] { 1, 2, 3 }, (a, b) => a + b);
+        var actual = new[] { 1, 2, 3, 4, 5 }.MergeRepeatLast([1, 2, 3], (a, b) => a + b);
 
         Assert.True(expected.SequenceEqual(actual));
     }
@@ -174,7 +174,7 @@ public class LinqExtensionsTests
     public void MergeRepeatLastSecondLonger()
     {
         var expected = new[] { 2, 4, 6, 7, 8 };
-        var actual = new[] { 1, 2, 3 }.MergeRepeatLast(new[] { 1, 2, 3, 4, 5 }, (a, b) => a + b);
+        var actual = new[] { 1, 2, 3 }.MergeRepeatLast([1, 2, 3, 4, 5], (a, b) => a + b);
 
         Assert.True(expected.SequenceEqual(actual));
     }

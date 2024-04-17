@@ -2,5 +2,5 @@
 
 public static class TupleExtensions
 {
-    public static int Sum(this (int, int, int) tup) => tup.Item1 + tup.Item2 + tup.Item3;
+    public static int Sum(this (int, int, int) tuple) => tuple.Item1 + tuple.Item2 + tuple.Item3;
 }

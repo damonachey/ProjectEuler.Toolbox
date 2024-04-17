@@ -1,4 +1,6 @@
-﻿namespace ProjectEuler.Toolbox;
+﻿// Ignore Spelling: Fnv
+
+namespace ProjectEuler.Toolbox;
 
 public static class Hashing
 {

@@ -66,7 +66,7 @@ public class TotientTests
     public void MaxnOverPhin()
     {
         var expected = 30;
-        var actual = Totient.MaxnOverPhin(100);
+        var actual = Totient.MaxNOverPhiN(100);
 
         Assert.Equal(expected, actual);
     }
@@ -75,7 +75,7 @@ public class TotientTests
     public void MinnOverPhin()
     {
         var expected = 49;
-        var actual = Totient.MinnOverPhin(100);
+        var actual = Totient.MinNOverPhiN(100);
 
         Assert.Equal(expected, actual);
     }
