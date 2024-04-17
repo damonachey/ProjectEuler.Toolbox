@@ -31,7 +31,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void ConstructorFromIntsIrrationalNumber()
+    public void ConstructorFromIntIrrationalNumber()
     {
         var expectedNumerator = new BigInteger(2);
         var expectedDenominator = new BigInteger(3);
@@ -53,7 +53,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void ConstructorFromIntsIrrationalReduction()
+    public void ConstructorFromIntIrrationalReduction()
     {
         var expectedNumerator = new BigInteger(2);
         var expectedDenominator = new BigInteger(3);
@@ -578,7 +578,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void Op_ExplicitBigIntergerFalse()
+    public void Op_ExplicitBigIntegerFalse()
     {
         var expected = new BigInteger(4);
         var actual = (BigInteger)new BigRational(13, 3);
