@@ -7,6 +7,7 @@ using Xunit;
 
 namespace ProjectEuler.ToolboxTests;
 
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
 public class LINQExtensionsTests
 {
     [Fact]
