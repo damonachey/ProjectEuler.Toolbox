@@ -19,13 +19,6 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     public bool IsZero => Numerator == 0;
     public int Sign => Numerator.Sign;
 
-    public BigRational(BigInteger i)
-        : this()
-    {
-        Numerator = i;
-        Denominator = 1;
-    }
-
     public BigRational(BigInteger numerator, BigInteger denominator)
         : this()
     {
@@ -45,11 +38,14 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         Denominator = denominator / gcd;
     }
 
-    public BigRational(BigRational value)
-        : this()
+    public BigRational(BigInteger i)
+        : this(i, 1)
     {
-        Numerator = value.Numerator;
-        Denominator = value.Denominator;
+    }
+
+    public BigRational(BigRational value)
+        : this(value.Numerator, value.Denominator)
+    {
     }
 
     public static BigRational operator -(BigRational value) => new(-value.Numerator, value.Denominator);
