@@ -152,7 +152,7 @@ public static class Geometry
     public static T Side<T>(Point2<T> p1, Point2<T> p2, Point2<T> p3) where T : INumber<T> => 
         (p2.X - p1.X) * (p3.Y - p1.Y) - (p2.Y - p1.Y) * (p3.X - p1.X);
 
-    public static double TriangleInscribedCirlceRadius(int a, int b, int c)
+    public static double TriangleInscribedCircleRadius(int a, int b, int c)
     {
         var s = (a + b + c) / 2.0;
 

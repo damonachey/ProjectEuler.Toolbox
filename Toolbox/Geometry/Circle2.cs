@@ -6,7 +6,7 @@ public readonly record struct Circle2<T>(Point2<T> C, T R) where T : IFloatingPo
 { 
     public T Area => T.Pi * R * R;
 
-    public T Circumfrence => T.Tau * R;
+    public T Circumference => T.Tau * R;
     
     public override string ToString() => $"{C} R = {R}";
 }
