@@ -251,11 +251,8 @@ public static class Combinatorics
     public static BigInteger PermutationCount(int n, int k)
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(n, 1);
-
-        if (k < 0 || k > n)
-        {
-            throw new ArgumentOutOfRangeException(nameof(k));
-        }
+        ArgumentOutOfRangeException.ThrowIfLessThan(k, 0);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(k, n);
 
         return MathLibrary.Factorial(n) / MathLibrary.Factorial(n - k);
     }

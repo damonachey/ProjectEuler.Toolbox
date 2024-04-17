@@ -161,15 +161,8 @@ public static class Geometry
 
     public static Point2<T> TriangleThirdPoint<T>(Point2<T> B, T ba, Point2<T> C, T ca) where T : INumber<T>, IRootFunctions<T>
     {
-        if (B != default)
-        {
-            throw new Exception();
-        }
-
-        if (C.Y != T.Zero)
-        {
-            throw new Exception();
-        }
+        ArgumentOutOfRangeException.ThrowIfNotEqual(B, default, nameof(B));
+        ArgumentOutOfRangeException.ThrowIfNotEqual(C.Y, T.Zero, nameof(C.Y));
 
         var x = (ba * ba - ca * ca + C.X * C.X) / (T.CreateChecked(2) * C.X);
         var y = T.Sqrt(ba * ba - x * x);

@@ -29,7 +29,10 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     public BigRational(BigInteger numerator, BigInteger denominator)
         : this()
     {
-        ArgumentOutOfRangeException.ThrowIfZero(denominator, nameof(denominator));
+        if (denominator == 0)
+        {
+            throw new DivideByZeroException();
+        }
 
         var gcd = BigInteger.GreatestCommonDivisor(numerator, denominator);
 

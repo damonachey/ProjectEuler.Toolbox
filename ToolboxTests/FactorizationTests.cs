@@ -73,64 +73,64 @@ public class FactorizationTests
     }
 
     [Fact]
-    public void GCDInt()
+    public void GreatestCommonDivisorInt()
     {
         var expected = 4;
-        var actual = Factorization.GCD(412, 612);
+        var actual = Factorization.GreatestCommonDivisor(412, 612);
 
         Assert.Equal(expected, actual);
     }
 
     [Fact]
-    public void GCDLong()
+    public void GreatestCommonDivisorLong()
     {
         var expected = 4;
-        var actual = Factorization.GCD(412L, 612L);
+        var actual = Factorization.GreatestCommonDivisor(412L, 612L);
 
         Assert.Equal(expected, actual);
     }
 
     [Fact]
-    public void LCMIntArgumentOutOfRange()
+    public void LeastCommonMultipleIntArgumentOutOfRange()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Factorization.LCM(0, 5));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Factorization.LeastCommonMultiple(0, 5));
     }
 
     [Fact]
-    public void LCMLongArgumentOutOfRange()
+    public void LeastCommonMultipleLongArgumentOutOfRange()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Factorization.LCM(0L, 5));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Factorization.LeastCommonMultiple(0L, 5));
     }
 
     [Fact]
-    public void LCMBigIntegerArgumentOutOfRange()
+    public void LeastCommonMultipleBigIntegerArgumentOutOfRange()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Factorization.LCM(BigInteger.Zero, 5));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Factorization.LeastCommonMultiple(BigInteger.Zero, 5));
     }
 
     [Fact]
-    public void LCMInt()
+    public void LeastCommonMultipleInt()
     {
         var expected = 336;
-        var actual = Factorization.LCM(42, 16);
+        var actual = Factorization.LeastCommonMultiple(42, 16);
 
         Assert.Equal(expected, actual);
     }
 
     [Fact]
-    public void LCMLong()
+    public void LeastCommonMultipleLong()
     {
         var expected = 336;
-        var actual = Factorization.LCM(42L, 16L);
+        var actual = Factorization.LeastCommonMultiple(42L, 16L);
 
         Assert.Equal(expected, actual);
     }
 
     [Fact]
-    public void LCMBigInteger()
+    public void LeastCommonMultipleBigInteger()
     {
         var expected = new BigInteger(336);
-        var actual = Factorization.LCM(new BigInteger(42), 16L);
+        var actual = Factorization.LeastCommonMultiple(new BigInteger(42), 16L);
 
         Assert.Equal(expected, actual);
     }

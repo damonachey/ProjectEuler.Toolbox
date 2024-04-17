@@ -10,7 +10,7 @@ public readonly record struct Ellipse2<T> where T : INumber<T>, IRootFunctions<T
 
     public Ellipse2(Point2<T> c, T a, T b)
     {
-        if (a < b) throw new ArgumentException("a must be the major axis");
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(b, a, nameof(b));
 
         C = c;
         A = a;
