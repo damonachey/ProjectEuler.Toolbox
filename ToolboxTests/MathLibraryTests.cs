@@ -58,7 +58,7 @@ public class MathLibraryTests
     }
 
     [Fact]
-    public void CycleLenthHasCycle()
+    public void CycleLengthHasCycle()
     {
         var expected = 115;
         var actual = MathLibrary.CycleLength(1, 452);
@@ -67,7 +67,7 @@ public class MathLibraryTests
     }
 
     [Fact]
-    public void CycleLenthNoCycle()
+    public void CycleLengthNoCycle()
     {
         var expected = 0;
         var actual = MathLibrary.CycleLength(12, 3);
@@ -79,7 +79,7 @@ public class MathLibraryTests
     public void MaximumSubsetSum()
     {
         var expected = 9;
-        var actual = MathLibrary.MaximumSubsetSum(new long[] { 1, 4, -6, 2, 3, 4, -3, -4, 6 });
+        var actual = MathLibrary.MaximumSubsetSum([1, 4, -6, 2, 3, 4, -3, -4, 6]);
 
         Assert.Equal(expected, actual);
     }

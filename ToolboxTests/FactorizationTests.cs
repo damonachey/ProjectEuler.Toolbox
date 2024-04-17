@@ -138,7 +138,7 @@ public class FactorizationTests
     [Fact]
     public void PrimeFactorsIntZero()
     {
-        var expected = new int[] { };
+        var expected = Array.Empty<int>();
         var actual = Factorization.PrimeFactors(0);
 
         Assert.True(expected.SequenceEqual(actual));
@@ -156,7 +156,7 @@ public class FactorizationTests
     [Fact]
     public void PrimeFactorsLongZero()
     {
-        var expected = new long[] { };
+        var expected = Array.Empty<long>();
         var actual = Factorization.PrimeFactors(0L);
 
         Assert.True(expected.SequenceEqual(actual));
@@ -174,7 +174,7 @@ public class FactorizationTests
     [Fact]
     public void PrimeFactorsBigIntegerZero()
     {
-        var expected = new BigInteger[] { };
+        var expected = Array.Empty<BigInteger>();
         var actual = Factorization.PrimeFactors(BigInteger.Zero);
 
         Assert.True(expected.SequenceEqual(actual));
