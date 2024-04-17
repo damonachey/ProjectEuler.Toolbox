@@ -20,7 +20,7 @@ public class Circle2Tests
     }
 
     [Fact]
-    public void Circumfrence()
+    public void Circumference()
     {
         var expected = Math.Tau;
         var c = new Point2<double>(1, 1);
