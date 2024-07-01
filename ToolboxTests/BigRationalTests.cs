@@ -722,19 +722,20 @@ public class BigRationalTests
     [Fact]
     public void Sin()
     {
-        var expected = "0.3271946967961522441733440852676206060643014068937597915900562770";
-        var precision = expected.Length - 2;
+        var expected = "-0.3271946967961522441733440852676206060643014068937597915900562770";
+        var precision = expected.Length - expected.IndexOf('.') - 1;
 
-        var actual = BigRational.Sin(new(1, 3), precision);
+        var actual = BigRational.Sin(new(-1, 3), precision);
+        var actualStr = actual.ToDecimalString(precision);
 
-        Assert.Equal(expected, actual.ToDecimalString(precision));
+        Assert.Equal(expected, actualStr);
     }
 
     [Fact]
     public void Cos()
     {
         var expected = "0.9449569463147376643882840076758806078458526995651407376776457337";
-        var precision = expected.Length - 2;
+        var precision = expected.Length - expected.IndexOf('.') - 1;
 
         var actual = BigRational.Cos(new(1, 3), precision);
 
@@ -745,7 +746,7 @@ public class BigRationalTests
     public void Tan()
     {
         var expected = "0.3462535495105754910385435656097407745957039161898002179764440648";
-        var precision = expected.Length - 2;
+        var precision = expected.Length - expected.IndexOf('.') - 1;
 
         var actual = BigRational.Tan(new(1, 3), precision);
 
@@ -1153,6 +1154,15 @@ public class BigRationalTests
     {
         var expected = "-3.50";
         var actual = new BigRational(7, -2).ToDecimalString(2);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void ToDecimalStringNegative3()
+    {
+        var expected = "-0.50";
+        var actual = new BigRational(1, -2).ToDecimalString(2);
 
         Assert.Equal(expected, actual);
     }

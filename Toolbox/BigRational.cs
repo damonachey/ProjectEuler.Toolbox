@@ -413,6 +413,10 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
             .ToString()
             .PadLeft(precision, '0');
 
-        return $"{wholePart}.{fractionalPart}";
+        var sign = wholePart == 0 && Sign < 0
+            ? "-"
+            : "";
+
+        return $"{sign}{wholePart}.{fractionalPart}";
     }
 }
