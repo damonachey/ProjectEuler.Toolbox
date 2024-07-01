@@ -738,9 +738,6 @@ public class BigRationalTests
 
         var actual = BigRational.Cos(new(1, 3), precision);
 
-        _output.WriteLine($"expected: {expected}");
-        _output.WriteLine($"actual  : {actual.ToDecimalString(precision)}");
-
         Assert.Equal(expected, actual.ToDecimalString(precision));
     }
 
