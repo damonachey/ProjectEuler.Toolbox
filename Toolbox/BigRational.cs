@@ -1,9 +1,11 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using System.Numerics;
 using System.Text;
 
 namespace ProjectEuler.Toolbox;
 
+[DebuggerDisplay("{Numerator} / {Denominator}")]
 public readonly record struct BigRational : IFormattable, IComparable, IComparable<BigRational>
 {
     public readonly BigInteger Numerator;
@@ -165,6 +167,70 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     public static double Log(BigRational value) => BigInteger.Log(value.Numerator) - BigInteger.Log(value.Denominator);
 
     public static double Log10(BigRational value) => BigInteger.Log10(value.Numerator) - BigInteger.Log10(value.Denominator);
+
+    public static BigRational Sin(BigRational value, int precision)
+    {
+        var epsilon = new BigRational(1, BigInteger.Pow(10, precision));
+
+        var x = value;
+        var power = 1;
+        var b = 1;
+        var sign = 1;
+
+        var previous = Zero;
+        var current = Pow(x, power) / MathLibrary.Factorial(b);
+        var delta = epsilon * 2;
+
+        while (delta > epsilon)
+        {
+            previous = current;
+
+            sign *= -1;
+            power += 2;
+            b += 2;
+            
+            current += sign * Pow(x, power) / MathLibrary.Factorial(b);
+            delta = Abs(current - previous);
+        }
+
+        return current;
+    }
+
+    public static BigRational Cos(BigRational value, int precision)
+    {
+        var epsilon = new BigRational(1, BigInteger.Pow(10, precision));
+
+        var x = value;
+        var power = 0;
+        var b = 0;
+        var sign = 1;
+
+        var previous = Zero;
+        var current = Pow(x, power) / MathLibrary.Factorial(b);
+        var delta = epsilon * 2;
+
+        while (delta > epsilon)
+        {
+            previous = current;
+
+            sign *= -1;
+            power += 2;
+            b += 2;
+
+            current += sign * Pow(x, power) / MathLibrary.Factorial(b);
+            delta = Abs(current - previous);
+        }
+
+        return current;
+    }
+
+    public static BigRational Tan(BigRational value, int precision)
+    { 
+        var sin = Sin(value, precision);
+        var cos = Cos(value, precision);
+
+        return sin / cos;
+    }
 
     public static BigRational Abs(BigRational value) => new(BigInteger.Abs(value.Numerator), value.Denominator);
 
