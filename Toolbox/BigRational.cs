@@ -279,9 +279,10 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     {
         var a = (int)Math.Sqrt(n);
 
+        yield return a;
+
         if (PowersAndRoots.IsPerfectSquare(n))
         {
-            yield return a;
             yield break;
         }
 
@@ -289,19 +290,13 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         var d = 1;
         var a0 = a;
 
-        var tup = (m, d, a);
-        var tuplist = new HashSet<(int, int, int)>();
-
-        while (!tuplist.Contains(tup))
+        while (a != 2 * a0)
         {
-            yield return a;
-
-            tuplist.Add(tup);
             m = d * a - m;
             d = (n - m * m) / d;
             a = (a0 + m) / d;
 
-            tup = (m, d, a);
+            yield return a;
         }
     }
 
@@ -315,9 +310,10 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     {
         var a = PowersAndRoots.SqrtFloor(n);
 
+        yield return a;
+
         if (PowersAndRoots.IsPerfectSquare(n))
         {
-            yield return a;
             yield break;
         }
 
@@ -325,19 +321,13 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         var d = BigInteger.One;
         var a0 = a;
 
-        var tup = (m, d, a);
-        var tuplist = new HashSet<(BigInteger, BigInteger, BigInteger)>();
-
-        while (!tuplist.Contains(tup))
+        while (a != 2 * a0)
         {
-            yield return a;
-
-            tuplist.Add(tup);
             m = d * a - m;
             d = (n - m * m) / d;
             a = (a0 + m) / d;
 
-            tup = (m, d, a);
+            yield return a;
         }
     }
 
