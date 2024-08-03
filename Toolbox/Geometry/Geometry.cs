@@ -39,6 +39,8 @@ public static class Geometry
     /// <returns></returns>
     public static long Rectangles(int w, int h)
     {
+        return w * (w + 1) * h * (h + 1) / 4;
+
         var rectangles = 0L;
 
         for (var x1 = 0; x1 <= w; x1++)
