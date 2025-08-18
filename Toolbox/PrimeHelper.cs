@@ -2,7 +2,7 @@
 
 public static class PrimeHelper
 {
-    private static string PrimeFile { get; } = @"C:\Users\Damon\OneDrive\Development\Data\Primes32bit.bin";
+    private static string PrimeFile { get; } = @"C:\Users\damon\uSync\Development\Data\Primes32bit.bin";
     private static Func<long, bool> IsPrimeMemoizedLocal { get; } = n => IsPrime(n);
 
     static PrimeHelper()
