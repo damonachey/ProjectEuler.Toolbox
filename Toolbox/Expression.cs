@@ -44,7 +44,9 @@ public static class Expression
         {
             if ("+-*/".Contains(item[0]))
             {
-                stack.Push(item[0] == '+' ? stack.Pop() + stack.Pop() : item[0] == '-' ? stack.Pop() - stack.Pop() : item[0] == '*' ? stack.Pop() * stack.Pop() : stack.Pop() / stack.Pop());
+                var b = stack.Pop();
+                var a = stack.Pop();
+                stack.Push(item[0] == '+' ? a + b : item[0] == '-' ? a - b : item[0] == '*' ? a * b : a / b);
             }
             else
             {
