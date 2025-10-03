@@ -25,6 +25,7 @@ public readonly record struct Ellipse2<T> where T : INumber<T>, IRootFunctions<T
     public T h => (A - B) * (A - B) / ((A + B) * (A + B));
 
     // https://www.mathsisfun.com/geometry/ellipse-perimeter.html
+    // https://www.youtube.com/watch?v=5nW3nJhBHL0
     public T Perimeter =>
         T.Pi * (A + B) *
         (
