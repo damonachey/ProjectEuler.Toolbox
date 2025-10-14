@@ -435,4 +435,128 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
 
         return $"{sign}{wholePart}.{fractionalPart}";
     }
+
+    /// <summary>
+    /// Optimized version of ToDecimalString using modern .NET performance features.
+    /// Reduces string allocations by using Span&lt;char&gt; and StringBuilder.
+    /// </summary>
+    /// <param name="precision">Number of decimal places</param>
+    /// <returns>Decimal string representation</returns>
+    public string ToDecimalString2(int precision)
+    {
+        var wholePart = GetWholePart();
+
+        // Fast path: no decimal places requested
+        if (precision == 0)
+        {
+            return wholePart.ToString();
+        }
+
+        // Fast path: integer values (denominator = 1)
+        if (Denominator == 1)
+        {
+            if (precision > 0)
+            {
+                return wholePart.ToString() + "." + new string('0', precision);
+            }
+            return wholePart.ToString();
+        }
+
+        var multiplier = BigInteger.Pow(10, precision);
+        var fractionalValue = Abs(Numerator % Denominator * multiplier).Numerator / Denominator;
+        
+        // Use StringBuilder for efficient string building
+        var sb = new StringBuilder();
+        
+        // Handle negative sign
+        if (wholePart == 0 && Sign < 0)
+        {
+            sb.Append('-');
+        }
+        
+        // Append whole part
+        sb.Append(wholePart);
+        sb.Append('.');
+        
+        // Get fractional part as string and pad efficiently
+        var fractionalStr = fractionalValue.ToString();
+        var paddingNeeded = precision - fractionalStr.Length;
+        
+        // Add leading zeros if needed
+        if (paddingNeeded > 0)
+        {
+            sb.Append('0', paddingNeeded);
+        }
+        
+        sb.Append(fractionalStr);
+        
+        return sb.ToString();
+    }
+
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// High-performance version using Span&lt;char&gt; for ultimate performance.
+    /// Only available in .NET 6+ due to Span&lt;char&gt; requirements.
+    /// </summary>
+    /// <param name="precision">Number of decimal places</param>
+    /// <returns>Decimal string representation</returns>
+    public string ToDecimalString3(int precision)
+    {
+        var wholePart = GetWholePart();
+
+        if (precision == 0)
+        {
+            return wholePart.ToString();
+        }
+
+        // Fast path for integers
+        if (Denominator == 1)
+        {
+            return wholePart.ToString() + "." + new string('0', precision);
+        }
+
+        var multiplier = BigInteger.Pow(10, precision);
+        var fractionalValue = Abs(Numerator % Denominator * multiplier).Numerator / Denominator;
+        
+        var wholeStr = wholePart.ToString();
+        var fractionalStr = fractionalValue.ToString();
+        
+        var isNegativeZero = wholePart == 0 && Sign < 0;
+        var totalLength = (isNegativeZero ? 1 : 0) + wholeStr.Length + 1 + precision;
+        
+        // Use string.Create for zero-allocation string building when possible
+        return string.Create(totalLength, (wholePart, fractionalValue, precision, isNegativeZero), 
+            static (span, state) =>
+            {
+                var pos = 0;
+                
+                // Add negative sign if needed
+                if (state.isNegativeZero)
+                {
+                    span[pos++] = '-';
+                }
+                
+                // Add whole part
+                var wholeStr = state.wholePart.ToString();
+                wholeStr.AsSpan().CopyTo(span[pos..]);
+                pos += wholeStr.Length;
+                
+                // Add decimal point
+                span[pos++] = '.';
+                
+                // Add fractional part with padding
+                var fractionalStr = state.fractionalValue.ToString();
+                var paddingNeeded = state.precision - fractionalStr.Length;
+                
+                // Add leading zeros
+                for (int i = 0; i < paddingNeeded; i++)
+                {
+                    span[pos++] = '0';
+                }
+                
+                // Add fractional digits
+                fractionalStr.AsSpan().CopyTo(span[pos..]);
+            });
+    }
+#endif
 }

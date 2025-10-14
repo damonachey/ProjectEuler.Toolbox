@@ -12,3 +12,4 @@ _Resharper*
 packages/
 *.cache
 /ToolboxBenchmarks/BenchmarkDotNet.Artifacts
+/BenchmarkDotNet.Artifacts
