@@ -11,3 +11,4 @@ __pycache__
 _Resharper*
 packages/
 *.cache
+/ToolboxBenchmarks/BenchmarkDotNet.Artifacts
