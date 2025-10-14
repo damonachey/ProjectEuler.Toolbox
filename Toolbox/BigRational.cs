@@ -80,13 +80,26 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     {
         //var dstr = value.ToString("R");
         var dstr = ToLongString(value);
-        var dlen = dstr.Length;
         var dot = dstr.IndexOf('.');
 
-        dstr = dstr.Replace(".", "");
+        BigInteger numerator;
+        BigInteger denominator;
 
-        var denominator = BigInteger.Pow(10, dot == -1 ? 1 : dlen - dot);
-        var numerator = 10 * BigInteger.Parse(dstr);
+        if (dot == -1)
+        {
+            // No decimal point - it's an integer
+            numerator = BigInteger.Parse(dstr);
+            denominator = BigInteger.One;
+        }
+        else
+        {
+            // Has decimal point - calculate decimal places
+            var decimalPlaces = dstr.Length - dot - 1;
+            dstr = dstr.Replace(".", "");
+            
+            numerator = BigInteger.Parse(dstr);
+            denominator = BigInteger.Pow(10, decimalPlaces);
+        }
 
         return new(numerator, denominator);
     }
@@ -147,13 +160,26 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     public static implicit operator BigRational(decimal value)
     {
         var dstr = value.ToString("G");
-        var dlen = dstr.Length;
         var dot = dstr.IndexOf('.');
 
-        dstr = dstr.Replace(".", "");
+        BigInteger numerator;
+        BigInteger denominator;
 
-        var denominator = BigInteger.Pow(10, dlen - dot);
-        var numerator = 10 * BigInteger.Parse(dstr);
+        if (dot == -1)
+        {
+            // No decimal point - it's an integer
+            numerator = BigInteger.Parse(dstr);
+            denominator = BigInteger.One;
+        }
+        else
+        {
+            // Has decimal point - calculate decimal places
+            var decimalPlaces = dstr.Length - dot - 1;
+            dstr = dstr.Replace(".", "");
+            
+            numerator = BigInteger.Parse(dstr);
+            denominator = BigInteger.Pow(10, decimalPlaces);
+        }
 
         return new(numerator, denominator);
     }

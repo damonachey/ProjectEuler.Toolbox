@@ -1184,4 +1184,19 @@ public class BigRationalTests
 
         Assert.True(BigRational.Abs(expected - actual) < new BigRational(1, 100000000000000));
     }
+
+    [Fact]
+    public void ImplicitDecimalConversionBugIntegerValue()
+    {
+        decimal testValue = 456m;
+        var actual = (BigRational)testValue;
+        
+        var expectedNumerator = new BigInteger(456);
+        var expectedDenominator = new BigInteger(1);
+        
+        Assert.Equal(expectedNumerator, actual.Numerator);
+        Assert.Equal(expectedDenominator, actual.Denominator);
+        
+        Assert.Equal(testValue, (decimal)actual);
+    }
 }
