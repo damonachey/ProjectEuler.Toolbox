@@ -41,26 +41,4 @@ public class BigRationalBenchmarks
         }
         return results;
     }
-
-    [Benchmark(Description = "Optimized ToDecimalString2")]
-    public string[] OptimizedToDecimalString2()
-    {
-        var results = new string[_testCases.Length];
-        for (int i = 0; i < _testCases.Length; i++)
-        {
-            results[i] = _testCases[i].ToDecimalString2(Precision);
-        }
-        return results;
-    }
-
-    [Benchmark(Description = "Optimized ToDecimalString3")]
-    public string[] OptimizedToDecimalString3()
-    {
-        var results = new string[_testCases.Length];
-        for (int i = 0; i < _testCases.Length; i++)
-        {
-            results[i] = _testCases[i].ToDecimalString3(Precision);
-        }
-        return results;
-    }
 }
