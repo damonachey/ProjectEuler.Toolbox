@@ -59,23 +59,58 @@ public static class LINQExtensions
     }
 
     /// <summary>
-    /// Grab nSample random samples out of an enumerable stream of unknown size
+    /// Grab nSample random samples out of an enumerable stream of unknown size.
+    /// Enumerates the source exactly once (reservoir sampling) and returns a uniform
+    /// random subset of exactly min(nSamples, count) elements in source order.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="rows"></param>
     /// <param name="nSamples"></param>
+    /// <param name="random">The random number generator to use; defaults to <see cref="Random.Shared"/>.</param>
     /// <returns></returns>
-    public static IEnumerable<T> RandomSample<T>(this IEnumerable<T> rows, int nSamples)
+    public static IEnumerable<T> RandomSample<T>(this IEnumerable<T> rows, int nSamples, Random? random = null)
     {
-        var count = rows.Count();
+        ArgumentNullException.ThrowIfNull(rows);
+        ArgumentOutOfRangeException.ThrowIfNegative(nSamples);
 
-        for (int i = 0; i < count; i++)
+        var rng = random ?? Random.Shared;
+
+        return RandomSampleCore();
+
+        IEnumerable<T> RandomSampleCore()
         {
-            if (Random.Shared.Next(count - i) < nSamples)
+            if (nSamples == 0)
             {
-                yield return rows.ElementAt(i);
-                if (--nSamples == 0)
-                    yield break;
+                yield break;
+            }
+
+            var reservoir = new (long Index, T Item)[nSamples];
+            var count = 0L;
+
+            foreach (var item in rows)
+            {
+                if (count < nSamples)
+                {
+                    reservoir[(int)count] = (count, item);
+                }
+                else
+                {
+                    var j = rng.NextInt64(count + 1);
+
+                    if (j < nSamples)
+                    {
+                        reservoir[(int)j] = (count, item);
+                    }
+                }
+
+                count++;
+            }
+
+            var filled = (int)Math.Min(count, nSamples);
+
+            foreach (var entry in reservoir.Take(filled).OrderBy(e => e.Index))
+            {
+                yield return entry.Item;
             }
         }
     }
@@ -116,6 +151,12 @@ public static class LINQExtensions
     /// <returns></returns>
     public static IEnumerable<T3> Merge<T1, T2, T3>(this IEnumerable<T1> first, IEnumerable<T2> second, Func<T1, T2, T3> operation, Func<T1> default1, Func<T2> default2)
     {
+        ArgumentNullException.ThrowIfNull(first);
+        ArgumentNullException.ThrowIfNull(second);
+        ArgumentNullException.ThrowIfNull(operation);
+        ArgumentNullException.ThrowIfNull(default1);
+        ArgumentNullException.ThrowIfNull(default2);
+
         using var iter1 = first.GetEnumerator();
         using var iter2 = second.GetEnumerator();
         
@@ -146,6 +187,10 @@ public static class LINQExtensions
     /// <returns></returns>
     public static IEnumerable<T3> MergeRepeatLast<T1, T2, T3>(this IEnumerable<T1> first, IEnumerable<T2> second, Func<T1?, T2?, T3> operation)
     {
+        ArgumentNullException.ThrowIfNull(first);
+        ArgumentNullException.ThrowIfNull(second);
+        ArgumentNullException.ThrowIfNull(operation);
+
         using var iter1 = first.GetEnumerator();
         using var iter2 = second.GetEnumerator();
         
@@ -170,14 +215,19 @@ public static class LINQExtensions
         }
     }
 
-    public static T SecondLast<T>(this IEnumerable<T> items)
+    public static T? SecondLast<T>(this IEnumerable<T> items)
     {
+        ArgumentNullException.ThrowIfNull(items);
+
         var current = default(T);
         var secondLast = default(T);
+        var seen = 0;
 
         foreach (var item in items)
         {
-            if (current is not null)
+            seen++;
+
+            if (seen > 1)
             {
                 secondLast = current;
             }
@@ -185,30 +235,35 @@ public static class LINQExtensions
             current = item;
         }
 
-        return secondLast
-            ?? throw new InvalidOperationException("Sequence contains fewer than two elements"); ;
+        if (seen < 2)
+        {
+            throw new InvalidOperationException("Sequence contains fewer than two elements");
+        }
+
+        return secondLast;
     }
 
-    public static readonly List<object> Errors = [];
-
-    public static IEnumerable<TResult?> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+    public static IEnumerable<TResult?> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector, Action<TSource, Exception>? errorHandler = null)
     {
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(selector);
+
         foreach (var item in source)
         {
             var result = default(TResult);
-            var wasSuccesful = false;
+            var wasSuccessful = false;
 
             try
             {
                 result = selector(item);
-                wasSuccesful = true;
+                wasSuccessful = true;
             }
             catch (Exception ex)
             {
-                Errors.Add(new { item, ex });
+                errorHandler?.Invoke(item, ex);
             }
 
-            if (wasSuccesful)
+            if (wasSuccessful)
             {
                 yield return result;
             }
@@ -225,6 +280,9 @@ public static class LINQExtensions
     /// <exception cref="System.ArgumentNullException"></exception>
     public static void ForAll<T>(this IEnumerable<T> source, Action<T> action)
     {
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(action);
+
         foreach (var item in source)
         {
             action(item);
