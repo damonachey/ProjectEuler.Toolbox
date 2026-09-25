@@ -17,7 +17,7 @@ public class HashingTests
     }
 
     [Fact]
-    public void EvaluateRPN()
+    public void ModifiedFnv64()
     {
         var expected = 8270004038646870267ul;
         var actual = Hashing.ModifiedFnv64([1, 2, 3]);

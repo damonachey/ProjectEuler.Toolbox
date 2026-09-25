@@ -254,17 +254,17 @@ public class BigRationalTests
     [Fact]
     public void Op_SubtractionDifferentDenominator()
     {
-        var expected = new BigRational(3, 4);
+        var expected = new BigRational(-1, 15);
         var actual = new BigRational(1, 3) - new BigRational(2, 5);
 
-        Assert.NotEqual(expected, actual);
+        Assert.Equal(expected, actual);
     }
 
     [Fact]
     public void Op_UnaryNegationNegativeToPositive()
     {
-        var expected = new BigRational(-1, 2);
-        var actual = -new BigRational(1, 2);
+        var expected = new BigRational(1, 2);
+        var actual = -new BigRational(-1, 2);
 
         Assert.Equal(expected, actual);
     }
@@ -272,10 +272,10 @@ public class BigRationalTests
     [Fact]
     public void Op_UnaryNegationPositiveToNegative()
     {
-        var expected = new BigRational(1, 2);
+        var expected = new BigRational(-1, 2);
         var actual = -new BigRational(1, 2);
 
-        Assert.NotEqual(expected, actual);
+        Assert.Equal(expected, actual);
     }
 
     [Fact]
@@ -376,10 +376,10 @@ public class BigRationalTests
     [Fact]
     public void Op_AdditionDifferentDenominator()
     {
-        var expected = new BigRational(3, 4);
+        var expected = new BigRational(11, 15);
         var actual = new BigRational(1, 3) + new BigRational(2, 5);
 
-        Assert.NotEqual(expected, actual);
+        Assert.Equal(expected, actual);
     }
 
     [Fact]
@@ -652,7 +652,7 @@ public class BigRationalTests
     [Fact]
     public void Op_ImplicitDoubleNegativeENotation3()
     {
-        var expected = -1.2 * new BigRational(BigInteger.Pow(10, 20), 1);
+        var expected = new BigRational(BigInteger.Parse("-120000000000000000000"), 1);
         var actual = (BigRational)(-1.2e20);
 
         Assert.Equal(expected, actual);
@@ -706,19 +706,20 @@ public class BigRationalTests
     [Fact]
     public void Log()
     {
-        var expected = BigInteger.Log(1) - BigInteger.Log(3);
+        // Independent oracle: Math.Log on the double approximation of 1/3.
+        var expected = Math.Log(1.0 / 3.0);
         var actual = BigRational.Log(new(1, 3));
 
-        Assert.Equal(expected, actual);
+        Assert.Equal(expected, actual, 10);
     }
 
     [Fact]
     public void Log10()
     {
-        var expected = BigInteger.Log10(1) - BigInteger.Log10(3);
+        var expected = Math.Log10(1.0 / 3.0);
         var actual = BigRational.Log10(new(1, 3));
 
-        Assert.Equal(expected, actual);
+        Assert.Equal(expected, actual, 10);
     }
 
     [Fact]
@@ -967,7 +968,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void CompareToObjectGreater()
+    public void CompareToObjectLess()
     {
         var expected = -1;
         var actual = new BigRational(1, 3).CompareTo((object)new BigRational(2, 3));
@@ -976,7 +977,7 @@ public class BigRationalTests
     }
 
     [Fact]
-    public void CompareToObjectLess()
+    public void CompareToObjectGreater()
     {
         var expected = 1;
         var actual = new BigRational(4, 3).CompareTo((object)new BigRational(2, 3));

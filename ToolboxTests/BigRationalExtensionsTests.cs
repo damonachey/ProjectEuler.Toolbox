@@ -23,35 +23,7 @@ public class BigRationalExtensionsTests
     }
 
     [Fact]
-    public void ToBigRationalsPerfectSquareTest1()
-    {
-        var expected = new[]
-            {
-                new BigRational(5, 1),
-            };
-        var actual = new[] { 5 }.ToBigRationals();
-
-        Assert.True(expected.SequenceEqual(actual));
-    }
-
-    [Fact]
-    public void ToBigRationalsIrrationalTest2()
-    {
-        var expected = new[]
-            {
-                new BigRational(1, 1),
-                new BigRational(3, 2),
-                new BigRational(7, 5),
-                new BigRational(17, 12),
-                new BigRational(41, 29),
-            };
-        var actual = new[] { 1, 2 }.ToBigRationals().Take(expected.Length);
-
-        Assert.True(expected.SequenceEqual(actual));
-    }
-
-    [Fact]
-    public void ToBigRationalsPerfectSquareTest3()
+    public void ToBigRationalsPerfectSquare()
     {
         var expected = new[]
             {

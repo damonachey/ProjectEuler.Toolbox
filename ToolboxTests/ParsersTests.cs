@@ -57,7 +57,7 @@ public class ParsersTests
     }
 
     [Fact]
-    public void ParseLongGrid()
+    public void ParseIntGrid()
     {
         var expected = new int[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };
         var actual = Parsers.ParseGrid<int>(@"
@@ -75,7 +75,7 @@ public class ParsersTests
     }
 
     [Fact]
-    public void ParseIntGrid()
+    public void ParseLongGrid()
     {
         var expected = new long[,] { { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 } };
         var actual = Parsers.ParseGrid<long>(@"

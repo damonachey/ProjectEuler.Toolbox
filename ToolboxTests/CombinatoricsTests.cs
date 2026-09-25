@@ -50,16 +50,38 @@ public class CombinatoricsTests
 
         Assert.Equal(expected, actual.Length);
         Assert.Equal(expected, actual.Distinct().Count());
+
+        // Every combination is a sorted selection of 6 distinct characters.
+        Assert.All(actual, c =>
+        {
+            Assert.Equal(6, c.Distinct().Count());
+            Assert.True(c.SequenceEqual(c.OrderBy(ch => ch)), c);
+        });
+
+        Assert.Contains("123456", actual);
+        Assert.Contains("456789", actual);
     }
 
     [Fact]
     public void CombinationsEnumerable()
     {
         var expected = 84;
-        var actual = Enumerable.Range(1, 9).Combinations(6).ToArray();
+        var actual = Enumerable.Range(1, 9)
+            .Combinations(6)
+            .Select(c => string.Concat(c))
+            .ToArray();
 
         Assert.Equal(expected, actual.Length);
         Assert.Equal(expected, actual.Distinct().Count());
+
+        Assert.All(actual, c =>
+        {
+            Assert.Equal(6, c.Distinct().Count());
+            Assert.True(c.SequenceEqual(c.OrderBy(ch => ch)), c);
+        });
+
+        Assert.Contains("123456", actual);
+        Assert.Contains("456789", actual);
     }
 
     [Fact]
@@ -87,17 +109,26 @@ public class CombinatoricsTests
         var actual0 = Combinatorics.Partitions(9).ToArray();
 
         Assert.Equal(expected, actual0.Length);
-        Assert.Equal(expected, actual0.Distinct().Count());
+
+        // Every partition is a multiset of positive integers summing to 9.
+        Assert.All(actual0, p => Assert.Equal(9, p.Sum()));
+        Assert.All(actual0, p => Assert.All(p, part => Assert.True(part > 0)));
+        Assert.Contains(actual0, p => p.SequenceEqual(new[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 }));
+        Assert.Contains(actual0, p => p.SequenceEqual(new[] { 9 }));
     }
 
     [Fact]
     public void PartitionsUnits()
     {
+        var units = new[] { 1, 5, 10, 25, 50 };
         var expected = 292;
-        var actual = Combinatorics.Partitions(100, [1, 5, 10, 25, 50]).ToArray();
+        var actual = Combinatorics.Partitions(100, units).ToArray();
 
         Assert.Equal(expected, actual.Length);
-        Assert.Equal(expected, actual.Distinct().Count());
+
+        // Every partition sums to 100 using only the allowed units.
+        Assert.All(actual, p => Assert.Equal(100, p.Sum()));
+        Assert.All(actual, p => Assert.All(p, part => Assert.Contains(part, units)));
     }
 
     [Fact]
@@ -147,6 +178,10 @@ public class CombinatoricsTests
         var actual = "113456".Permutations().ToArray();
 
         Assert.Equal(expected, actual.Length);
+        Assert.Equal(expected / 2, actual.Distinct().Count());
+
+        // Every string is a permutation of the input (two 1s, one each of 3-6).
+        Assert.All(actual, p => Assert.True("113456".IsPermutation(p), p));
     }
 
     [Fact]
@@ -156,15 +191,8 @@ public class CombinatoricsTests
         var actual = "113456".PermutationsDistinct().ToArray();
 
         Assert.Equal(expected, actual.Length);
-    }
-
-    [Fact]
-    public void PermutationsStringK()
-    {
-        var expected = 720;
-        var actual = "113456".Permutations(6).ToArray();
-
-        Assert.Equal(expected, actual.Length);
+        Assert.Equal(expected, actual.Distinct().Count());
+        Assert.All(actual, p => Assert.True("113456".IsPermutation(p), p));
     }
 
     [Fact]
@@ -174,6 +202,10 @@ public class CombinatoricsTests
         var actual = new[] { 1, 1, 3, 4, 5, 6 }.PermutationsDistinct().ToArray();
 
         Assert.Equal(expected, actual.Length);
+        Assert.Equal(expected, actual.Select(p => string.Concat(p)).Distinct().Count());
+
+        // Every sequence is a permutation of the input multiset.
+        Assert.All(actual, p => Assert.True(p.OrderBy(x => x).SequenceEqual(new[] { 1, 1, 3, 4, 5, 6 }), p.EnumerableToString()));
     }
 
     [Fact]
@@ -183,6 +215,7 @@ public class CombinatoricsTests
         var actual = new[] { 1, 1, 3, 4, 5, 6 }.Permutations(6).ToArray();
 
         Assert.Equal(expected, actual.Length);
-        Assert.Equal(expected, actual.Distinct().Count());
+        Assert.Equal(expected / 2, actual.Select(p => string.Concat(p)).Distinct().Count());
+        Assert.All(actual, p => Assert.True(p.OrderBy(x => x).SequenceEqual(new[] { 1, 1, 3, 4, 5, 6 }), p.EnumerableToString()));
     }
 }

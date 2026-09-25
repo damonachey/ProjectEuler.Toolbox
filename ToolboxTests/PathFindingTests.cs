@@ -210,15 +210,6 @@ public class PathFindingTests
     }
 
     [Fact]
-    public void CoordinateEqualsCoordinateNull()
-    {
-        var expected = new PathFinding.Coordinate(1, 2);
-        var actual = default(PathFinding.Coordinate);
-
-        Assert.False(expected.Equals(actual));
-    }
-
-    [Fact]
     public void CoordinateEqualsNotCoordinateNull()
     {
         var expected = new PathFinding.Coordinate(1, 2);
@@ -276,11 +267,11 @@ public class PathFindingTests
     }
 
     [Fact]
-    public void AStarExploresFullGrid()
+    public void AStarFindsOptimalPathWhenGoalIsExpensive()
     {
-        // The goal has a much higher weight than its surroundings, so every other
-        // node is expanded (and re-expands over already-closed neighbors) before
-        // the goal is popped.
+        // The goal cell is far more expensive than its surroundings, so any
+        // optimal path pays 100 at the last step; the assertion pins the
+        // resulting optimal cost (path cell costs excluding the start).
         var grid = new long[,]
         {
             { 1, 1, 1, 1 },

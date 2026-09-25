@@ -27,9 +27,11 @@ public class PowersAndRootsTests
     [Fact]
     public void IsPerfectSquareTrue()
     {
-        var actual = PowersAndRoots.IsPerfectSquare(9223372036854775808);
+        // 3037000499 = floor(sqrt(long.MaxValue)); its square fits in a long,
+        // so this exercises the long overload's upper boundary.
+        var actual = PowersAndRoots.IsPerfectSquare(3037000499L * 3037000499L);
 
-        Assert.False(actual);
+        Assert.True(actual);
     }
 
     [Fact]

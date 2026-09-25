@@ -13,10 +13,14 @@ public class PackingTests
     [Fact]
     public void Knapsack()
     {
-        var expected = new long[] { 3, 2 };
-        var actual = Packing.Knapsack([1, 2, 3], 5);
+        var items = new long[] { 1, 2, 3 };
+        var actual = Packing.Knapsack(items, 5).ToArray();
 
-        Assert.True(expected.SequenceEqual(actual));
+        // Any minimal-size subset of items summing to the goal is correct; assert
+        // the property rather than a tie-break-dependent ordering like [3, 2].
+        Assert.Equal(2, actual.Length);
+        Assert.Equal(5, actual.Sum());
+        Assert.All(actual, x => Assert.Contains(x, items));
     }
 
     [Fact]
@@ -30,6 +34,11 @@ public class PackingTests
         var actual = Packing.Knapsack01(15, items, out List<BigInteger> bag);
 
         Assert.Equal(expected, actual);
+
+        // The bag holds the chosen items: distinct inputs summing to the result.
+        Assert.Equal(expected, bag.Sum());
+        Assert.Equal(bag.Count, bag.Distinct().Count());
+        Assert.All(bag, x => Assert.Contains(x, items));
     }
 
     [Fact]
@@ -38,9 +47,10 @@ public class PackingTests
         var items = Array.Empty<BigInteger>();
 
         var expected = new BigInteger(0);
-        var actual = Packing.Knapsack01(15, items, out _);
+        var actual = Packing.Knapsack01(15, items, out List<BigInteger> bag);
 
         Assert.Equal(expected, actual);
+        Assert.Empty(bag);
     }
 
     [Fact]
@@ -54,5 +64,6 @@ public class PackingTests
         var actual = Packing.Knapsack01(15, items, out List<BigInteger> bag);
 
         Assert.Equal(expected, actual);
+        Assert.True(bag.SequenceEqual(new[] { new BigInteger(1) }));
     }
 }

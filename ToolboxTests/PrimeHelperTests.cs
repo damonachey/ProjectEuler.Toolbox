@@ -1,4 +1,5 @@
 ﻿using ProjectEuler.Toolbox;
+using System.IO;
 using System.Linq;
 using Xunit;
 
@@ -102,6 +103,7 @@ public class PrimeHelperTests
     {
         var last = 0L;
         var count = 100000000L;
+        var hitEndOfFile = false;
 
         try
         {
@@ -111,8 +113,14 @@ public class PrimeHelperTests
                 count++;
             }
         }
-        catch { };
+        catch (EndOfStreamException)
+        {
+            // Primes(index) seeks into Primes32bit.bin and reads ints forever;
+            // hitting the end of the file is the iterator's normal termination.
+            hitEndOfFile = true;
+        }
 
+        Assert.True(hitEndOfFile, "Expected enumeration to reach the end of the primes data file.");
         Assert.Equal(2147483647, last);
         Assert.Equal(105097565, count);
     }

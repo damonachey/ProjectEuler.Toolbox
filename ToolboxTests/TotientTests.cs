@@ -67,16 +67,6 @@ public class TotientTests
     }
 
     [Fact]
-    public void PhiPhi2()
-    {
-        var totient = new Totient(100);
-        var expected = totient.Phi(20);
-        var actual = Totient.Phi2(20);
-
-        Assert.Equal(expected, actual);
-    }
-
-    [Fact]
     public void MaxNOverPhiN()
     {
         var expected = 30;

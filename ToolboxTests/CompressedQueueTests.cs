@@ -1,17 +1,17 @@
-﻿using ProjectEuler.Toolbox;
+using ProjectEuler.Toolbox;
 using System.Linq;
 using Xunit;
 
 namespace ProjectEuler.ToolboxTests;
 
-public class BackingStoreQueueTests
+public class CompressedQueueTests
 {
     [Fact]
     public void Constructor()
     {
-        var bsq = new CompressedQueue();
+        var actual = new CompressedQueue();
 
-        Assert.NotNull(bsq);
+        Assert.Equal(0, actual.Count);
     }
 
     [Fact]
@@ -44,5 +44,7 @@ public class BackingStoreQueueTests
         {
             Assert.Equal(expected, actual.Dequeue());
         }
+
+        Assert.Equal(0, actual.Count);
     }
 }

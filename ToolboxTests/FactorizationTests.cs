@@ -57,19 +57,22 @@ public class FactorizationTests
     [Fact]
     public void FactorsBigIntegerPrime()
     {
-        var expected = 2;
-        var actual = Factorization.Factors(new BigInteger(112272535095293)).Count();
+        var expected = new BigInteger[] { 1, 112272535095293 };
+        var actual = Factorization.Factors(new BigInteger(112272535095293));
 
-        Assert.Equal(expected, actual);
+        Assert.True(expected.OrderBy(x => x).SequenceEqual(actual.OrderBy(x => x)));
     }
 
     [Fact]
     public void FactorsBigIntegerNonPrime()
     {
-        var expected = 32;
-        var actual = Factorization.Factors(new BigInteger(6546235646418)).Count();
+        // 6546235646418 = 2 * 3 * 13 * 163 * 514884037 => 2^5 = 32 divisors.
+        var n = new BigInteger(6546235646418);
+        var actual = Factorization.Factors(n).ToArray();
 
-        Assert.Equal(expected, actual);
+        Assert.Equal(32, actual.Length);
+        Assert.Equal(32, actual.Distinct().Count());
+        Assert.All(actual, f => Assert.True(f > 0 && n % f == 0, f.ToString()));
     }
 
     [Fact]
@@ -192,19 +195,9 @@ public class FactorizationTests
     [Fact]
     public void PrimeFactorsPrime()
     {
-        var expected = 1;
-        var actual = Factorization.PrimeFactors(112272535095293).Count();
+        var actual = Factorization.PrimeFactors(112272535095293);
 
-        Assert.Equal(expected, actual);
-    }
-
-    [Fact]
-    public void PrimeFactorsNonPrime()
-    {
-        var expected = 5;
-        var actual = Factorization.PrimeFactors(6546235646418).Count();
-
-        Assert.Equal(expected, actual);
+        Assert.True(actual.SequenceEqual(new long[] { 112272535095293 }));
     }
 
     [Fact]

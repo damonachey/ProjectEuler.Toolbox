@@ -297,8 +297,10 @@ public class MathLibraryTests
     }
 
     [Fact]
-    public void NewtonsMethodOutOfRange()
+    public void NewtonsMethodMismatchedDerivativeDiverges()
     {
+        // The gradient x => 2x is the derivative of x^2, not of the function
+        // x => 3 - x^2, so Newton's iteration diverges and overflows.
         var epsilon = 0.0005;
 
         Assert.Throws<OverflowException>(() => MathLibrary.NewtonsMethod(x => 3 - x * x, x => 2 * x, 2, epsilon));

@@ -111,17 +111,19 @@ public class PolynomialTests
     }
 
     [Fact]
-    public void LagrangeBigIntegerCube()
+    public void LagrangeBigIntegerQuadratic()
     {
+        // y = x^2 through both negative and positive points; x = 3 must give 9.
+        // Exercises BigInteger interpolation with negative x coordinates.
         var input = new Point2<System.Numerics.BigInteger>[]
             {
+                new(-1, 1),
+                new(0, 0),
                 new(1, 1),
-                new(2, 8),
-                new(3, 27),
-                new(4, 64),
+                new(2, 4),
             };
-        var expected = new System.Numerics.BigInteger(125);
-        var actual = Polynomial.Lagrange(input, 5, 1).First().Y;
+        var expected = new System.Numerics.BigInteger(9);
+        var actual = Polynomial.Lagrange(input, 3, 1).First().Y;
 
         Assert.Equal(expected, actual);
     }

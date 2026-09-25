@@ -37,11 +37,22 @@ public class StringExtensionsTests
     }
 
     [Fact]
-    public void TestRandomString()
+    public void RandomString()
     {
-        var s1 = StringExtensions.RandomString();
-        var s2 = StringExtensions.RandomString();
+        // The parameterless overload picks a length in 0..131 and fills it with
+        // lowercase a-z. Property checks only, so the test is deterministic.
+        var actual = StringExtensions.RandomString();
 
-        Assert.NotEqual(s1, s2);
+        Assert.InRange(actual.Length, 0, 131);
+        Assert.All(actual, c => Assert.InRange(c, 'a', 'z'));
+    }
+
+    [Fact]
+    public void RandomStringSpecifiedSize()
+    {
+        var actual = StringExtensions.RandomString(10);
+
+        Assert.Equal(10, actual.Length);
+        Assert.All(actual, c => Assert.InRange(c, 'a', 'z'));
     }
 }
