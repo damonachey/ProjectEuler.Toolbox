@@ -104,9 +104,12 @@ public sealed class Totient
 
     public static long Phi2(long n)
     {
+        // n = 0 previously looped forever: 0 % 2 == 0 and 0 >> 1 == 0.
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(n);
+
         var p = 0;
 
-        while(n % 2 == 0)
+        while (n % 2 == 0)
         {
             n >>= 1;
             p++;

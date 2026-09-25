@@ -53,6 +53,20 @@ public class TotientTests
     }
 
     [Fact]
+    public void Phi2ZeroThrows()
+    {
+        // phi(0) is undefined; this used to loop forever (0 % 2 == 0, 0 >> 1 == 0).
+        Assert.Throws<ArgumentOutOfRangeException>(() => Totient.Phi2(0));
+    }
+
+    [Fact]
+    public void Phi2NegativeThrows()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => Totient.Phi2(-1));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Totient.Phi2(-2));
+    }
+
+    [Fact]
     public void PhiPhi2()
     {
         var totient = new Totient(100);
