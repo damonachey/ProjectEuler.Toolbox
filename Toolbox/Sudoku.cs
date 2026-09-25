@@ -7,8 +7,28 @@ public static class Sudoku
     /// </summary>
     /// <param name="grid">Puzzle grid</param>
     /// <returns>Completed puzzle or null if no solution</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     public static int[,]? Solve(int[,] grid)
     {
+        ArgumentNullException.ThrowIfNull(grid);
+
+        if (grid.GetLength(0) != 9 || grid.GetLength(1) != 9)
+        {
+            throw new ArgumentException("Puzzle grid must be 9x9.", nameof(grid));
+        }
+
+        for (var x = 0; x < 9; x++)
+        {
+            for (var y = 0; y < 9; y++)
+            {
+                if (grid[x, y] is < 0 or > 9)
+                {
+                    throw new ArgumentException($"Cell [{x}, {y}] must hold a value in the range 0..9.", nameof(grid));
+                }
+            }
+        }
+
         var possibleCellValues = InitializePossibleEmptyCellValues(grid);
 
         while (true)
@@ -18,7 +38,7 @@ public static class Sudoku
 
             if (possibleCellValues.Count == 0)
             {
-                return CheckAllSums(grid) ? grid : null;
+                return CheckAllUnitsSolved(grid) ? grid : null;
             }
 
             if (!AssignCellsWithOnlyOnePossibleValue(grid, possibleCellValues))
@@ -111,22 +131,21 @@ public static class Sudoku
         }
     }
 
-    private static int ExpectedSum { get; } = 45;
+    private static bool CheckAllUnitsSolved(int[,] grid) =>
+        CheckAllColumnsSolved(grid) && CheckAllRowsSolved(grid) && CheckAllBoxesSolved(grid);
 
-    private static bool CheckAllSums(int[,] grid) => CheckColSums(grid) && CheckRowSums(grid) && CheckBoxSums(grid);
-
-    private static bool CheckColSums(int[,] grid)
+    private static bool CheckAllColumnsSolved(int[,] grid)
     {
         for (var x = 0; x < 9; x++)
         {
-            var sum = 0;
+            var values = new int[9];
 
             for (var y = 0; y < 9; y++)
             {
-                sum += grid[x, y];
+                values[y] = grid[x, y];
             }
 
-            if (sum != ExpectedSum)
+            if (!IsUnitComplete(values))
             {
                 return false;
             }
@@ -135,18 +154,18 @@ public static class Sudoku
         return true;
     }
 
-    private static bool CheckRowSums(int[,] grid)
+    private static bool CheckAllRowsSolved(int[,] grid)
     {
         for (var y = 0; y < 9; y++)
         {
-            var sum = 0;
+            var values = new int[9];
 
             for (var x = 0; x < 9; x++)
             {
-                sum += grid[x, y];
+                values[x] = grid[x, y];
             }
 
-            if (sum != ExpectedSum)
+            if (!IsUnitComplete(values))
             {
                 return false;
             }
@@ -155,27 +174,47 @@ public static class Sudoku
         return true;
     }
 
-    private static bool CheckBoxSums(int[,] grid)
+    private static bool CheckAllBoxesSolved(int[,] grid)
     {
         for (var x = 0; x < 9; x += 3)
         {
             for (var y = 0; y < 9; y += 3)
             {
-                var sum = 0;
+                var values = new int[9];
+                var index = 0;
 
                 for (var dx = 0; dx < 3; dx++)
                 {
                     for (var dy = 0; dy < 3; dy++)
                     {
-                        sum += grid[x + dx, y + dy];
+                        values[index++] = grid[x + dx, y + dy];
                     }
                 }
 
-                if (sum != ExpectedSum)
+                if (!IsUnitComplete(values))
                 {
                     return false;
                 }
             }
+        }
+
+        return true;
+    }
+
+    // A unit (row, column or box) is complete only if it contains every digit 1..9 exactly once.
+    // A sum check is not sufficient: e.g. five 9s and four 0s in a row also sums to 45.
+    private static bool IsUnitComplete(int[] values)
+    {
+        var seen = new bool[9];
+
+        foreach (var value in values)
+        {
+            if (value is < 1 or > 9 || seen[value - 1])
+            {
+                return false;
+            }
+
+            seen[value - 1] = true;
         }
 
         return true;
