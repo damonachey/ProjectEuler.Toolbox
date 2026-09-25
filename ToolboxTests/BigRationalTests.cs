@@ -1,8 +1,10 @@
 ﻿using ProjectEuler.Toolbox;
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
+using System.Threading;
 
 using Xunit;
 using Xunit.Abstractions;
@@ -1198,5 +1200,87 @@ public class BigRationalTests
         Assert.Equal(expectedDenominator, actual.Denominator);
         
         Assert.Equal(testValue, (decimal)actual);
+    }
+
+    [Fact]
+    public void SqrtDoesNotFalselyConverge()
+    {
+        // Regression: sqrt(2/7) - the first two merged convergents coincide at exactly 1/2,
+        // which used to trip the "consecutive terms close" check and return 0.5 instead of
+        // the true value ~0.534522483824849.
+        var actual = BigRational.Sqrt(new BigRational(2, 7), 15);
+        var expected = Math.Sqrt(2.0 / 7.0);
+
+        Assert.True(BigRational.Abs(actual - expected) < new BigRational(1, 1000000000000));
+
+        Assert.True(BigRational.Abs(BigRational.Sqrt(new BigRational(7, 2), 15) - Math.Sqrt(7.0 / 2.0)) < new BigRational(1, 1000000000000));
+        Assert.True(BigRational.Abs(BigRational.Sqrt(new BigRational(7, 3), 15) - Math.Sqrt(7.0 / 3.0)) < new BigRational(1, 1000000000000));
+        Assert.True(BigRational.Abs(BigRational.Sqrt(new BigRational(8, 7), 15) - Math.Sqrt(8.0 / 7.0)) < new BigRational(1, 1000000000000));
+    }
+
+    [Fact]
+    public void ImplicitConversionsAreCultureInvariant()
+    {
+        var original = CultureInfo.CurrentCulture;
+
+        try
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("de-DE");
+
+            Assert.Equal(new BigRational(1, 2), (BigRational)0.5);
+            Assert.Equal(new BigRational(1, 2), (BigRational)0.5m);
+            Assert.Equal(new BigRational(123456789, 10000), (BigRational)12345.6789m);
+            Assert.Equal(new BigRational(621, 10000000000000), (BigRational)6.21e-11);
+        }
+        finally
+        {
+            Thread.CurrentThread.CurrentCulture = original;
+        }
+    }
+
+    [Fact]
+    public void DoubleNaNOrInfinityThrows()
+    {
+        Assert.Throws<InvalidCastException>(() => (BigRational)double.NaN);
+        Assert.Throws<InvalidCastException>(() => (BigRational)double.PositiveInfinity);
+        Assert.Throws<InvalidCastException>(() => (BigRational)double.NegativeInfinity);
+    }
+
+    [Fact]
+    public void PowNegativeExponent()
+    {
+        Assert.Equal(new BigRational(1, 2), BigRational.Pow(new BigRational(2), -1));
+        Assert.Equal(new BigRational(9, 4), BigRational.Pow(new BigRational(2, 3), -2));
+        Assert.Equal(new BigRational(8), BigRational.Pow(new BigRational(1, 2), -3));
+    }
+
+    [Fact]
+    public void ParameterlessConstructorIsZero()
+    {
+        Assert.Equal(BigRational.Zero, new BigRational());
+        Assert.Equal(BigInteger.Zero, new BigRational().Numerator);
+        Assert.Equal(BigInteger.One, new BigRational().Denominator);
+    }
+
+    [Fact]
+    public void CompareToNullIsGreater()
+    {
+        Assert.Equal(1, new BigRational(2, 3).CompareTo(null));
+    }
+
+    [Fact]
+    public void SqrtNegativeThrows()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => BigRational.Sqrt(new BigRational(-4), 10));
+        Assert.Throws<ArgumentOutOfRangeException>(() => BigRational.SqrtAsContinuedFraction(-4).ToArray());
+        Assert.Throws<ArgumentOutOfRangeException>(() => BigRational.SqrtAsContinuedFraction(new BigInteger(-4)).ToArray());
+    }
+
+    [Fact]
+    public void ToStringNumericFormatAppliesToNumerator()
+    {
+        Assert.Equal("2.00", new BigRational(2, 3).ToString("F2"));
+        Assert.Equal("2.00", new BigRational(2, 3).ToString("0.00"));
+        Assert.Equal("-5/2", new BigRational(-5, 2).ToString("{0}/{1}"));
     }
 }

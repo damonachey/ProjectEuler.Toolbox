@@ -5,6 +5,15 @@ using System.Text;
 
 namespace ProjectEuler.Toolbox;
 
+/// <summary>
+/// An arbitrary-precision rational number, always stored in reduced form with a positive
+/// denominator. Equality, hashing and ordering rely on this canonical form.
+/// <para>
+/// Like all structs, <c>default(BigRational)</c> is zeroed by the runtime and produces an
+/// invalid 0/0 value (the denominator-zero invariant is enforced by the constructors, which
+/// <c>default</c> bypasses). Use <see cref="Zero"/> or <c>new BigRational()</c> instead.
+/// </para>
+/// </summary>
 [DebuggerDisplay("{Numerator} / {Denominator}")]
 public readonly record struct BigRational : IFormattable, IComparable, IComparable<BigRational>
 {
@@ -21,8 +30,21 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     public bool IsZero => Numerator == 0;
     public int Sign => Numerator.Sign;
 
+    /// <summary>
+    /// Creates the zero value. Guarantees that <c>new BigRational()</c> produces the valid
+    /// rational 0/1 instead of the invalid 0/0.
+    /// <para>
+    /// Note: <c>default(BigRational)</c> is zeroed by the runtime and always bypasses every
+    /// constructor (C# struct semantics), so it still yields the invalid 0/0. Prefer
+    /// <see cref="Zero"/> or <c>new BigRational()</c>.
+    /// </para>
+    /// </summary>
+    public BigRational()
+        : this(BigInteger.Zero)
+    {
+    }
+
     public BigRational(BigInteger numerator, BigInteger denominator)
-        : this()
     {
         if (denominator == 0)
         {
@@ -78,7 +100,11 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
 
     public static implicit operator BigRational(double value)
     {
-        //var dstr = value.ToString("R");
+        if (double.IsNaN(value) || double.IsInfinity(value))
+        {
+            throw new InvalidCastException("Cannot convert NaN or infinity to BigRational.");
+        }
+
         var dstr = ToLongString(value);
         var dot = dstr.IndexOf('.');
 
@@ -88,7 +114,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         if (dot == -1)
         {
             // No decimal point - it's an integer
-            numerator = BigInteger.Parse(dstr);
+            numerator = BigInteger.Parse(dstr, CultureInfo.InvariantCulture);
             denominator = BigInteger.One;
         }
         else
@@ -96,8 +122,8 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
             // Has decimal point - calculate decimal places
             var decimalPlaces = dstr.Length - dot - 1;
             dstr = dstr.Replace(".", "");
-            
-            numerator = BigInteger.Parse(dstr);
+
+            numerator = BigInteger.Parse(dstr, CultureInfo.InvariantCulture);
             denominator = BigInteger.Pow(10, decimalPlaces);
         }
 
@@ -106,7 +132,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
 
     private static string ToLongString(double input)
     {
-        var str = input.ToString().ToUpper();
+        var str = input.ToString(CultureInfo.InvariantCulture).ToUpper();
 
         // if string representation was collapsed from scientific notation, just return it:
         if (!str.Contains('E'))
@@ -122,10 +148,8 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
             negativeNumber = true;
         }
 
-        var decSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
-
         var exponentParts = str.Split('E');
-        var decimalParts = exponentParts[0].Split(decSeparator);
+        var decimalParts = exponentParts[0].Split('.');
 
         // fix missing decimal point:
         if (decimalParts.Length == 1)
@@ -133,7 +157,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
             decimalParts = [exponentParts[0], "0"];
         }
 
-        var exponentValue = int.Parse(exponentParts[1]);
+        var exponentValue = int.Parse(exponentParts[1], CultureInfo.InvariantCulture);
 
         var newNumber = decimalParts[0] + decimalParts[1];
 
@@ -145,7 +169,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         }
         else // negative exponent
         {
-            result = ("0" + decSeparator + new string('0', Math.Abs(exponentValue + decimalParts[0].Length)) + newNumber)
+            result = ("0." + new string('0', Math.Abs(exponentValue + decimalParts[0].Length)) + newNumber)
                .TrimEnd('0');
         }
 
@@ -159,7 +183,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
 
     public static implicit operator BigRational(decimal value)
     {
-        var dstr = value.ToString("G");
+        var dstr = value.ToString("G", CultureInfo.InvariantCulture);
         var dot = dstr.IndexOf('.');
 
         BigInteger numerator;
@@ -168,7 +192,7 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         if (dot == -1)
         {
             // No decimal point - it's an integer
-            numerator = BigInteger.Parse(dstr);
+            numerator = BigInteger.Parse(dstr, CultureInfo.InvariantCulture);
             denominator = BigInteger.One;
         }
         else
@@ -176,8 +200,8 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
             // Has decimal point - calculate decimal places
             var decimalPlaces = dstr.Length - dot - 1;
             dstr = dstr.Replace(".", "");
-            
-            numerator = BigInteger.Parse(dstr);
+
+            numerator = BigInteger.Parse(dstr, CultureInfo.InvariantCulture);
             denominator = BigInteger.Pow(10, decimalPlaces);
         }
 
@@ -188,7 +212,16 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
 
     public static implicit operator BigRational(BigInteger value) => new(value);
 
-    public static BigRational Pow(BigRational value, int exponent) => new(BigInteger.Pow(value.Numerator, exponent), BigInteger.Pow(value.Denominator, exponent));
+    public static BigRational Pow(BigRational value, int exponent)
+    {
+        if (exponent < 0)
+        {
+            value = Inverse(value);
+            exponent = -exponent;
+        }
+
+        return new(BigInteger.Pow(value.Numerator, exponent), BigInteger.Pow(value.Denominator, exponent));
+    }
 
     public static double Log(BigRational value) => BigInteger.Log(value.Numerator) - BigInteger.Log(value.Denominator);
 
@@ -284,7 +317,13 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
 
         foreach (var test in list)
         {
-            if (Abs(test - last) < epsilon)
+            // Stop when the residual of the square is small enough that the error is within epsilon:
+            //   |sqrt(n) - test| = |n - test^2| / (sqrt(n) + test) <= |n - test^2| / test   (test > 0)
+            // so |n - test^2| < epsilon * test guarantees |sqrt(n) - test| < epsilon.
+            // Comparing successive convergents (as before) is not a valid convergence test for the
+            // merged ratio sequence - consecutive terms can coincide long before the limit is reached
+            // (e.g. sqrt(2/7): the first two merged convergents are both exactly 1/2).
+            if (Abs(test * test - n) < epsilon * Abs(test))
             {
                 return test;
             }
@@ -303,6 +342,11 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     /// <returns></returns>
     public static IEnumerable<int> SqrtAsContinuedFraction(int n)
     {
+        if (n < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(n), "n must be non-negative.");
+        }
+
         var a = (int)Math.Sqrt(n);
 
         yield return a;
@@ -334,6 +378,11 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
     /// <returns></returns>
     public static IEnumerable<BigInteger> SqrtAsContinuedFraction(BigInteger n)
     {
+        if (n < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(n), "n must be non-negative.");
+        }
+
         var a = PowersAndRoots.SqrtFloor(n);
 
         yield return a;
@@ -385,6 +434,11 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
 
     public int CompareTo(object? obj)
     {
+        if (obj is null)
+        {
+            return 1;
+        }
+
         if (obj is BigRational other)
         {
             return CompareTo(other);
@@ -410,6 +464,14 @@ public readonly record struct BigRational : IFormattable, IComparable, IComparab
         if (string.IsNullOrEmpty(format))
         {
             return ToString();
+        }
+
+        if (!format.Contains('{'))
+        {
+            // A standard or custom numeric format string (e.g. "F2", "X", "0.000")
+            // applies to the numerator. Composite formats such as "{0}/{1}" are
+            // handled below.
+            return Numerator.ToString(format, formatProvider);
         }
 
         return string.Format(formatProvider ?? CultureInfo.CurrentCulture, format, Numerator, Denominator);
