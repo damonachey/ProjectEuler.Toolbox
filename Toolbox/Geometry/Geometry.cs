@@ -37,24 +37,20 @@ public static class Geometry
     /// <param name="w"></param>
     /// <param name="h"></param>
     /// <returns></returns>
+    /// <exception cref="OverflowException">Thrown when the result does not fit in a long.</exception>
     public static long Rectangles(int w, int h)
     {
-        return w * (w + 1) * h * (h + 1) / 4;
-
-        var rectangles = 0L;
-
-        for (var x1 = 0; x1 <= w; x1++)
+        // Closed form w·(w+1)·h·(h+1)/4: the product is always divisible by 4.
+        // Compute in long (not int) arithmetic so inputs like w = h = 50000 do
+        // not silently wrap, and keep it checked so truly huge inputs throw
+        // instead of returning garbage.
+        checked
         {
-            for (var y1 = 0; y1 <= h; y1++)
-            {
-                for (var x2 = x1 + 1; x2 <= w; x2++)
-                {
-                    rectangles += h - y1;
-                }
-            }
-        }
+            long wl = w;
+            long hl = h;
 
-        return rectangles;
+            return wl * (wl + 1) * hl * (hl + 1) / 4;
+        }
     }
 
     /// <summary>
@@ -161,14 +157,49 @@ public static class Geometry
         return Math.Sqrt((s - a) * (s - b) * (s - c) / s);
     }
 
+    /// <summary>
+    /// Given two vertices of a triangle and the distances from the third vertex to each of
+    /// them, returns the third vertex.
+    /// </summary>
+    /// <param name="B">The second vertex. Must be the origin (0, 0).</param>
+    /// <param name="ba">The distance from the returned point to B. Must be non-negative.</param>
+    /// <param name="C">The third vertex. Must lie on the X axis (Y = 0) with non-zero X.</param>
+    /// <param name="ca">The distance from the returned point to C. Must be non-negative.</param>
+    /// <returns>The point A such that |A - B| = ba and |A - C| = ca, with A.Y &gt;= 0.</returns>
+    /// <exception cref="ArgumentException">Thrown when the B/C preconditions are not met or the side lengths and base do not form a triangle.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when a side length is negative.</exception>
     public static Point2<T> TriangleThirdPoint<T>(Point2<T> B, T ba, Point2<T> C, T ca) where T : INumber<T>, IRootFunctions<T>
     {
-        ArgumentOutOfRangeException.ThrowIfNotEqual(B, default, nameof(B));
-        ArgumentOutOfRangeException.ThrowIfNotEqual(C.Y, T.Zero, nameof(C.Y));
+        if (B != default)
+        {
+            throw new ArgumentException("B must be the origin.", nameof(B));
+        }
 
+        if (C.Y != T.Zero)
+        {
+            throw new ArgumentException("C must lie on the X axis.", nameof(C));
+        }
+
+        if (C.X == T.Zero)
+        {
+            throw new ArgumentException("C.X must not be zero; B and C would coincide.", nameof(C));
+        }
+
+        ArgumentOutOfRangeException.ThrowIfNegative(ba);
+        ArgumentOutOfRangeException.ThrowIfNegative(ca);
+
+        // B is the origin and C lies on the X axis, so subtracting the squared
+        // distance equations places A at x = (ba² - ca² + C.X²) / (2·C.X).
         var x = (ba * ba - ca * ca + C.X * C.X) / (T.CreateChecked(2) * C.X);
-        var y = T.Sqrt(ba * ba - x * x);
 
-        return new(x, y);
+        // Triangle existence: |ba - ca| <= base <= ba + ca. Checked up front
+        // on the raw inputs so rounding cannot push the square root below zero;
+        // the clamp below covers exact-boundary (degenerate) triangles.
+        if (T.Abs(ba - ca) > T.Abs(C.X) || ba + ca < T.Abs(C.X))
+        {
+            throw new ArgumentException("The side lengths and the base do not form a triangle.");
+        }
+
+        return new(x, T.Sqrt(T.Max(ba * ba - x * x, T.Zero)));
     }
 }
