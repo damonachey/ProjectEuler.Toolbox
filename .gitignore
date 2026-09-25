@@ -3,6 +3,8 @@ Release/
 bin/
 obj/
 TestResults/
+coverage-results/
+*.trx
 .vs/
 *.suo
 *.user
