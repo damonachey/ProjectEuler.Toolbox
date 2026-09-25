@@ -1,4 +1,5 @@
 ﻿using ProjectEuler.Toolbox;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -242,5 +243,166 @@ public class PathFindingTests
         var actual = new PathFinding.Coordinate(1, 2).ToString();
 
         Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void AStarReparentsNodeOnBetterPath()
+    {
+        // Regression: A* must update a node's parent when a cheaper route is discovered later.
+        // The buggy implementation produced the suboptimal path
+        // (0,2)->(1,2)->(2,2)->(3,3)->(4,4) with weight 18 instead of the optimal 17.
+        var grid = new long[,]
+        {
+            { 7, 3, 7, 9, 5 },
+            { 1, 2, 3, 9, 6 },
+            { 6, 7, 9, 8, 7 },
+            { 4, 1, 7, 2, 8 },
+            { 8, 6, 6, 1, 4 },
+        };
+
+        var start = new PathFinding.Coordinate(0, 2);
+        var goal = new PathFinding.Coordinate(4, 4);
+
+        var path = grid.AStar(start, goal).ToArray();
+
+        Assert.Equal(start, path.First());
+        Assert.Equal(goal, path.Last());
+
+        // A* path cost excludes the start cell weight (gScore semantics).
+        // Dijkstra's optimum (including start) is 24, so the path sum must be 17.
+        var sum = path.Skip(1).Sum(p => grid[p.Row, p.Col]);
+
+        Assert.Equal(17, sum);
+    }
+
+    [Fact]
+    public void AStarExploresFullGrid()
+    {
+        // The goal has a much higher weight than its surroundings, so every other
+        // node is expanded (and re-expands over already-closed neighbors) before
+        // the goal is popped.
+        var grid = new long[,]
+        {
+            { 1, 1, 1, 1 },
+            { 1, 1, 1, 1 },
+            { 1, 1, 1, 1 },
+            { 1, 1, 1, 100 },
+        };
+
+        var start = new PathFinding.Coordinate(0, 0);
+        var goal = new PathFinding.Coordinate(3, 3);
+
+        var path = grid.AStar(start, goal).ToArray();
+
+        // Unique shortest path is the diagonal: (0,0)->(1,1)->(2,2)->(3,3).
+        var sum = path.Skip(1).Sum(p => grid[p.Row, p.Col]);
+
+        Assert.Equal(102, sum);
+    }
+
+    [Fact]
+    public void AStarStartEqualsGoal()
+    {
+        var grid = new long[,] { { 1, 2 }, { 3, 4 } };
+        var start = new PathFinding.Coordinate(1, 1);
+
+        var actual = grid.AStar(start, start).ToArray();
+
+        var expected = new[] { start };
+        Assert.True(expected.SequenceEqual(actual), actual.EnumerableToString());
+    }
+
+    [Fact]
+    public void AStarGoalUnreachable()
+    {
+        var grid = new long[,] { { 1, 2 }, { 3, 4 } };
+
+        var actual = grid
+            .AStar(new PathFinding.Coordinate(0, 0), new PathFinding.Coordinate(1, 1), (g, x) => Enumerable.Empty<PathFinding.Coordinate>())
+            .ToArray();
+
+        Assert.Empty(actual);
+    }
+
+    [Fact]
+    public void AStarAgreesWithDijkstraOnRandomGrids()
+    {
+        var rng = new Random(20240924);
+
+        for (var iteration = 0; iteration < 50; iteration++)
+        {
+            var grid = new long[5, 5];
+
+            for (var row = 0; row < 5; row++)
+            {
+                for (var col = 0; col < 5; col++)
+                {
+                    grid[row, col] = rng.Next(1, 10);
+                }
+            }
+
+            var start = new PathFinding.Coordinate(rng.Next(5), rng.Next(5));
+
+            PathFinding.Coordinate goal;
+            do
+            {
+                goal = new PathFinding.Coordinate(rng.Next(5), rng.Next(5));
+            }
+            while (start.Equals(goal));
+
+            var dijkstraTotal = grid.DijkstraMinPathWeight(start, goal);
+            var path = grid.AStar(start, goal).ToArray();
+            var pathSum = path.Skip(1).Sum(p => grid[p.Row, p.Col]);
+            var optimalExcludingStart = dijkstraTotal - grid[start.Row, start.Col];
+
+            Assert.True(pathSum == optimalExcludingStart,
+                $"iteration {iteration}: start {start}, goal {goal}: A* path sum {pathSum} != optimal {optimalExcludingStart}; path {path.EnumerableToString()}");
+        }
+    }
+
+    [Fact]
+    public void DijkstraDisconnectedGoalReturnsMaxValue()
+    {
+        var grid = new long[,]
+        {
+            { 1, 2 },
+            { 3, 4 },
+        };
+
+        // NeighborsRightAndDown from the lower-right corner can never reach the upper-left.
+        var actual = grid.DijkstraMinPathWeight(
+            new PathFinding.Coordinate(1, 1),
+            new PathFinding.Coordinate(0, 0),
+            PathFinding.NeighborsRightAndDown);
+
+        Assert.Equal(long.MaxValue, actual);
+    }
+
+    [Fact]
+    public void DijkstraMinPathWeightsDisconnectedLeavesMaxValue()
+    {
+        var grid = new long[,]
+        {
+            { 1, 2 },
+            { 3, 4 },
+        };
+
+        var actual = grid.DijkstraMinPathWeights(
+            new PathFinding.Coordinate(1, 1),
+            PathFinding.NeighborsRightAndDown);
+
+        Assert.Equal(grid[1, 1], actual[1, 1]);
+        Assert.Equal(long.MaxValue, actual[0, 0]);
+    }
+
+    [Fact]
+    public void DijkstraStartEqualsGoal()
+    {
+        var grid = new long[,] { { 1, 2 }, { 3, 4 } };
+        var start = new PathFinding.Coordinate(1, 1);
+
+        var actual = grid.DijkstraMinPathWeight(start, start);
+
+        Assert.Equal(grid[start.Row, start.Col], actual);
     }
 }

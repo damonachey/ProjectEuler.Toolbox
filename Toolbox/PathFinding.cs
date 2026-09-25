@@ -73,7 +73,7 @@ public static class PathFinding
         while (q.Count != 0)
         {
             var min = long.MaxValue;
-            var u = default(Coordinate)!;
+            Coordinate? u = null;
 
             foreach (var t in q)
             {
@@ -82,6 +82,12 @@ public static class PathFinding
                     min = dist[t.Row, t.Col];
                     u = t;
                 }
+            }
+
+            // no reachable node left in the queue (disconnected graph)
+            if (u is null)
+            {
+                break;
             }
 
             // we are at the final square
@@ -150,12 +156,17 @@ public static class PathFinding
 
             if (u.Equals(goal))
             {
-                foreach (var p in ReconstitutePath(cameFrom, cameFrom[u]))
+                if (cameFrom.TryGetValue(u, out var parent))
                 {
-                    yield return p;
+                    foreach (var p in ReconstitutePath(cameFrom, parent))
+                    {
+                        yield return p;
+                    }
                 }
 
                 yield return goal;
+
+                yield break;
             }
 
             openSet.Remove(u);
@@ -182,14 +193,7 @@ public static class PathFinding
 
                 if (tentativeIsBetter)
                 {
-                    if (cameFrom.TryGetValue(neighbor, out var value))
-                    {
-                        value = u;
-                    }
-                    else
-                    {
-                        cameFrom.Add(neighbor, u);
-                    }
+                    cameFrom[neighbor] = u;
 
                     gScore[neighbor.Row, neighbor.Col] = tentativeGScore;
                     hScore[neighbor.Row, neighbor.Col] = DistanceEstimate(grid, neighbor, goal);
