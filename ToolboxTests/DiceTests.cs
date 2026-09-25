@@ -46,6 +46,30 @@ public class DiceTests
     }
 
     [Fact]
+    public void DicePossibleRollsZeroDice()
+    {
+        var actual = Dice.PossibleRolls(0, 6).ToArray();
+
+        Assert.Single(actual);
+        Assert.Empty(actual[0]);
+    }
+
+    [Fact]
+    public void DicePossibleRollsNegativeDiceThrows()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => Dice.PossibleRolls(-1, 6).ToArray());
+    }
+
+    [Fact]
+    public void DicePossibleRollsThreeDice()
+    {
+        var actual = Dice.PossibleRolls(3, 6).ToArray();
+
+        Assert.Equal(216, actual.Length);
+        Assert.Equal(216, actual.Distinct().Count());
+    }
+
+    [Fact]
     public void MeteredRollsOneDie()
     {
         var actual = Dice.MeteredRolls(1, 6).Take(100000).ToArray();

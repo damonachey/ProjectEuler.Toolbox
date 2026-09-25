@@ -1,5 +1,6 @@
 ﻿using ProjectEuler.Toolbox;
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using Xunit;
 
@@ -134,6 +135,46 @@ public class PowersAndRootsTests
         var actual = PowersAndRoots.Sqrt(2m);
 
         Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void SqrtLargeNonSquareTerminates()
+    {
+        // The old loop never terminated on this value: decimal rounding made
+        // the Newton iterate oscillate forever between two adjacent values
+        // (a two-cycle) instead of reaching an exact fixed point.
+        var expected = 200000000000000.00000000000001m;
+        var actual = PowersAndRoots.Sqrt(40000000000000000000000000003m);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void SqrtSweepStaysCloseToRoot()
+    {
+        var values = new List<decimal>();
+
+        for (var i = 2; i <= 200; i++)
+        {
+            values.Add(i);
+        }
+
+        for (var i = 1; i <= 20; i++)
+        {
+            values.Add(i * 0.5m);
+        }
+
+        values.Add(100000000000m);
+        values.Add(10000000000000000000000000000m);
+        values.Add(40000000000000000000000000003m);
+
+        foreach (var n in values)
+        {
+            var actual = PowersAndRoots.Sqrt(n);
+            var error = Math.Abs(actual * actual - n);
+
+            Assert.True(error <= Math.Max(0.00000000000000000001m, n * 0.00000000000000000001m), $"Sqrt({n}) is off by {error}");
+        }
     }
 
     [Fact]

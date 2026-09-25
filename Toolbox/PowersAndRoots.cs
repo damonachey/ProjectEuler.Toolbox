@@ -94,28 +94,43 @@ public static class PowersAndRoots
     /// </summary>
     /// <param name="n">The n.</param>
     /// <returns></returns>
-    /// <exception cref="System.OverflowException"></exception>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
+    /// <exception cref="System.ArgumentOutOfRangeException"></exception>
     public static decimal Sqrt(decimal n)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(n);
 
-        var epsilon = 0.0m;
-        var current = (decimal)Math.Sqrt((double)n);
-        var previous = default(decimal);
-
-        do
+        if (n == 0)
         {
-            previous = current;
+            return 0;
+        }
 
-            if (previous == 0.0m)
+        // Newton-Raphson iteration seeded from the double approximation.
+        // Quadratic convergence settles to full decimal precision within a
+        // few iterations, but decimal rounding can make the final step
+        // oscillate forever between two adjacent values next to an irrational
+        // root, so the loop is bounded and stops on the first fixed point or
+        // two-cycle it encounters.
+        var current = (decimal)Math.Sqrt((double)n);
+        decimal previous = default;
+
+        for (var iteration = 0; iteration < 20; iteration++)
+        {
+            var next = (current + n / current) / 2;
+
+            if (next == current)
             {
-                return 0;
+                return next;
             }
 
-            current = (previous + n / previous) / 2;
+            if (next == previous)
+            {
+                // Two-cycle: return whichever value is closer to the root.
+                return Math.Abs(next * next - n) <= Math.Abs(current * current - n) ? next : current;
+            }
+
+            previous = current;
+            current = next;
         }
-        while (Math.Abs(previous - current) > epsilon);
 
         return current;
     }

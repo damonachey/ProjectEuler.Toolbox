@@ -8,8 +8,17 @@ public static class Dice
     /// <param name="dice"></param>
     /// <param name="sides"></param>
     /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when dice is negative.</exception>
     public static IEnumerable<int[]> PossibleRolls(int dice, int sides)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(dice);
+
+        if (dice == 0)
+        {
+            yield return Array.Empty<int>();
+            yield break;
+        }
+
         for (var roll = 1; roll <= sides; roll++)
         {
             if (dice == 1)
