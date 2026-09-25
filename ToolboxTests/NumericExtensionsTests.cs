@@ -11,8 +11,61 @@ public class NumericExtensionsTests
     [Fact]
     public void ReduceRomanNumeral()
     {
-        var expected = "MCMCXCXLXIXIV";
+        var expected = "MMCLIII"; // 2153 — the old one-pass chain produced the non-minimal "MCMCXCXLXIXIV" (13 chars)
         var actual = "DDDCDLLLXLXXXXVVVIVIIII".ReduceRomanNumeral();
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void ReduceRomanNumeralSixI()
+    {
+        // Old chain: "IIIIII" -> "IVII" (length 4); minimal is "VI".
+        var expected = "VI";
+        var actual = "IIIIII".ReduceRomanNumeral();
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void ReduceRomanNumeralVIVI()
+    {
+        // 5 + 4 + 1 = 10; old chain gave "IXI".
+        var expected = "X";
+        var actual = "VIVI".ReduceRomanNumeral();
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void ReduceRomanNumeralAlreadyMinimal()
+    {
+        var expected = "MCMXCIX";
+        var actual = "MCMXCIX".ReduceRomanNumeral();
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void ReduceRomanNumeralLowercase()
+    {
+        var expected = "VI";
+        var actual = "iiiiii".ReduceRomanNumeral();
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void ReduceRomanNumeralEmpty()
+    {
+        Assert.Equal(string.Empty, string.Empty.ReduceRomanNumeral());
+    }
+
+    [Fact]
+    public void ReduceRomanNumeralUnknownCharIgnored()
+    {
+        var expected = "IV"; // 'J' has no value and is dropped; IIII = 4
+        var actual = "IIIIJ".ReduceRomanNumeral();
 
         Assert.Equal(expected, actual);
     }
