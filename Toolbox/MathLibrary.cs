@@ -19,7 +19,7 @@ public static class MathLibrary
     /// <returns></returns>
     public static BigInteger Binomial(int n, int k)
     {
-        ArgumentOutOfRangeException.ThrowIfLessThan(n, 1);
+        ArgumentOutOfRangeException.ThrowIfLessThan(n, 0);
         ArgumentOutOfRangeException.ThrowIfLessThan(k, 0);
         ArgumentOutOfRangeException.ThrowIfGreaterThan(k, n);
 
@@ -33,6 +33,8 @@ public static class MathLibrary
     /// <returns></returns>
     public static BigInteger Factorial(long n)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
+
         var factorial = BigInteger.One;
 
         while (n > 1)
@@ -104,35 +106,52 @@ public static class MathLibrary
     }
 
     /// <summary>
-    /// Find the cycle length of n / d
+    /// Find the length of the repeating block in the decimal expansion of n / d
+    /// (the repetend length). Terminating fractions return 0. For example
+    /// 1/7 = 0.142857... has repetend length 6.
     /// </summary>
     /// <param name="n"></param>
     /// <param name="d"></param>
     /// <returns></returns>
     public static int CycleLength(long n, long d)
     {
-        var qrSet = new HashSet<(long, long)>();
+        ArgumentOutOfRangeException.ThrowIfZero(d);
 
-        while (true)
+        // Reduce the fraction; factors of 2 and 5 in the denominator only
+        // shorten the non-repeating prefix, never the repeating block.
+        var gcd = Factorization.GreatestCommonDivisor(n, d);
+        n /= gcd;
+        d /= gcd;
+
+        while (d % 2 == 0)
         {
-            var q = n / d;
-            var r = n % d;
-
-            if (r == 0)
-            {
-                return qrSet.Count;
-            }
-
-            var qr = (q, r);
-
-            if (qrSet.Contains(qr))
-            {
-                return qrSet.Count;
-            }
-
-            qrSet.Add(qr);
-            n = r * 10;
+            d /= 2;
         }
+
+        while (d % 5 == 0)
+        {
+            d /= 5;
+        }
+
+        if (d == 1)
+        {
+            return 0;
+        }
+
+        // The repetend length is the number of distinct remainders seen before
+        // the first remainder repeats (equivalently the multiplicative order
+        // of 10 modulo d). Track remainders only, so the integer part of n / d
+        // is not counted.
+        var seen = new HashSet<long>();
+        var r = n % d;
+
+        while (!seen.Contains(r))
+        {
+            seen.Add(r);
+            r = (long)((BigInteger)r * 10 % d);
+        }
+
+        return seen.Count;
     }
 
     /// <summary>
@@ -194,7 +213,9 @@ public static class MathLibrary
     /// number first.
     public static bool IsPalindrome(string s)
     {
-        for (var i = s.Length / 2; i >= 0; i--)
+        ArgumentNullException.ThrowIfNull(s);
+
+        for (var i = 0; i < s.Length / 2; i++)
         {
             if (s[i] != s[s.Length - i - 1])
             {
@@ -249,15 +270,33 @@ public static class MathLibrary
     }
 
     /// <summary>
-    /// Counts in the requested number base.
+    /// Counts in the requested number base. Each count is emitted as the base-b
+    /// digits rendered as a base-10 number, e.g. base 3 yields 0, 1, 2, 10, 11.
+    /// The number of digits is chosen so no emitted value exceeds
+    /// <see cref="long.MaxValue"/>.
     /// </summary>
     /// <param name="b">The base.</param>
     /// <returns></returns>
     public static IEnumerable<long> CountInBase(int b)
     {
-        var c = long.MaxValue.ToString().Length;
+        ArgumentOutOfRangeException.ThrowIfLessThan(b, 2);
+
+        // Largest value with c digits is (b-1)(10^c - 1)/9; pick the largest c
+        // for which that still fits in a long.
+        var c = 1;
+
+        while ((BigInteger)(b - 1) * (BigInteger.Pow(10, c) - 1) / 9 <= long.MaxValue)
+        {
+            c++;
+        }
+
+        c--;
+
         var n = new int[c];
 
+        // The counter wraps back to 0 after covering every c-digit base-b
+        // number, so it enumerates forever. (The top digit never actually
+        // reaches b: on overflow it is reset to 0 alongside the others.)
         while (n[c - 1] != b)
         {
             var sum = 0L;

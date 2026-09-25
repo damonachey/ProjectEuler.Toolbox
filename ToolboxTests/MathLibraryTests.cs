@@ -60,7 +60,10 @@ public class MathLibraryTests
     [Fact]
     public void CycleLengthHasCycle()
     {
-        var expected = 115;
+        // 1/452 = 0.002212389... repeats with period 112 (452 = 2^2 * 113,
+        // and the order of 10 mod 113 is 112). The old implementation counted
+        // the pre-period q/r states and returned 115.
+        var expected = 112;
         var actual = MathLibrary.CycleLength(1, 452);
 
         Assert.Equal(expected, actual);
@@ -73,6 +76,70 @@ public class MathLibraryTests
         var actual = MathLibrary.CycleLength(12, 3);
 
         Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void CycleLengthSeven()
+    {
+        // 1/7 = 0.142857... (length 6, not 7: the leading 0 digit is not part
+        // of the repetend).
+        var expected = 6;
+        var actual = MathLibrary.CycleLength(1, 7);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void CycleLengthTerminating()
+    {
+        var expected = 0;
+        var actual = MathLibrary.CycleLength(1, 4);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void CycleLengthTwelve()
+    {
+        // 1/12 = 0.08333...: pre-period "08", then a single repeating digit.
+        var expected = 1;
+        var actual = MathLibrary.CycleLength(1, 12);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void CycleLengthIntegerPartIgnored()
+    {
+        // 22/7 = 3.142857... has the same repetend as 1/7.
+        var expected = 6;
+        var actual = MathLibrary.CycleLength(22, 7);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void CycleLengthZeroNumerator()
+    {
+        var expected = 0;
+        var actual = MathLibrary.CycleLength(0, 5);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void CycleLengthZeroDenominatorThrows()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => MathLibrary.CycleLength(1, 0));
+    }
+
+    [Fact]
+    public void CycleLengthDenominatorWithFive()
+    {
+        // 1/25 = 0.04 terminates once the factor of 5 is stripped.
+        Assert.Equal(0, MathLibrary.CycleLength(1, 25));
+        // 1/35 = 0.0285714...: the 5 is stripped, leaving period of 1/7.
+        Assert.Equal(6, MathLibrary.CycleLength(1, 35));
     }
 
     [Fact]
@@ -150,6 +217,64 @@ public class MathLibraryTests
         var actual = MathLibrary.CountInBase(3).Take(5);
 
         Assert.True(expected.SequenceEqual(actual));
+    }
+
+    [Fact]
+    public void CountInBaseDecade()
+    {
+        var expected = Enumerable.Range(0, 20).Select(i => (long)i).ToArray();
+        var actual = MathLibrary.CountInBase(10).Take(20);
+
+        Assert.True(expected.SequenceEqual(actual));
+    }
+
+    [Fact]
+    public void CountInBaseBaseTooSmallThrows()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => MathLibrary.CountInBase(1).ToArray());
+    }
+
+    [Fact]
+    public void CountInBaseAllBaseTwo()
+    {
+        // The counter cycles through every c-digit base-2 number and then wraps
+        // back to 0; c is chosen so no emitted value exceeds long.MaxValue and
+        // none wrap negative (the old hard-coded 19-digit implementation could
+        // silently wrap for radix 10).
+        var all = MathLibrary.CountInBase(2).Take((1 << 19) + 3).ToArray();
+
+        Assert.Equal((1 << 19) + 3, all.Length);
+        Assert.Equal(1111111111111111111L, all[^4]); // (10^19 - 1)/9: last of the first cycle
+        Assert.Equal(new[] { 0L, 1, 10 }, all[^3..]); // wraps back to 0 and repeats
+        Assert.DoesNotContain(all, v => v < 0);
+        Assert.DoesNotContain(all, v => v > long.MaxValue);
+    }
+
+    [Fact]
+    public void BinomialZeroZero()
+    {
+        var expected = BigInteger.One;
+        var actual = MathLibrary.Binomial(0, 0);
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void FactorialNegativeThrows()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => MathLibrary.Factorial(-5));
+    }
+
+    [Fact]
+    public void IsPalindromeEmpty()
+    {
+        Assert.True(MathLibrary.IsPalindrome(string.Empty));
+    }
+
+    [Fact]
+    public void IsPalindromeNullThrows()
+    {
+        Assert.Throws<ArgumentNullException>(() => MathLibrary.IsPalindrome(null!));
     }
 
     [Fact]

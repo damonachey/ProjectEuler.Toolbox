@@ -22,6 +22,8 @@ public static class Factorization
             return 0;
         }
 
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
+
         var count = 1;
 
         if (n % 2 == 0)
@@ -74,6 +76,8 @@ public static class Factorization
     /// <returns></returns>
     public static IEnumerable<int> Factors(int n)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
+
         var factor = (int)Math.Sqrt(n);
 
         while (factor > 0)
@@ -100,6 +104,8 @@ public static class Factorization
     /// <returns></returns>
     public static IEnumerable<long> Factors(long n)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
+
         var factor = (long)Math.Sqrt(n);
 
         while (factor > 0)
@@ -126,6 +132,8 @@ public static class Factorization
     /// <returns></returns>
     public static IEnumerable<BigInteger> Factors(BigInteger n)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
+
         var factor = PowersAndRoots.SqrtFloor(n);
 
         while (factor > 0)
@@ -158,6 +166,8 @@ public static class Factorization
         {
             yield break;
         }
+
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
 
         while (n % 2 == 0)
         {
@@ -204,6 +214,8 @@ public static class Factorization
             yield break;
         }
 
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
+
         while (n % 2 == 0)
         {
             yield return 2;
@@ -249,6 +261,8 @@ public static class Factorization
             yield break;
         }
 
+        ArgumentOutOfRangeException.ThrowIfNegative(n);
+
         while (n % 2 == 0)
         {
             yield return 2;
@@ -288,22 +302,16 @@ public static class Factorization
     /// <returns></returns>
     public static int GreatestCommonDivisor(int a, int b)
     {
-        a = Math.Abs(a);
-        b = Math.Abs(b);
+        // Compute in long: the absolute value of int.MinValue is not
+        // representable as an int, but fits in a long.
+        var gcd = GreatestCommonDivisor((long)a, (long)b);
 
-        while (a != 0 && b != 0)
+        if (gcd > int.MaxValue)
         {
-            if (a > b)
-            {
-                a %= b;
-            }
-            else
-            {
-                b %= a;
-            }
+            throw new OverflowException("The greatest common divisor exceeds Int32.MaxValue.");
         }
 
-        return a != 0 ? a : b;
+        return (int)gcd;
     }
 
     /// <summary>
@@ -314,22 +322,21 @@ public static class Factorization
     /// <returns></returns>
     public static long GreatestCommonDivisor(long a, long b)
     {
-        a = Math.Abs(a);
-        b = Math.Abs(b);
-
-        while (a != 0 && b != 0)
+        // Euclid's algorithm with signed remainders. The modulus sign follows
+        // the dividend, which is fine: only the magnitude matters and the
+        // intermediate values stay within range (unlike Math.Abs(long.MinValue)).
+        while (b != 0)
         {
-            if (a > b)
-            {
-                a %= b;
-            }
-            else
-            {
-                b %= a;
-            }
+            var t = b;
+            b = a % b;
+            a = t;
         }
 
-        return a != 0 ? a : b;
+        // The gcd magnitude is representable unless the other operand was 0
+        // and this one is long.MinValue (a value whose negation is 2^63).
+        return a == long.MinValue
+            ? throw new OverflowException("The greatest common divisor is not representable as Int64.")
+            : Math.Abs(a);
     }
 
     /// <summary>
@@ -342,10 +349,16 @@ public static class Factorization
     {
         ArgumentOutOfRangeException.ThrowIfZero(a);
 
-        a = Math.Abs(a);
-        b = Math.Abs(b);
+        // Compute in long and check the range: the product of two ints can
+        // exceed Int32.MaxValue and silently wrap around otherwise.
+        var result = LeastCommonMultiple((long)a, (long)b);
 
-        return a * (b / GreatestCommonDivisor(a, b));
+        if (result > int.MaxValue)
+        {
+            throw new OverflowException("The least common multiple exceeds Int32.MaxValue.");
+        }
+
+        return (int)result;
     }
 
     /// <summary>
@@ -358,10 +371,14 @@ public static class Factorization
     {
         ArgumentOutOfRangeException.ThrowIfZero(a);
 
-        a = Math.Abs(a);
-        b = Math.Abs(b);
+        if (b == 0)
+        {
+            return 0;
+        }
 
-        return a * (b / GreatestCommonDivisor(a, b));
+        // checked: the true lcm of long.MinValue with any non-zero value is
+        // always greater than long.MaxValue, and Math.Abs throws for it.
+        return checked(Math.Abs(a) * (Math.Abs(b) / GreatestCommonDivisor(a, b)));
     }
 
     /// <summary>
